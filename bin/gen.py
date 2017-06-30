@@ -21,26 +21,26 @@ class Collector:
 
     def _collect_from_mapper(self, m):
         d = OrderedDict()
-        for prop in m.iterate_properties:
+        for prop in sorted(m.iterate_properties, key=lambda x: x.key):
             if hasattr(prop, "direction"):
                 pairs = prop.synchronize_pairs
                 assert len(pairs) == 1, "multi keys are not supported"
-                d[prop.key] = {
-                    "table": prop.target.fullname,
-                    "direction": prop.direction.name,
-                    "uselist": prop.uselist,
-                    "relation": {
-                        "to": "{}.{}".format(pairs[0][0].table.fullname, pairs[0][0].name),
-                        "from": "{}.{}".format(pairs[0][1].table.fullname, pairs[0][1].name),
-                    }
-                }
+                d[prop.key] = OrderedDict([
+                    ("table", prop.target.fullname),
+                    ("direction", prop.direction.name),
+                    ("uselist", prop.uselist),
+                    ("relation", OrderedDict([
+                        ("to", "{}.{}".format(pairs[0][0].table.fullname, pairs[0][0].name)),
+                        ("from", "{}.{}".format(pairs[0][1].table.fullname, pairs[0][1].name)),
+                    ])),
+                ])
             else:
                 assert len(prop.columns) == 1, "multi keys are not supported"
                 c = prop.columns[0]
-                d[prop.key] = {
-                    "type": self.resolver.resolve_type(c),
-                    "nullable": c.nullable,
-                }
+                d[prop.key] = OrderedDict([
+                    ("type", self.resolver.resolve_type(c)),
+                    ("nullable", c.nullable),
+                ])
         return d
 
 
@@ -66,7 +66,7 @@ def main(src):
     engine = create_engine(src)
     Base.prepare(engine, reflect=True)
     collector = Collector(Resolver())
-    d = collector.collect(Base.classes)
+    d = collector.collect(sorted(Base.classes, key=lambda x: x.__table__.fullname))
     loading.dumpfile(d, format="json")
 
 
