@@ -1,39 +1,39 @@
-type Alerts_alert {
+type AlertsAlert {
     active: bool!
     id: ID!
     message: String!
 }
 
-type Auth_group {
-    auth_group_permissions_collection: [Auth_group_permission]
-    auth_user_groups_collection: [Auth_user_group]
+type AuthGroup {
+    auth_group_permissions: [AuthGroupPermission]
+    auth_user_groups: [AuthUserGroup]
     id: ID!
     name: String!
 }
 
-type Auth_group_permission {
-    auth_group: Auth_group
-    auth_permission: Auth_permission
+type AuthGroupPermission {
+    auth_group: AuthGroup
+    auth_permission: AuthPermission
     group_id: Integer!
     id: ID!
     permission_id: Integer!
 }
 
-type Auth_permission {
-    auth_group_permissions_collection: [Auth_group_permission]
-    auth_user_user_permissions_collection: [Auth_user_user_permission]
+type AuthPermission {
+    auth_group_permissions: [AuthGroupPermission]
+    auth_user_permissions: [AuthUserPermission]
     codename: String!
     content_type_id: Integer!
-    django_content_type: Django_content_type
+    django_content_type: DjangoContentType
     id: ID!
     name: String!
 }
 
-type Auth_user {
-    auth_user_groups_collection: [Auth_user_group]
-    auth_user_user_permissions_collection: [Auth_user_user_permission]
+type AuthUser {
+    auth_user_groups: [AuthUserGroup]
+    auth_user_permissions: [AuthUserPermission]
     date_joined: datetime!
-    django_admin_log_collection: [Django_admin_log]
+    django_admin_log_users: [DjangoAdminLog]
     email: String!
     first_name: String!
     id: ID!
@@ -43,114 +43,111 @@ type Auth_user {
     last_login: datetime
     last_name: String!
     password: String!
-    tastypie_apikey_collection: [Tastypie_apikey]
+    tastypie_apikey_users: [TastypieApikey]
     username: String!
 }
 
-type Auth_user_group {
-    auth_group: Auth_group
-    auth_user: Auth_user
+type AuthUserGroup {
+    auth_group: AuthGroup
+    auth_user: AuthUser
     group_id: Integer!
     id: ID!
     user_id: Integer!
 }
 
-type Auth_user_user_permission {
-    auth_permission: Auth_permission
-    auth_user: Auth_user
+type AuthUserPermission {
+    auth_permission: AuthPermission
+    auth_user: AuthUser
     id: ID!
     permission_id: Integer!
     user_id: Integer!
 }
 
-type Corsheaders_corsmodel {
+type CorsheadersCorsmodel {
     cors: String!
     id: ID!
 }
 
-type Django_admin_log {
+type DjangoAdminLog {
     action_flag: Integer!
     action_time: datetime!
-    auth_user: Auth_user
+    auth_user: AuthUser
     change_message: String!
     content_type_id: Integer
-    django_content_type: Django_content_type
+    django_content_type: DjangoContentType
     id: ID!
     object_id: String
     object_repr: String!
     user_id: Integer!
 }
 
-type Django_content_type {
+type DjangoContentType {
     app_label: String!
-    auth_permission_collection: [Auth_permission]
-    django_admin_log_collection: [Django_admin_log]
+    auth_permission_content_types: [AuthPermission]
+    django_admin_log_content_types: [DjangoAdminLog]
     id: ID!
     model: String!
 }
 
-type Django_migration {
+type DjangoMigration {
     app: String!
     applied: datetime!
     id: ID!
     name: String!
 }
 
-type Django_session {
+type DjangoSession {
     expire_date: datetime!
     session_data: String!
     session_key: ID!
 }
 
-type Django_site {
+type DjangoSite {
     domain: String!
     id: ID!
     name: String!
 }
 
-type Hits_resourceview {
+type HitsResourceview {
     count: Integer!
     date: date!
     id: ID!
     version: Integer!
 }
 
-type Pokemon_ability {
-    created: datetime!
-    description: String!
+type PokemonAbility {
+    ability_id: Integer!
     id: ID!
-    modified: datetime!
-    name: String!
-    pokemon_pokemon_abilities_collection: [Pokemon_pokemon_abilitie]
+    pokemon: Pokemon
+    pokemon_ability: PokemonAbility
+    pokemon_id: Integer!
 }
 
-type Pokemon_description {
-    created: datetime!
-    description: String!
+type PokemonDescription {
+    description_id: Integer!
     id: ID!
-    modified: datetime!
-    name: String!
-    pokemon_description_game_collection: [Pokemon_description_game]
-    pokemon_pokemon_descriptions_collection: [Pokemon_pokemon_description]
+    pokemon: Pokemon
+    pokemon_description: PokemonDescription
+    pokemon_id: Integer!
 }
 
-type Pokemon_description_game {
+type PokemonDescriptionGame {
     description_id: Integer!
     game_id: Integer!
     id: ID!
-    pokemon_description: Pokemon_description
-    pokemon_game: Pokemon_game
+    pokemon_description: PokemonDescription
+    pokemon_game: PokemonGame
 }
 
-type Pokemon_egggroup {
+type PokemonEgggroup {
     created: datetime!
     id: ID!
     modified: datetime!
     name: String!
-    pokemon_pokemon_egg_group_collection: [Pokemon_pokemon_egg_group]
+    pokemon_egg_group_egggroups: [PokemonEggGroup]
 }
 
-type Pokemon_evolution {
+type PokemonEvolution {
     created: datetime!
     detail: String
     frm_id: Integer
@@ -158,21 +155,22 @@ type Pokemon_evolution {
     level: Integer!
     method: String!
     modified: datetime!
-    pokemon_pokemon: Pokemon_pokemon
+    pokemon_frm: Pokemon
+    pokemon_to: Pokemon
     to_id: Integer
 }
 
-type Pokemon_game {
+type PokemonGame {
     created: datetime!
     generation: Integer!
     id: ID!
     modified: datetime!
     name: String!
-    pokemon_description_game_collection: [Pokemon_description_game]
+    pokemon_description_games: [PokemonDescriptionGame]
     release_year: Integer!
 }
 
-type Pokemon_move {
+type PokemonMove {
     accuracy: Integer!
     category: String!
     created: datetime!
@@ -180,1026 +178,992 @@ type Pokemon_move {
     id: ID!
     modified: datetime!
     name: String!
-    pokemon_move_etype_collection: [Pokemon_move_etype]
-    pokemon_movepokemon_collection: [Pokemon_movepokemon]
+    pokemon_move_etypes: [PokemonMoveEtype]
+    pokemon_movepokemon_moves: [PokemonMovepokemon]
     power: Integer!
     pp: Integer!
 }
 
-type Pokemon_move_etype {
+type PokemonMoveEtype {
     id: ID!
     move_id: Integer!
-    pokemon_move: Pokemon_move
-    pokemon_type: Pokemon_type
+    pokemon_move: PokemonMove
+    pokemon_type: PokemonType
     type_id: Integer!
 }
 
-type Pokemon_movepokemon {
+type PokemonMovepokemon {
     created: datetime!
     id: ID!
     learn_type: String!
     level: Integer
     modified: datetime!
     move_id: Integer
+    pokemon: Pokemon
     pokemon_id: Integer
-    pokemon_move: Pokemon_move
-    pokemon_pokemon: Pokemon_pokemon
+    pokemon_move: PokemonMove
 }
 
-type Pokemon_pokedex {
+type PokemonPokedex {
     created: datetime!
     id: ID!
     modified: datetime!
     name: String!
 }
 
-type Pokemon_pokemon {
-    attack: Integer!
-    catch_rate: Integer!
-    created: datetime!
-    defense: Integer!
-    egg_cycles: Integer!
-    ev_yield: String!
-    exp: Integer!
-    growth_rate: String!
-    happiness: Integer!
-    height: String!
-    hp: Integer!
+type Pokemon {
+    base_experience: Integer!
+    encounter_pokemons: [Encounter]
+    height: Integer!
     id: ID!
-    male_female_ratio: String!
-    modified: datetime!
+    is_default: bool!
     name: String!
-    pkdx_id: Integer!
-    pokemon_evolution_collection: [Pokemon_evolution]
-    pokemon_movepokemon_collection: [Pokemon_movepokemon]
-    pokemon_pokemon_abilities_collection: [Pokemon_pokemon_abilitie]
-    pokemon_pokemon_descriptions_collection: [Pokemon_pokemon_description]
-    pokemon_pokemon_egg_group_collection: [Pokemon_pokemon_egg_group]
-    pokemon_pokemon_sprites_collection: [Pokemon_pokemon_sprite]
-    pokemon_pokemon_types_collection: [Pokemon_pokemon_type]
-    sp_atk: Integer!
-    sp_def: Integer!
-    species: String!
-    speed: Integer!
-    total: Integer!
-    weight: String!
+    order: Integer
+    pokemon_species_id: Integer
+    pokemonability_pokemons: [Pokemonability]
+    pokemonform_pokemons: [Pokemonform]
+    pokemongameindex_pokemons: [Pokemongameindex]
+    pokemonitem_pokemons: [Pokemonitem]
+    pokemonmove_pokemons: [Pokemonmove]
+    pokemonspecy_pokemon_specy: Pokemonspecy
+    pokemonsprite_pokemons: [Pokemonsprite]
+    pokemonstat_pokemons: [Pokemonstat]
+    pokemontype_pokemons: [Pokemontype]
+    weight: Integer!
 }
 
-type Pokemon_pokemon_abilitie {
-    ability_id: Integer!
-    id: ID!
-    pokemon_ability: Pokemon_ability
-    pokemon_id: Integer!
-    pokemon_pokemon: Pokemon_pokemon
-}
-
-type Pokemon_pokemon_description {
-    description_id: Integer!
-    id: ID!
-    pokemon_description: Pokemon_description
-    pokemon_id: Integer!
-    pokemon_pokemon: Pokemon_pokemon
-}
-
-type Pokemon_pokemon_egg_group {
+type PokemonEggGroup {
     egggroup_id: Integer!
     id: ID!
-    pokemon_egggroup: Pokemon_egggroup
+    pokemon: Pokemon
+    pokemon_egggroup: PokemonEgggroup
     pokemon_id: Integer!
-    pokemon_pokemon: Pokemon_pokemon
 }
 
-type Pokemon_pokemon_sprite {
-    id: ID!
-    pokemon_id: Integer!
-    pokemon_pokemon: Pokemon_pokemon
-    pokemon_sprite: Pokemon_sprite
-    sprite_id: Integer!
-}
-
-type Pokemon_pokemon_type {
-    id: ID!
-    pokemon_id: Integer!
-    pokemon_pokemon: Pokemon_pokemon
-    pokemon_type: Pokemon_type
-    type_id: Integer!
-}
-
-type Pokemon_sprite {
+type PokemonSprite {
     created: datetime!
     id: ID!
     image: String!
     modified: datetime!
     name: String!
-    pokemon_pokemon_sprites_collection: [Pokemon_pokemon_sprite]
+    pokemon_sprites: [PokemonSprite]
 }
 
-type Pokemon_type {
+type PokemonType {
     created: datetime!
     id: ID!
     modified: datetime!
     name: String!
-    pokemon_move_etype_collection: [Pokemon_move_etype]
-    pokemon_pokemon_types_collection: [Pokemon_pokemon_type]
-    pokemon_typechart_collection: [Pokemon_typechart]
+    pokemon_move_etype_types: [PokemonMoveEtype]
+    pokemon_typechart_frms: [PokemonTypechart]
+    pokemon_typechart_tos: [PokemonTypechart]
+    pokemon_types: [PokemonType]
 }
 
-type Pokemon_typechart {
+type PokemonTypechart {
     created: datetime!
     frm_id: Integer
     id: ID!
     modified: datetime!
-    pokemon_type: Pokemon_type
+    pokemon_type_frm: PokemonType
+    pokemon_type_to: PokemonType
     to_id: Integer
     ttype: String
 }
 
-type Pokemon_v2_ability {
+type Ability {
+    abilitychange_abilities: [Abilitychange]
+    abilityeffecttext_abilities: [Abilityeffecttext]
+    abilityflavortext_abilities: [Abilityflavortext]
+    abilityname_abilities: [Abilityname]
+    generation: Generation
     generation_id: Integer
     id: ID!
     is_main_series: bool!
     name: String!
-    pokemon_v2_abilitychange_collection: [Pokemon_v2_abilitychange]
-    pokemon_v2_abilityeffecttext_collection: [Pokemon_v2_abilityeffecttext]
-    pokemon_v2_abilityflavortext_collection: [Pokemon_v2_abilityflavortext]
-    pokemon_v2_abilityname_collection: [Pokemon_v2_abilityname]
-    pokemon_v2_generation: Pokemon_v2_generation
-    pokemon_v2_pokemonability_collection: [Pokemon_v2_pokemonability]
+    pokemonability_abilities: [Pokemonability]
 }
 
-type Pokemon_v2_abilitychange {
+type Abilitychange {
+    ability: Ability
     ability_id: Integer
+    abilitychangeeffecttext_ability_changes: [Abilitychangeeffecttext]
     id: ID!
-    pokemon_v2_ability: Pokemon_v2_ability
-    pokemon_v2_abilitychangeeffecttext_collection: [Pokemon_v2_abilitychangeeffecttext]
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_abilitychangeeffecttext {
+type Abilitychangeeffecttext {
     ability_change_id: Integer
+    abilitychange_ability_change: Abilitychange
     effect: String!
     id: ID!
+    language: Language
     language_id: Integer
-    pokemon_v2_abilitychange: Pokemon_v2_abilitychange
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_abilityeffecttext {
+type Abilityeffecttext {
+    ability: Ability
     ability_id: Integer
     effect: String!
     id: ID!
+    language: Language
     language_id: Integer
-    pokemon_v2_ability: Pokemon_v2_ability
-    pokemon_v2_language: Pokemon_v2_language
     short_effect: String!
 }
 
-type Pokemon_v2_abilityflavortext {
+type Abilityflavortext {
+    ability: Ability
     ability_id: Integer
     flavor_text: String!
     id: ID!
+    language: Language
     language_id: Integer
-    pokemon_v2_ability: Pokemon_v2_ability
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_abilityname {
+type Abilityname {
+    ability: Ability
     ability_id: Integer
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_ability: Pokemon_v2_ability
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_berry {
+type Berry {
     berry_firmness_id: Integer
+    berryfirmness_berry_firmness: Berryfirmnes
+    berryflavormap_berries: [Berryflavormap]
     growth_time: Integer!
     id: ID!
+    item: Item
     item_id: Integer
     max_harvest: Integer!
     name: String!
     natural_gift_power: Integer!
     natural_gift_type_id: Integer
-    pokemon_v2_berryfirmness: Pokemon_v2_berryfirmnes
-    pokemon_v2_berryflavormap_collection: [Pokemon_v2_berryflavormap]
-    pokemon_v2_item: Pokemon_v2_item
-    pokemon_v2_type: Pokemon_v2_type
     size: Integer!
     smoothness: Integer!
     soil_dryness: Integer!
+    type_natural_gift: Type
 }
 
-type Pokemon_v2_berryfirmnes {
+type Berryfirmnes {
+    berry_firmnesses: [Berry]
+    berryfirmnessname_berry_firmnesses: [Berryfirmnessname]
     id: ID!
     name: String!
-    pokemon_v2_berry_collection: [Pokemon_v2_berry]
-    pokemon_v2_berryfirmnessname_collection: [Pokemon_v2_berryfirmnessname]
 }
 
-type Pokemon_v2_berryfirmnessname {
+type Berryfirmnessname {
     berry_firmness_id: Integer
+    berryfirmness_berry_firmness: Berryfirmnes
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_berryfirmness: Pokemon_v2_berryfirmnes
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_berryflavor {
+type Berryflavor {
+    berryflavormap_berry_flavors: [Berryflavormap]
+    berryflavorname_berry_flavors: [Berryflavorname]
     contest_type_id: Integer
+    contesttype_contest_type: Contesttype
     id: ID!
     name: String!
-    pokemon_v2_berryflavormap_collection: [Pokemon_v2_berryflavormap]
-    pokemon_v2_berryflavorname_collection: [Pokemon_v2_berryflavorname]
-    pokemon_v2_contesttype: Pokemon_v2_contesttype
-    pokemon_v2_nature_collection: [Pokemon_v2_nature]
+    nature_hates_flavors: [Nature]
+    nature_likes_flavors: [Nature]
 }
 
-type Pokemon_v2_berryflavormap {
+type Berryflavormap {
+    berry: Berry
     berry_flavor_id: Integer
     berry_id: Integer
+    berryflavor_berry_flavor: Berryflavor
     id: ID!
-    pokemon_v2_berry: Pokemon_v2_berry
-    pokemon_v2_berryflavor: Pokemon_v2_berryflavor
     potency: Integer!
 }
 
-type Pokemon_v2_berryflavorname {
+type Berryflavorname {
     berry_flavor_id: Integer
+    berryflavor_berry_flavor: Berryflavor
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_berryflavor: Pokemon_v2_berryflavor
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_characteristic {
+type Characteristic {
+    characteristicdescription_characteristics: [Characteristicdescription]
     gene_mod_5: Integer!
     id: ID!
-    pokemon_v2_characteristicdescription_collection: [Pokemon_v2_characteristicdescription]
-    pokemon_v2_stat: Pokemon_v2_stat
+    stat: Stat
     stat_id: Integer
 }
 
-type Pokemon_v2_characteristicdescription {
+type Characteristicdescription {
+    characteristic: Characteristic
     characteristic_id: Integer
     description: String!
     id: ID!
+    language: Language
     language_id: Integer
-    pokemon_v2_characteristic: Pokemon_v2_characteristic
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_contestcombo {
+type Contestcombo {
     first_move_id: Integer
     id: ID!
-    pokemon_v2_move: Pokemon_v2_move
+    move_first: Move
+    move_second: Move
     second_move_id: Integer
 }
 
-type Pokemon_v2_contesteffect {
+type Contesteffect {
     appeal: Integer!
+    contesteffecteffecttext_contest_effects: [Contesteffecteffecttext]
+    contesteffectflavortext_contest_effects: [Contesteffectflavortext]
     id: ID!
     jam: Integer!
-    pokemon_v2_contesteffecteffecttext_collection: [Pokemon_v2_contesteffecteffecttext]
-    pokemon_v2_contesteffectflavortext_collection: [Pokemon_v2_contesteffectflavortext]
-    pokemon_v2_move_collection: [Pokemon_v2_move]
+    move_contest_effects: [Move]
 }
 
-type Pokemon_v2_contesteffecteffecttext {
+type Contesteffecteffecttext {
     contest_effect_id: Integer
+    contesteffect_contest_effect: Contesteffect
     effect: String!
     id: ID!
+    language: Language
     language_id: Integer
-    pokemon_v2_contesteffect: Pokemon_v2_contesteffect
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_contesteffectflavortext {
+type Contesteffectflavortext {
     contest_effect_id: Integer
+    contesteffect_contest_effect: Contesteffect
     flavor_text: String!
     id: ID!
+    language: Language
     language_id: Integer
-    pokemon_v2_contesteffect: Pokemon_v2_contesteffect
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_contesttype {
+type Contesttype {
+    berryflavor_contest_types: [Berryflavor]
+    contesttypename_contest_types: [Contesttypename]
     id: ID!
+    move_contest_types: [Move]
     name: String!
-    pokemon_v2_berryflavor_collection: [Pokemon_v2_berryflavor]
-    pokemon_v2_contesttypename_collection: [Pokemon_v2_contesttypename]
-    pokemon_v2_move_collection: [Pokemon_v2_move]
 }
 
-type Pokemon_v2_contesttypename {
+type Contesttypename {
     color: String!
     contest_type_id: Integer
+    contesttype_contest_type: Contesttype
     flavor: String!
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_contesttype: Pokemon_v2_contesttype
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_egggroup {
+type Egggroup {
+    egggroupname_egg_groups: [Egggroupname]
     id: ID!
     name: String!
-    pokemon_v2_egggroupname_collection: [Pokemon_v2_egggroupname]
-    pokemon_v2_pokemonegggroup_collection: [Pokemon_v2_pokemonegggroup]
+    pokemonegggroup_egg_groups: [Pokemonegggroup]
 }
 
-type Pokemon_v2_egggroupname {
+type Egggroupname {
     egg_group_id: Integer
+    egggroup_egg_group: Egggroup
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_egggroup: Pokemon_v2_egggroup
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_encounter {
+type Encounter {
     encounter_slot_id: Integer
+    encounterconditionvaluemap_encounters: [Encounterconditionvaluemap]
+    encounterslot_encounter_slot: Encounterslot
     id: ID!
     location_area_id: Integer
+    locationarea_location_area: Locationarea
     max_level: Integer!
     min_level: Integer!
+    pokemon: Pokemon
     pokemon_id: Integer
-    pokemon_v2_encounterconditionvaluemap_collection: [Pokemon_v2_encounterconditionvaluemap]
-    pokemon_v2_encounterslot: Pokemon_v2_encounterslot
-    pokemon_v2_locationarea: Pokemon_v2_locationarea
-    pokemon_v2_pokemon: Pokemon_v2_pokemon
-    pokemon_v2_version: Pokemon_v2_version
+    version: Version
     version_id: Integer
 }
 
-type Pokemon_v2_encountercondition {
+type Encountercondition {
+    encounterconditionname_encounter_conditions: [Encounterconditionname]
+    encounterconditionvalue_encounter_conditions: [Encounterconditionvalue]
     id: ID!
     name: String!
-    pokemon_v2_encounterconditionname_collection: [Pokemon_v2_encounterconditionname]
-    pokemon_v2_encounterconditionvalue_collection: [Pokemon_v2_encounterconditionvalue]
 }
 
-type Pokemon_v2_encounterconditionname {
+type Encounterconditionname {
     encounter_condition_id: Integer
+    encountercondition_encounter_condition: Encountercondition
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_encountercondition: Pokemon_v2_encountercondition
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_encounterconditionvalue {
+type Encounterconditionvalue {
     encounter_condition_id: Integer
+    encountercondition_encounter_condition: Encountercondition
+    encounterconditionvaluemap_encounter_condition_values: [Encounterconditionvaluemap]
+    encounterconditionvaluename_encounter_condition_values: [Encounterconditionvaluename]
     id: ID!
     is_default: bool!
     name: String!
-    pokemon_v2_encountercondition: Pokemon_v2_encountercondition
-    pokemon_v2_encounterconditionvaluemap_collection: [Pokemon_v2_encounterconditionvaluemap]
-    pokemon_v2_encounterconditionvaluename_collection: [Pokemon_v2_encounterconditionvaluename]
 }
 
-type Pokemon_v2_encounterconditionvaluemap {
+type Encounterconditionvaluemap {
+    encounter: Encounter
     encounter_condition_value_id: Integer
     encounter_id: Integer
+    encounterconditionvalue_encounter_condition_value: Encounterconditionvalue
     id: ID!
-    pokemon_v2_encounter: Pokemon_v2_encounter
-    pokemon_v2_encounterconditionvalue: Pokemon_v2_encounterconditionvalue
 }
 
-type Pokemon_v2_encounterconditionvaluename {
+type Encounterconditionvaluename {
     encounter_condition_value_id: Integer
+    encounterconditionvalue_encounter_condition_value: Encounterconditionvalue
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_encounterconditionvalue: Pokemon_v2_encounterconditionvalue
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_encountermethod {
+type Encountermethod {
+    encountermethodname_encounter_methods: [Encountermethodname]
+    encounterslot_encounter_methods: [Encounterslot]
     id: ID!
+    locationareaencounterrate_encounter_methods: [Locationareaencounterrate]
     name: String!
     order: Integer
-    pokemon_v2_encountermethodname_collection: [Pokemon_v2_encountermethodname]
-    pokemon_v2_encounterslot_collection: [Pokemon_v2_encounterslot]
-    pokemon_v2_locationareaencounterrate_collection: [Pokemon_v2_locationareaencounterrate]
 }
 
-type Pokemon_v2_encountermethodname {
+type Encountermethodname {
     encounter_method_id: Integer
+    encountermethod_encounter_method: Encountermethod
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_encountermethod: Pokemon_v2_encountermethod
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_encounterslot {
+type Encounterslot {
     encounter_method_id: Integer
+    encounter_slots: [Encounter]
+    encountermethod_encounter_method: Encountermethod
     id: ID!
-    pokemon_v2_encounter_collection: [Pokemon_v2_encounter]
-    pokemon_v2_encountermethod: Pokemon_v2_encountermethod
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
     rarity: Integer!
     slot: Integer
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_evolutionchain {
+type Evolutionchain {
     baby_trigger_item_id: Integer
     id: ID!
-    pokemon_v2_item: Pokemon_v2_item
-    pokemon_v2_pokemonspecies_collection: [Pokemon_v2_pokemonspecie]
+    item_baby_trigger: Item
+    pokemonspecy_evolution_chains: [Pokemonspecy]
 }
 
-type Pokemon_v2_evolutiontrigger {
+type Evolutiontrigger {
+    evolutiontriggername_evolution_triggers: [Evolutiontriggername]
     id: ID!
     name: String!
-    pokemon_v2_evolutiontriggername_collection: [Pokemon_v2_evolutiontriggername]
-    pokemon_v2_pokemonevolution_collection: [Pokemon_v2_pokemonevolution]
+    pokemonevolution_evolution_triggers: [Pokemonevolution]
 }
 
-type Pokemon_v2_evolutiontriggername {
+type Evolutiontriggername {
     evolution_trigger_id: Integer
+    evolutiontrigger_evolution_trigger: Evolutiontrigger
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_evolutiontrigger: Pokemon_v2_evolutiontrigger
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_experience {
+type Experience {
     experience: Integer!
     growth_rate_id: Integer
+    growthrate_growth_rate: Growthrate
     id: ID!
     level: Integer!
-    pokemon_v2_growthrate: Pokemon_v2_growthrate
 }
 
-type Pokemon_v2_gender {
+type Gender {
     id: ID!
     name: String!
-    pokemon_v2_pokemonevolution_collection: [Pokemon_v2_pokemonevolution]
+    pokemonevolution_genders: [Pokemonevolution]
 }
 
-type Pokemon_v2_generation {
+type Generation {
+    ability_generations: [Ability]
+    generationname_generations: [Generationname]
     id: ID!
+    itemgameindex_generations: [Itemgameindex]
+    locationgameindex_generations: [Locationgameindex]
+    move_generations: [Move]
     name: String!
-    pokemon_v2_ability_collection: [Pokemon_v2_ability]
-    pokemon_v2_generationname_collection: [Pokemon_v2_generationname]
-    pokemon_v2_itemgameindex_collection: [Pokemon_v2_itemgameindex]
-    pokemon_v2_locationgameindex_collection: [Pokemon_v2_locationgameindex]
-    pokemon_v2_move_collection: [Pokemon_v2_move]
-    pokemon_v2_pokemonformgeneration_collection: [Pokemon_v2_pokemonformgeneration]
-    pokemon_v2_pokemonspecies_collection: [Pokemon_v2_pokemonspecie]
-    pokemon_v2_region: Pokemon_v2_region
-    pokemon_v2_type_collection: [Pokemon_v2_type]
-    pokemon_v2_typegameindex_collection: [Pokemon_v2_typegameindex]
-    pokemon_v2_versiongroup_collection: [Pokemon_v2_versiongroup]
+    pokemonformgeneration_generations: [Pokemonformgeneration]
+    pokemonspecy_generations: [Pokemonspecy]
+    region: Region
     region_id: Integer
+    type_generations: [Type]
+    typegameindex_generations: [Typegameindex]
+    versiongroup_generations: [Versiongroup]
 }
 
-type Pokemon_v2_generationname {
+type Generationname {
+    generation: Generation
     generation_id: Integer
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_generation: Pokemon_v2_generation
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_growthrate {
+type Growthrate {
+    experience_growth_rates: [Experience]
     formula: String!
+    growthratedescription_growth_rates: [Growthratedescription]
     id: ID!
+    machine_growth_rates: [Machine]
     name: String!
-    pokemon_v2_experience_collection: [Pokemon_v2_experience]
-    pokemon_v2_growthratedescription_collection: [Pokemon_v2_growthratedescription]
-    pokemon_v2_machine_collection: [Pokemon_v2_machine]
-    pokemon_v2_pokemonspecies_collection: [Pokemon_v2_pokemonspecie]
+    pokemonspecy_growth_rates: [Pokemonspecy]
 }
 
-type Pokemon_v2_growthratedescription {
+type Growthratedescription {
     description: String!
     growth_rate_id: Integer
+    growthrate_growth_rate: Growthrate
     id: ID!
+    language: Language
     language_id: Integer
-    pokemon_v2_growthrate: Pokemon_v2_growthrate
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_item {
+type Item {
+    berry_items: [Berry]
     cost: Integer
+    evolutionchain_baby_trigger_items: [Evolutionchain]
     fling_power: Integer
     id: ID!
     item_category_id: Integer
     item_fling_effect_id: Integer
+    itemattributemap_items: [Itemattributemap]
+    itemcategory_item_category: Itemcategory
+    itemeffecttext_items: [Itemeffecttext]
+    itemflavortext_items: [Itemflavortext]
+    itemflingeffect_item_fling_effect: Itemflingeffect
+    itemgameindex_items: [Itemgameindex]
+    itemname_items: [Itemname]
+    itemsprite_items: [Itemsprite]
+    machine_items: [Machine]
     name: String!
-    pokemon_v2_berry_collection: [Pokemon_v2_berry]
-    pokemon_v2_evolutionchain_collection: [Pokemon_v2_evolutionchain]
-    pokemon_v2_itemattributemap_collection: [Pokemon_v2_itemattributemap]
-    pokemon_v2_itemcategory: Pokemon_v2_itemcategory
-    pokemon_v2_itemeffecttext_collection: [Pokemon_v2_itemeffecttext]
-    pokemon_v2_itemflavortext_collection: [Pokemon_v2_itemflavortext]
-    pokemon_v2_itemflingeffect: Pokemon_v2_itemflingeffect
-    pokemon_v2_itemgameindex_collection: [Pokemon_v2_itemgameindex]
-    pokemon_v2_itemname_collection: [Pokemon_v2_itemname]
-    pokemon_v2_itemsprites_collection: [Pokemon_v2_itemsprite]
-    pokemon_v2_machine_collection: [Pokemon_v2_machine]
-    pokemon_v2_pokemonevolution_collection: [Pokemon_v2_pokemonevolution]
-    pokemon_v2_pokemonitem_collection: [Pokemon_v2_pokemonitem]
+    pokemonevolution_evolution_items: [Pokemonevolution]
+    pokemonevolution_held_items: [Pokemonevolution]
+    pokemonitem_items: [Pokemonitem]
 }
 
-type Pokemon_v2_itemattribute {
+type Itemattribute {
     id: ID!
+    itemattributedescription_item_attributes: [Itemattributedescription]
+    itemattributemap_item_attributes: [Itemattributemap]
+    itemattributename_item_attributes: [Itemattributename]
     name: String!
-    pokemon_v2_itemattributedescription_collection: [Pokemon_v2_itemattributedescription]
-    pokemon_v2_itemattributemap_collection: [Pokemon_v2_itemattributemap]
-    pokemon_v2_itemattributename_collection: [Pokemon_v2_itemattributename]
 }
 
-type Pokemon_v2_itemattributedescription {
+type Itemattributedescription {
     description: String!
     id: ID!
     item_attribute_id: Integer
+    itemattribute_item_attribute: Itemattribute
+    language: Language
     language_id: Integer
-    pokemon_v2_itemattribute: Pokemon_v2_itemattribute
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_itemattributemap {
+type Itemattributemap {
     id: ID!
+    item: Item
     item_attribute_id: Integer
     item_id: Integer
-    pokemon_v2_item: Pokemon_v2_item
-    pokemon_v2_itemattribute: Pokemon_v2_itemattribute
+    itemattribute_item_attribute: Itemattribute
 }
 
-type Pokemon_v2_itemattributename {
+type Itemattributename {
     id: ID!
     item_attribute_id: Integer
+    itemattribute_item_attribute: Itemattribute
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_itemattribute: Pokemon_v2_itemattribute
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_itemcategory {
+type Itemcategory {
     id: ID!
+    item_categories: [Item]
     item_pocket_id: Integer
+    itemcategoryname_item_categories: [Itemcategoryname]
+    itempocket_item_pocket: Itempocket
     name: String!
-    pokemon_v2_item_collection: [Pokemon_v2_item]
-    pokemon_v2_itemcategoryname_collection: [Pokemon_v2_itemcategoryname]
-    pokemon_v2_itempocket: Pokemon_v2_itempocket
 }
 
-type Pokemon_v2_itemcategoryname {
+type Itemcategoryname {
     id: ID!
     item_category_id: Integer
+    itemcategory_item_category: Itemcategory
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_itemcategory: Pokemon_v2_itemcategory
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_itemeffecttext {
+type Itemeffecttext {
     effect: String!
     id: ID!
+    item: Item
     item_id: Integer
+    language: Language
     language_id: Integer
-    pokemon_v2_item: Pokemon_v2_item
-    pokemon_v2_language: Pokemon_v2_language
     short_effect: String!
 }
 
-type Pokemon_v2_itemflavortext {
+type Itemflavortext {
     flavor_text: String!
     id: ID!
+    item: Item
     item_id: Integer
+    language: Language
     language_id: Integer
-    pokemon_v2_item: Pokemon_v2_item
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_itemflingeffect {
+type Itemflingeffect {
     id: ID!
+    item_fling_effects: [Item]
+    itemflingeffecteffecttext_item_fling_effects: [Itemflingeffecteffecttext]
     name: String!
-    pokemon_v2_item_collection: [Pokemon_v2_item]
-    pokemon_v2_itemflingeffecteffecttext_collection: [Pokemon_v2_itemflingeffecteffecttext]
 }
 
-type Pokemon_v2_itemflingeffecteffecttext {
+type Itemflingeffecteffecttext {
     effect: String!
     id: ID!
     item_fling_effect_id: Integer
+    itemflingeffect_item_fling_effect: Itemflingeffect
+    language: Language
     language_id: Integer
-    pokemon_v2_itemflingeffect: Pokemon_v2_itemflingeffect
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_itemgameindex {
+type Itemgameindex {
     game_index: Integer!
+    generation: Generation
     generation_id: Integer
     id: ID!
+    item: Item
     item_id: Integer
-    pokemon_v2_generation: Pokemon_v2_generation
-    pokemon_v2_item: Pokemon_v2_item
 }
 
-type Pokemon_v2_itemname {
+type Itemname {
     id: ID!
+    item: Item
     item_id: Integer
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_item: Pokemon_v2_item
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_itempocket {
+type Itempocket {
     id: ID!
+    itemcategory_item_pockets: [Itemcategory]
+    itempocketname_item_pockets: [Itempocketname]
     name: String!
-    pokemon_v2_itemcategory_collection: [Pokemon_v2_itemcategory]
-    pokemon_v2_itempocketname_collection: [Pokemon_v2_itempocketname]
 }
 
-type Pokemon_v2_itempocketname {
+type Itempocketname {
     id: ID!
     item_pocket_id: Integer
+    itempocket_item_pocket: Itempocket
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_itempocket: Pokemon_v2_itempocket
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_itemsprite {
+type Itemsprite {
     id: ID!
+    item: Item
     item_id: Integer
-    pokemon_v2_item: Pokemon_v2_item
     sprites: String!
 }
 
-type Pokemon_v2_language {
+type Language {
+    abilitychangeeffecttext_languages: [Abilitychangeeffecttext]
+    abilityeffecttext_languages: [Abilityeffecttext]
+    abilityflavortext_languages: [Abilityflavortext]
+    abilityname_languages: [Abilityname]
+    berryfirmnessname_languages: [Berryfirmnessname]
+    berryflavorname_languages: [Berryflavorname]
+    characteristicdescription_languages: [Characteristicdescription]
+    contesteffecteffecttext_languages: [Contesteffecteffecttext]
+    contesteffectflavortext_languages: [Contesteffectflavortext]
+    contesttypename_languages: [Contesttypename]
+    egggroupname_languages: [Egggroupname]
+    encounterconditionname_languages: [Encounterconditionname]
+    encounterconditionvaluename_languages: [Encounterconditionvaluename]
+    encountermethodname_languages: [Encountermethodname]
+    evolutiontriggername_languages: [Evolutiontriggername]
+    generationname_languages: [Generationname]
+    growthratedescription_languages: [Growthratedescription]
     id: ID!
     iso3166: String!
     iso639: String!
+    itemattributedescription_languages: [Itemattributedescription]
+    itemattributename_languages: [Itemattributename]
+    itemcategoryname_languages: [Itemcategoryname]
+    itemeffecttext_languages: [Itemeffecttext]
+    itemflavortext_languages: [Itemflavortext]
+    itemflingeffecteffecttext_languages: [Itemflingeffecteffecttext]
+    itemname_languages: [Itemname]
+    itempocketname_languages: [Itempocketname]
+    languagename_languages: [Languagename]
+    languagename_local_languages: [Languagename]
+    locationareaname_languages: [Locationareaname]
+    locationname_languages: [Locationname]
+    moveattributedescription_languages: [Moveattributedescription]
+    moveattributename_languages: [Moveattributename]
+    movebattlestylename_languages: [Movebattlestylename]
+    movedamageclassdescription_languages: [Movedamageclassdescription]
+    movedamageclassname_languages: [Movedamageclassname]
+    moveeffectchangeeffecttext_languages: [Moveeffectchangeeffecttext]
+    moveeffecteffecttext_languages: [Moveeffecteffecttext]
+    moveflavortext_languages: [Moveflavortext]
+    movelearnmethoddescription_languages: [Movelearnmethoddescription]
+    movelearnmethodname_languages: [Movelearnmethodname]
+    movemetaailmentname_languages: [Movemetaailmentname]
+    movemetacategorydescription_languages: [Movemetacategorydescription]
+    movename_languages: [Movename]
+    movetargetdescription_languages: [Movetargetdescription]
+    movetargetname_languages: [Movetargetname]
     name: String!
+    naturename_languages: [Naturename]
     official: bool!
     order: Integer
-    pokemon_v2_abilitychangeeffecttext_collection: [Pokemon_v2_abilitychangeeffecttext]
-    pokemon_v2_abilityeffecttext_collection: [Pokemon_v2_abilityeffecttext]
-    pokemon_v2_abilityflavortext_collection: [Pokemon_v2_abilityflavortext]
-    pokemon_v2_abilityname_collection: [Pokemon_v2_abilityname]
-    pokemon_v2_berryfirmnessname_collection: [Pokemon_v2_berryfirmnessname]
-    pokemon_v2_berryflavorname_collection: [Pokemon_v2_berryflavorname]
-    pokemon_v2_characteristicdescription_collection: [Pokemon_v2_characteristicdescription]
-    pokemon_v2_contesteffecteffecttext_collection: [Pokemon_v2_contesteffecteffecttext]
-    pokemon_v2_contesteffectflavortext_collection: [Pokemon_v2_contesteffectflavortext]
-    pokemon_v2_contesttypename_collection: [Pokemon_v2_contesttypename]
-    pokemon_v2_egggroupname_collection: [Pokemon_v2_egggroupname]
-    pokemon_v2_encounterconditionname_collection: [Pokemon_v2_encounterconditionname]
-    pokemon_v2_encounterconditionvaluename_collection: [Pokemon_v2_encounterconditionvaluename]
-    pokemon_v2_encountermethodname_collection: [Pokemon_v2_encountermethodname]
-    pokemon_v2_evolutiontriggername_collection: [Pokemon_v2_evolutiontriggername]
-    pokemon_v2_generationname_collection: [Pokemon_v2_generationname]
-    pokemon_v2_growthratedescription_collection: [Pokemon_v2_growthratedescription]
-    pokemon_v2_itemattributedescription_collection: [Pokemon_v2_itemattributedescription]
-    pokemon_v2_itemattributename_collection: [Pokemon_v2_itemattributename]
-    pokemon_v2_itemcategoryname_collection: [Pokemon_v2_itemcategoryname]
-    pokemon_v2_itemeffecttext_collection: [Pokemon_v2_itemeffecttext]
-    pokemon_v2_itemflavortext_collection: [Pokemon_v2_itemflavortext]
-    pokemon_v2_itemflingeffecteffecttext_collection: [Pokemon_v2_itemflingeffecteffecttext]
-    pokemon_v2_itemname_collection: [Pokemon_v2_itemname]
-    pokemon_v2_itempocketname_collection: [Pokemon_v2_itempocketname]
-    pokemon_v2_languagename_collection: [Pokemon_v2_languagename]
-    pokemon_v2_locationareaname_collection: [Pokemon_v2_locationareaname]
-    pokemon_v2_locationname_collection: [Pokemon_v2_locationname]
-    pokemon_v2_moveattributedescription_collection: [Pokemon_v2_moveattributedescription]
-    pokemon_v2_moveattributename_collection: [Pokemon_v2_moveattributename]
-    pokemon_v2_movebattlestylename_collection: [Pokemon_v2_movebattlestylename]
-    pokemon_v2_movedamageclassdescription_collection: [Pokemon_v2_movedamageclassdescription]
-    pokemon_v2_movedamageclassname_collection: [Pokemon_v2_movedamageclassname]
-    pokemon_v2_moveeffectchangeeffecttext_collection: [Pokemon_v2_moveeffectchangeeffecttext]
-    pokemon_v2_moveeffecteffecttext_collection: [Pokemon_v2_moveeffecteffecttext]
-    pokemon_v2_moveflavortext_collection: [Pokemon_v2_moveflavortext]
-    pokemon_v2_movelearnmethoddescription_collection: [Pokemon_v2_movelearnmethoddescription]
-    pokemon_v2_movelearnmethodname_collection: [Pokemon_v2_movelearnmethodname]
-    pokemon_v2_movemetaailmentname_collection: [Pokemon_v2_movemetaailmentname]
-    pokemon_v2_movemetacategorydescription_collection: [Pokemon_v2_movemetacategorydescription]
-    pokemon_v2_movename_collection: [Pokemon_v2_movename]
-    pokemon_v2_movetargetdescription_collection: [Pokemon_v2_movetargetdescription]
-    pokemon_v2_movetargetname_collection: [Pokemon_v2_movetargetname]
-    pokemon_v2_naturename_collection: [Pokemon_v2_naturename]
-    pokemon_v2_palparkareaname_collection: [Pokemon_v2_palparkareaname]
-    pokemon_v2_pokeathlonstatname_collection: [Pokemon_v2_pokeathlonstatname]
-    pokemon_v2_pokedexdescription_collection: [Pokemon_v2_pokedexdescription]
-    pokemon_v2_pokedexname_collection: [Pokemon_v2_pokedexname]
-    pokemon_v2_pokemoncolorname_collection: [Pokemon_v2_pokemoncolorname]
-    pokemon_v2_pokemonformname_collection: [Pokemon_v2_pokemonformname]
-    pokemon_v2_pokemonhabitatname_collection: [Pokemon_v2_pokemonhabitatname]
-    pokemon_v2_pokemonshapename_collection: [Pokemon_v2_pokemonshapename]
-    pokemon_v2_pokemonspeciesdescription_collection: [Pokemon_v2_pokemonspeciesdescription]
-    pokemon_v2_pokemonspeciesflavortext_collection: [Pokemon_v2_pokemonspeciesflavortext]
-    pokemon_v2_pokemonspeciesname_collection: [Pokemon_v2_pokemonspeciesname]
-    pokemon_v2_regionname_collection: [Pokemon_v2_regionname]
-    pokemon_v2_statname_collection: [Pokemon_v2_statname]
-    pokemon_v2_supercontesteffectflavortext_collection: [Pokemon_v2_supercontesteffectflavortext]
-    pokemon_v2_typename_collection: [Pokemon_v2_typename]
-    pokemon_v2_versionname_collection: [Pokemon_v2_versionname]
+    palparkareaname_languages: [Palparkareaname]
+    pokeathlonstatname_languages: [Pokeathlonstatname]
+    pokedexdescription_languages: [Pokedexdescription]
+    pokedexname_languages: [Pokedexname]
+    pokemoncolorname_languages: [Pokemoncolorname]
+    pokemonformname_languages: [Pokemonformname]
+    pokemonhabitatname_languages: [Pokemonhabitatname]
+    pokemonshapename_languages: [Pokemonshapename]
+    pokemonspeciesdescription_languages: [Pokemonspeciesdescription]
+    pokemonspeciesflavortext_languages: [Pokemonspeciesflavortext]
+    pokemonspeciesname_languages: [Pokemonspeciesname]
+    regionname_languages: [Regionname]
+    statname_languages: [Statname]
+    supercontesteffectflavortext_languages: [Supercontesteffectflavortext]
+    typename_languages: [Typename]
+    versionname_languages: [Versionname]
 }
 
-type Pokemon_v2_languagename {
+type Languagename {
     id: ID!
+    language: Language
     language_id: Integer
+    language_local: Language
     local_language_id: Integer
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
 }
 
-type Pokemon_v2_location {
+type Location {
     id: ID!
+    locationarea_locations: [Locationarea]
+    locationgameindex_locations: [Locationgameindex]
+    locationname_locations: [Locationname]
     name: String!
-    pokemon_v2_locationarea_collection: [Pokemon_v2_locationarea]
-    pokemon_v2_locationgameindex_collection: [Pokemon_v2_locationgameindex]
-    pokemon_v2_locationname_collection: [Pokemon_v2_locationname]
-    pokemon_v2_pokemonevolution_collection: [Pokemon_v2_pokemonevolution]
-    pokemon_v2_region: Pokemon_v2_region
+    pokemonevolution_locations: [Pokemonevolution]
+    region: Region
     region_id: Integer
 }
 
-type Pokemon_v2_locationarea {
+type Locationarea {
+    encounter_location_areas: [Encounter]
     game_index: Integer!
     id: ID!
+    location: Location
     location_id: Integer
+    locationareaencounterrate_location_areas: [Locationareaencounterrate]
+    locationareaname_location_areas: [Locationareaname]
     name: String!
-    pokemon_v2_encounter_collection: [Pokemon_v2_encounter]
-    pokemon_v2_location: Pokemon_v2_location
-    pokemon_v2_locationareaencounterrate_collection: [Pokemon_v2_locationareaencounterrate]
-    pokemon_v2_locationareaname_collection: [Pokemon_v2_locationareaname]
 }
 
-type Pokemon_v2_locationareaencounterrate {
+type Locationareaencounterrate {
     encounter_method_id: Integer
+    encountermethod_encounter_method: Encountermethod
     id: ID!
     location_area_id: Integer
-    pokemon_v2_encountermethod: Pokemon_v2_encountermethod
-    pokemon_v2_locationarea: Pokemon_v2_locationarea
-    pokemon_v2_version: Pokemon_v2_version
+    locationarea_location_area: Locationarea
     rate: Integer!
+    version: Version
     version_id: Integer
 }
 
-type Pokemon_v2_locationareaname {
+type Locationareaname {
     id: ID!
+    language: Language
     language_id: Integer
     location_area_id: Integer
+    locationarea_location_area: Locationarea
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_locationarea: Pokemon_v2_locationarea
 }
 
-type Pokemon_v2_locationgameindex {
+type Locationgameindex {
     game_index: Integer!
+    generation: Generation
     generation_id: Integer
     id: ID!
+    location: Location
     location_id: Integer
-    pokemon_v2_generation: Pokemon_v2_generation
-    pokemon_v2_location: Pokemon_v2_location
 }
 
-type Pokemon_v2_locationname {
+type Locationname {
     id: ID!
+    language: Language
     language_id: Integer
+    location: Location
     location_id: Integer
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_location: Pokemon_v2_location
 }
 
-type Pokemon_v2_machine {
+type Machine {
     growth_rate_id: Integer
+    growthrate_growth_rate: Growthrate
     id: ID!
+    item: Item
     item_id: Integer
     machine_number: Integer!
+    move: Move
     move_id: Integer
-    pokemon_v2_growthrate: Pokemon_v2_growthrate
-    pokemon_v2_item: Pokemon_v2_item
-    pokemon_v2_move: Pokemon_v2_move
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_move {
+type Move {
     accuracy: Integer
     contest_effect_id: Integer
     contest_type_id: Integer
+    contestcombo_first_moves: [Contestcombo]
+    contestcombo_second_moves: [Contestcombo]
+    contesteffect_contest_effect: Contesteffect
+    contesttype_contest_type: Contesttype
+    generation: Generation
     generation_id: Integer
     id: ID!
+    machine_moves: [Machine]
     move_damage_class_id: Integer
     move_effect_chance: Integer
     move_effect_id: Integer
     move_target_id: Integer
+    moveattributemap_moves: [Moveattributemap]
+    movechange_moves: [Movechange]
+    movedamageclass_move_damage_class: Movedamageclas
+    moveeffect_move_effect: Moveeffect
+    moveflavortext_moves: [Moveflavortext]
+    movemetastatchange_moves: [Movemetastatchange]
+    movemetum_moves: [Movemetum]
+    movename_moves: [Movename]
+    movetarget_move_target: Movetarget
     name: String!
-    pokemon_v2_contestcombo_collection: [Pokemon_v2_contestcombo]
-    pokemon_v2_contesteffect: Pokemon_v2_contesteffect
-    pokemon_v2_contesttype: Pokemon_v2_contesttype
-    pokemon_v2_generation: Pokemon_v2_generation
-    pokemon_v2_machine_collection: [Pokemon_v2_machine]
-    pokemon_v2_moveattributemap_collection: [Pokemon_v2_moveattributemap]
-    pokemon_v2_movechange_collection: [Pokemon_v2_movechange]
-    pokemon_v2_movedamageclass: Pokemon_v2_movedamageclas
-    pokemon_v2_moveeffect: Pokemon_v2_moveeffect
-    pokemon_v2_moveflavortext_collection: [Pokemon_v2_moveflavortext]
-    pokemon_v2_movemeta_collection: [Pokemon_v2_movemeta]
-    pokemon_v2_movemetastatchange_collection: [Pokemon_v2_movemetastatchange]
-    pokemon_v2_movename_collection: [Pokemon_v2_movename]
-    pokemon_v2_movetarget: Pokemon_v2_movetarget
-    pokemon_v2_pokemonevolution_collection: [Pokemon_v2_pokemonevolution]
-    pokemon_v2_pokemonmove_collection: [Pokemon_v2_pokemonmove]
-    pokemon_v2_supercontestcombo_collection: [Pokemon_v2_supercontestcombo]
-    pokemon_v2_supercontesteffect: Pokemon_v2_supercontesteffect
-    pokemon_v2_type: Pokemon_v2_type
+    pokemonevolution_known_moves: [Pokemonevolution]
+    pokemonmove_moves: [Pokemonmove]
     power: Integer
     pp: Integer
     priority: Integer
     super_contest_effect_id: Integer
+    supercontestcombo_first_moves: [Supercontestcombo]
+    supercontestcombo_second_moves: [Supercontestcombo]
+    supercontesteffect_super_contest_effect: Supercontesteffect
+    type: Type
     type_id: Integer
 }
 
-type Pokemon_v2_moveattribute {
+type Moveattribute {
     id: ID!
+    moveattributedescription_move_attributes: [Moveattributedescription]
+    moveattributemap_move_attributes: [Moveattributemap]
+    moveattributename_move_attributes: [Moveattributename]
     name: String!
-    pokemon_v2_moveattributedescription_collection: [Pokemon_v2_moveattributedescription]
-    pokemon_v2_moveattributemap_collection: [Pokemon_v2_moveattributemap]
-    pokemon_v2_moveattributename_collection: [Pokemon_v2_moveattributename]
 }
 
-type Pokemon_v2_moveattributedescription {
+type Moveattributedescription {
     description: String!
     id: ID!
+    language: Language
     language_id: Integer
     move_attribute_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_moveattribute: Pokemon_v2_moveattribute
+    moveattribute_move_attribute: Moveattribute
 }
 
-type Pokemon_v2_moveattributemap {
+type Moveattributemap {
     id: ID!
+    move: Move
     move_attribute_id: Integer
     move_id: Integer
-    pokemon_v2_move: Pokemon_v2_move
-    pokemon_v2_moveattribute: Pokemon_v2_moveattribute
+    moveattribute_move_attribute: Moveattribute
 }
 
-type Pokemon_v2_moveattributename {
+type Moveattributename {
     id: ID!
+    language: Language
     language_id: Integer
     move_attribute_id: Integer
+    moveattribute_move_attribute: Moveattribute
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_moveattribute: Pokemon_v2_moveattribute
 }
 
-type Pokemon_v2_movebattlestyle {
+type Movebattlestyle {
     id: ID!
+    movebattlestylename_move_battle_styles: [Movebattlestylename]
     name: String!
-    pokemon_v2_movebattlestylename_collection: [Pokemon_v2_movebattlestylename]
-    pokemon_v2_naturebattlestylepreference_collection: [Pokemon_v2_naturebattlestylepreference]
+    naturebattlestylepreference_move_battle_styles: [Naturebattlestylepreference]
 }
 
-type Pokemon_v2_movebattlestylename {
+type Movebattlestylename {
     id: ID!
+    language: Language
     language_id: Integer
     move_battle_style_id: Integer
+    movebattlestyle_move_battle_style: Movebattlestyle
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_movebattlestyle: Pokemon_v2_movebattlestyle
 }
 
-type Pokemon_v2_movechange {
+type Movechange {
     accuracy: Integer
     id: ID!
+    move: Move
     move_effect_chance: Integer
     move_effect_id: Integer
     move_id: Integer
-    pokemon_v2_move: Pokemon_v2_move
-    pokemon_v2_moveeffect: Pokemon_v2_moveeffect
-    pokemon_v2_type: Pokemon_v2_type
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
+    moveeffect_move_effect: Moveeffect
     power: Integer
     pp: Integer
+    type: Type
     type_id: Integer
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_movedamageclas {
+type Movedamageclas {
     id: ID!
+    move_damage_classes: [Move]
+    movedamageclassdescription_move_damage_classes: [Movedamageclassdescription]
+    movedamageclassname_move_damage_classes: [Movedamageclassname]
     name: String!
-    pokemon_v2_move_collection: [Pokemon_v2_move]
-    pokemon_v2_movedamageclassdescription_collection: [Pokemon_v2_movedamageclassdescription]
-    pokemon_v2_movedamageclassname_collection: [Pokemon_v2_movedamageclassname]
-    pokemon_v2_stat_collection: [Pokemon_v2_stat]
-    pokemon_v2_type_collection: [Pokemon_v2_type]
+    stat_move_damage_classes: [Stat]
+    type_move_damage_classes: [Type]
 }
 
-type Pokemon_v2_movedamageclassdescription {
+type Movedamageclassdescription {
     description: String!
     id: ID!
+    language: Language
     language_id: Integer
     move_damage_class_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_movedamageclass: Pokemon_v2_movedamageclas
+    movedamageclass_move_damage_class: Movedamageclas
 }
 
-type Pokemon_v2_movedamageclassname {
+type Movedamageclassname {
     id: ID!
+    language: Language
     language_id: Integer
     move_damage_class_id: Integer
+    movedamageclass_move_damage_class: Movedamageclas
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_movedamageclass: Pokemon_v2_movedamageclas
 }
 
-type Pokemon_v2_moveeffect {
+type Moveeffect {
     id: ID!
-    pokemon_v2_move_collection: [Pokemon_v2_move]
-    pokemon_v2_movechange_collection: [Pokemon_v2_movechange]
-    pokemon_v2_moveeffectchange_collection: [Pokemon_v2_moveeffectchange]
-    pokemon_v2_moveeffecteffecttext_collection: [Pokemon_v2_moveeffecteffecttext]
+    move_effects: [Move]
+    movechange_move_effects: [Movechange]
+    moveeffectchange_move_effects: [Moveeffectchange]
+    moveeffecteffecttext_move_effects: [Moveeffecteffecttext]
 }
 
-type Pokemon_v2_moveeffectchange {
+type Moveeffectchange {
     id: ID!
     move_effect_id: Integer
-    pokemon_v2_moveeffect: Pokemon_v2_moveeffect
-    pokemon_v2_moveeffectchangeeffecttext_collection: [Pokemon_v2_moveeffectchangeeffecttext]
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
+    moveeffect_move_effect: Moveeffect
+    moveeffectchangeeffecttext_move_effect_changes: [Moveeffectchangeeffecttext]
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_moveeffectchangeeffecttext {
+type Moveeffectchangeeffecttext {
     effect: String!
     id: ID!
+    language: Language
     language_id: Integer
     move_effect_change_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_moveeffectchange: Pokemon_v2_moveeffectchange
+    moveeffectchange_move_effect_change: Moveeffectchange
 }
 
-type Pokemon_v2_moveeffecteffecttext {
+type Moveeffecteffecttext {
     effect: String!
     id: ID!
+    language: Language
     language_id: Integer
     move_effect_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_moveeffect: Pokemon_v2_moveeffect
+    moveeffect_move_effect: Moveeffect
     short_effect: String!
 }
 
-type Pokemon_v2_moveflavortext {
+type Moveflavortext {
     flavor_text: String!
     id: ID!
+    language: Language
     language_id: Integer
+    move: Move
     move_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_move: Pokemon_v2_move
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_movelearnmethod {
+type Movelearnmethod {
     id: ID!
+    movelearnmethoddescription_move_learn_methods: [Movelearnmethoddescription]
+    movelearnmethodname_move_learn_methods: [Movelearnmethodname]
     name: String!
-    pokemon_v2_movelearnmethoddescription_collection: [Pokemon_v2_movelearnmethoddescription]
-    pokemon_v2_movelearnmethodname_collection: [Pokemon_v2_movelearnmethodname]
-    pokemon_v2_pokemonmove_collection: [Pokemon_v2_pokemonmove]
-    pokemon_v2_versiongroupmovelearnmethod_collection: [Pokemon_v2_versiongroupmovelearnmethod]
+    pokemonmove_move_learn_methods: [Pokemonmove]
+    versiongroupmovelearnmethod_move_learn_methods: [Versiongroupmovelearnmethod]
 }
 
-type Pokemon_v2_movelearnmethoddescription {
+type Movelearnmethoddescription {
     description: String!
     id: ID!
+    language: Language
     language_id: Integer
     move_learn_method_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_movelearnmethod: Pokemon_v2_movelearnmethod
+    movelearnmethod_move_learn_method: Movelearnmethod
 }
 
-type Pokemon_v2_movelearnmethodname {
+type Movelearnmethodname {
     id: ID!
+    language: Language
     language_id: Integer
     move_learn_method_id: Integer
+    movelearnmethod_move_learn_method: Movelearnmethod
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_movelearnmethod: Pokemon_v2_movelearnmethod
 }
 
-type Pokemon_v2_movemeta {
+type Movemetum {
     ailment_chance: Integer
     crit_rate: Integer
     drain: Integer
@@ -1210,92 +1174,94 @@ type Pokemon_v2_movemeta {
     max_turns: Integer
     min_hits: Integer
     min_turns: Integer
+    move: Move
     move_id: Integer!
     move_meta_ailment_id: Integer
     move_meta_category_id: Integer
-    pokemon_v2_move: Pokemon_v2_move
-    pokemon_v2_movemetaailment: Pokemon_v2_movemetaailment
-    pokemon_v2_movemetacategory: Pokemon_v2_movemetacategory
+    movemetaailment_move_meta_ailment: Movemetaailment
+    movemetacategory_move_meta_category: Movemetacategory
     stat_chance: Integer
 }
 
-type Pokemon_v2_movemetaailment {
+type Movemetaailment {
     id: ID!
+    movemetaailmentname_move_meta_ailments: [Movemetaailmentname]
+    movemetum_move_meta_ailments: [Movemetum]
     name: String!
-    pokemon_v2_movemeta_collection: [Pokemon_v2_movemeta]
-    pokemon_v2_movemetaailmentname_collection: [Pokemon_v2_movemetaailmentname]
 }
 
-type Pokemon_v2_movemetaailmentname {
+type Movemetaailmentname {
     id: ID!
+    language: Language
     language_id: Integer
     move_meta_ailment_id: Integer
+    movemetaailment_move_meta_ailment: Movemetaailment
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_movemetaailment: Pokemon_v2_movemetaailment
 }
 
-type Pokemon_v2_movemetacategory {
+type Movemetacategory {
     id: ID!
+    movemetacategorydescription_move_meta_categories: [Movemetacategorydescription]
+    movemetum_move_meta_categories: [Movemetum]
     name: String!
-    pokemon_v2_movemeta_collection: [Pokemon_v2_movemeta]
-    pokemon_v2_movemetacategorydescription_collection: [Pokemon_v2_movemetacategorydescription]
 }
 
-type Pokemon_v2_movemetacategorydescription {
+type Movemetacategorydescription {
     description: String!
     id: ID!
+    language: Language
     language_id: Integer
     move_meta_category_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_movemetacategory: Pokemon_v2_movemetacategory
+    movemetacategory_move_meta_category: Movemetacategory
 }
 
-type Pokemon_v2_movemetastatchange {
+type Movemetastatchange {
     change: Integer!
     id: ID!
+    move: Move
     move_id: Integer
-    pokemon_v2_move: Pokemon_v2_move
-    pokemon_v2_stat: Pokemon_v2_stat
+    stat: Stat
     stat_id: Integer
 }
 
-type Pokemon_v2_movename {
+type Movename {
     id: ID!
+    language: Language
     language_id: Integer
+    move: Move
     move_id: Integer
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_move: Pokemon_v2_move
 }
 
-type Pokemon_v2_movetarget {
+type Movetarget {
     id: ID!
+    move_targets: [Move]
+    movetargetdescription_move_targets: [Movetargetdescription]
+    movetargetname_move_targets: [Movetargetname]
     name: String!
-    pokemon_v2_move_collection: [Pokemon_v2_move]
-    pokemon_v2_movetargetdescription_collection: [Pokemon_v2_movetargetdescription]
-    pokemon_v2_movetargetname_collection: [Pokemon_v2_movetargetname]
 }
 
-type Pokemon_v2_movetargetdescription {
+type Movetargetdescription {
     description: String!
     id: ID!
+    language: Language
     language_id: Integer
     move_target_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_movetarget: Pokemon_v2_movetarget
+    movetarget_move_target: Movetarget
 }
 
-type Pokemon_v2_movetargetname {
+type Movetargetname {
     id: ID!
+    language: Language
     language_id: Integer
     move_target_id: Integer
+    movetarget_move_target: Movetarget
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_movetarget: Pokemon_v2_movetarget
 }
 
-type Pokemon_v2_nature {
+type Nature {
+    berryflavor_hates_flavor: Berryflavor
+    berryflavor_likes_flavor: Berryflavor
     decreased_stat_id: Integer
     game_index: Integer!
     hates_flavor_id: Integer
@@ -1303,216 +1269,199 @@ type Pokemon_v2_nature {
     increased_stat_id: Integer
     likes_flavor_id: Integer
     name: String!
-    pokemon_v2_berryflavor: Pokemon_v2_berryflavor
-    pokemon_v2_naturebattlestylepreference_collection: [Pokemon_v2_naturebattlestylepreference]
-    pokemon_v2_naturename_collection: [Pokemon_v2_naturename]
-    pokemon_v2_naturepokeathlonstat_collection: [Pokemon_v2_naturepokeathlonstat]
-    pokemon_v2_stat: Pokemon_v2_stat
+    naturebattlestylepreference_natures: [Naturebattlestylepreference]
+    naturename_natures: [Naturename]
+    naturepokeathlonstat_natures: [Naturepokeathlonstat]
+    stat_decreased: Stat
+    stat_increased: Stat
 }
 
-type Pokemon_v2_naturebattlestylepreference {
+type Naturebattlestylepreference {
     high_hp_preference: Integer!
     id: ID!
     low_hp_preference: Integer!
     move_battle_style_id: Integer
+    movebattlestyle_move_battle_style: Movebattlestyle
+    nature: Nature
     nature_id: Integer
-    pokemon_v2_movebattlestyle: Pokemon_v2_movebattlestyle
-    pokemon_v2_nature: Pokemon_v2_nature
 }
 
-type Pokemon_v2_naturename {
+type Naturename {
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
+    nature: Nature
     nature_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_nature: Pokemon_v2_nature
 }
 
-type Pokemon_v2_naturepokeathlonstat {
+type Naturepokeathlonstat {
     id: ID!
     max_change: Integer!
+    nature: Nature
     nature_id: Integer
     pokeathlon_stat_id: Integer
-    pokemon_v2_nature: Pokemon_v2_nature
-    pokemon_v2_pokeathlonstat: Pokemon_v2_pokeathlonstat
+    pokeathlonstat_pokeathlon_stat: Pokeathlonstat
 }
 
-type Pokemon_v2_palpark {
+type Palpark {
     base_score: Integer
     id: ID!
     pal_park_area_id: Integer
+    palparkarea_pal_park_area: Palparkarea
     pokemon_species_id: Integer
-    pokemon_v2_palparkarea: Pokemon_v2_palparkarea
-    pokemon_v2_pokemonspecies: Pokemon_v2_pokemonspecie
+    pokemonspecy_pokemon_specy: Pokemonspecy
     rate: Integer!
 }
 
-type Pokemon_v2_palparkarea {
+type Palparkarea {
     id: ID!
     name: String!
-    pokemon_v2_palpark_collection: [Pokemon_v2_palpark]
-    pokemon_v2_palparkareaname_collection: [Pokemon_v2_palparkareaname]
+    palpark_pal_park_areas: [Palpark]
+    palparkareaname_pal_park_areas: [Palparkareaname]
 }
 
-type Pokemon_v2_palparkareaname {
+type Palparkareaname {
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
     pal_park_area_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_palparkarea: Pokemon_v2_palparkarea
+    palparkarea_pal_park_area: Palparkarea
 }
 
-type Pokemon_v2_pokeathlonstat {
+type Pokeathlonstat {
     id: ID!
     name: String!
-    pokemon_v2_naturepokeathlonstat_collection: [Pokemon_v2_naturepokeathlonstat]
-    pokemon_v2_pokeathlonstatname_collection: [Pokemon_v2_pokeathlonstatname]
+    naturepokeathlonstat_pokeathlon_stats: [Naturepokeathlonstat]
+    pokeathlonstatname_pokeathlon_stats: [Pokeathlonstatname]
 }
 
-type Pokemon_v2_pokeathlonstatname {
+type Pokeathlonstatname {
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
     pokeathlon_stat_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_pokeathlonstat: Pokemon_v2_pokeathlonstat
+    pokeathlonstat_pokeathlon_stat: Pokeathlonstat
 }
 
-type Pokemon_v2_pokedex {
+type Pokedex {
     id: ID!
     is_main_series: bool!
     name: String!
-    pokemon_v2_pokedexdescription_collection: [Pokemon_v2_pokedexdescription]
-    pokemon_v2_pokedexname_collection: [Pokemon_v2_pokedexname]
-    pokemon_v2_pokedexversiongroup_collection: [Pokemon_v2_pokedexversiongroup]
-    pokemon_v2_pokemondexnumber_collection: [Pokemon_v2_pokemondexnumber]
-    pokemon_v2_region: Pokemon_v2_region
+    pokedexdescription_pokedexes: [Pokedexdescription]
+    pokedexname_pokedexes: [Pokedexname]
+    pokedexversiongroup_pokedexes: [Pokedexversiongroup]
+    pokemondexnumber_pokedexes: [Pokemondexnumber]
+    region: Region
     region_id: Integer
 }
 
-type Pokemon_v2_pokedexdescription {
+type Pokedexdescription {
     description: String!
     id: ID!
+    language: Language
     language_id: Integer
+    pokedex: Pokedex
     pokedex_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_pokedex: Pokemon_v2_pokedex
 }
 
-type Pokemon_v2_pokedexname {
+type Pokedexname {
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
+    pokedex: Pokedex
     pokedex_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_pokedex: Pokemon_v2_pokedex
 }
 
-type Pokemon_v2_pokedexversiongroup {
+type Pokedexversiongroup {
     id: ID!
+    pokedex: Pokedex
     pokedex_id: Integer
-    pokemon_v2_pokedex: Pokemon_v2_pokedex
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_pokemon {
-    base_experience: Integer!
-    height: Integer!
-    id: ID!
-    is_default: bool!
-    name: String!
-    order: Integer
-    pokemon_species_id: Integer
-    pokemon_v2_encounter_collection: [Pokemon_v2_encounter]
-    pokemon_v2_pokemonability_collection: [Pokemon_v2_pokemonability]
-    pokemon_v2_pokemonform_collection: [Pokemon_v2_pokemonform]
-    pokemon_v2_pokemongameindex_collection: [Pokemon_v2_pokemongameindex]
-    pokemon_v2_pokemonitem_collection: [Pokemon_v2_pokemonitem]
-    pokemon_v2_pokemonmove_collection: [Pokemon_v2_pokemonmove]
-    pokemon_v2_pokemonspecies: Pokemon_v2_pokemonspecie
-    pokemon_v2_pokemonsprites_collection: [Pokemon_v2_pokemonsprite]
-    pokemon_v2_pokemonstat_collection: [Pokemon_v2_pokemonstat]
-    pokemon_v2_pokemontype_collection: [Pokemon_v2_pokemontype]
-    weight: Integer!
-}
-
-type Pokemon_v2_pokemonability {
+type Pokemonability {
+    ability: Ability
     ability_id: Integer
     id: ID!
     is_hidden: bool!
+    pokemon: Pokemon
     pokemon_id: Integer
-    pokemon_v2_ability: Pokemon_v2_ability
-    pokemon_v2_pokemon: Pokemon_v2_pokemon
     slot: Integer!
 }
 
-type Pokemon_v2_pokemoncolor {
+type Pokemoncolor {
     id: ID!
     name: String!
-    pokemon_v2_pokemoncolorname_collection: [Pokemon_v2_pokemoncolorname]
-    pokemon_v2_pokemonspecies_collection: [Pokemon_v2_pokemonspecie]
+    pokemoncolorname_pokemon_colors: [Pokemoncolorname]
+    pokemonspecy_pokemon_colors: [Pokemonspecy]
 }
 
-type Pokemon_v2_pokemoncolorname {
+type Pokemoncolorname {
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
     pokemon_color_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_pokemoncolor: Pokemon_v2_pokemoncolor
+    pokemoncolor_pokemon_color: Pokemoncolor
 }
 
-type Pokemon_v2_pokemondexnumber {
+type Pokemondexnumber {
     id: ID!
+    pokedex: Pokedex
     pokedex_id: Integer
     pokedex_number: Integer!
     pokemon_species_id: Integer
-    pokemon_v2_pokedex: Pokemon_v2_pokedex
-    pokemon_v2_pokemonspecies: Pokemon_v2_pokemonspecie
+    pokemonspecy_pokemon_specy: Pokemonspecy
 }
 
-type Pokemon_v2_pokemonegggroup {
+type Pokemonegggroup {
     egg_group_id: Integer
+    egggroup_egg_group: Egggroup
     id: ID!
     pokemon_species_id: Integer
-    pokemon_v2_egggroup: Pokemon_v2_egggroup
-    pokemon_v2_pokemonspecies: Pokemon_v2_pokemonspecie
+    pokemonspecy_pokemon_specy: Pokemonspecy
 }
 
-type Pokemon_v2_pokemonevolution {
+type Pokemonevolution {
     evolution_item_id: Integer
     evolution_trigger_id: Integer
+    evolutiontrigger_evolution_trigger: Evolutiontrigger
     evolved_species_id: Integer
+    gender: Gender
     gender_id: Integer
     held_item_id: Integer
     id: ID!
+    item_evolution: Item
+    item_held: Item
     known_move_id: Integer
     known_move_type_id: Integer
+    location: Location
     location_id: Integer
     min_affection: Integer
     min_beauty: Integer
     min_happiness: Integer
     min_level: Integer
+    move_known: Move
     needs_overworld_rain: bool!
     party_species_id: Integer
     party_type_id: Integer
-    pokemon_v2_evolutiontrigger: Pokemon_v2_evolutiontrigger
-    pokemon_v2_gender: Pokemon_v2_gender
-    pokemon_v2_item: Pokemon_v2_item
-    pokemon_v2_location: Pokemon_v2_location
-    pokemon_v2_move: Pokemon_v2_move
-    pokemon_v2_pokemonspecies: Pokemon_v2_pokemonspecie
-    pokemon_v2_type: Pokemon_v2_type
+    pokemonspecy_evolved_specy: Pokemonspecy
+    pokemonspecy_party_specy: Pokemonspecy
+    pokemonspecy_trade_specy: Pokemonspecy
     relative_physical_stats: Integer
     time_of_day: String
     trade_species_id: Integer
     turn_upside_down: bool!
+    type_known_move: Type
+    type_party: Type
 }
 
-type Pokemon_v2_pokemonform {
+type Pokemonform {
     form_name: String!
     form_order: Integer
     id: ID!
@@ -1521,369 +1470,376 @@ type Pokemon_v2_pokemonform {
     is_mega: bool!
     name: String!
     order: Integer
+    pokemon: Pokemon
     pokemon_id: Integer
-    pokemon_v2_pokemon: Pokemon_v2_pokemon
-    pokemon_v2_pokemonformgeneration_collection: [Pokemon_v2_pokemonformgeneration]
-    pokemon_v2_pokemonformname_collection: [Pokemon_v2_pokemonformname]
-    pokemon_v2_pokemonformsprites_collection: [Pokemon_v2_pokemonformsprite]
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
+    pokemonformgeneration_pokemon_forms: [Pokemonformgeneration]
+    pokemonformname_pokemon_forms: [Pokemonformname]
+    pokemonformsprite_pokemon_forms: [Pokemonformsprite]
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_pokemonformgeneration {
+type Pokemonformgeneration {
     game_index: Integer!
+    generation: Generation
     generation_id: Integer
     id: ID!
     pokemon_form_id: Integer
-    pokemon_v2_generation: Pokemon_v2_generation
-    pokemon_v2_pokemonform: Pokemon_v2_pokemonform
+    pokemonform_pokemon_form: Pokemonform
 }
 
-type Pokemon_v2_pokemonformname {
+type Pokemonformname {
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
     pokemon_form_id: Integer
     pokemon_name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_pokemonform: Pokemon_v2_pokemonform
+    pokemonform_pokemon_form: Pokemonform
 }
 
-type Pokemon_v2_pokemonformsprite {
+type Pokemonformsprite {
     id: ID!
     pokemon_form_id: Integer
-    pokemon_v2_pokemonform: Pokemon_v2_pokemonform
+    pokemonform_pokemon_form: Pokemonform
     sprites: String!
 }
 
-type Pokemon_v2_pokemongameindex {
+type Pokemongameindex {
     game_index: Integer!
     id: ID!
+    pokemon: Pokemon
     pokemon_id: Integer
-    pokemon_v2_pokemon: Pokemon_v2_pokemon
-    pokemon_v2_version: Pokemon_v2_version
+    version: Version
     version_id: Integer
 }
 
-type Pokemon_v2_pokemonhabitat {
+type Pokemonhabitat {
     id: ID!
     name: String!
-    pokemon_v2_pokemonhabitatname_collection: [Pokemon_v2_pokemonhabitatname]
-    pokemon_v2_pokemonspecies_collection: [Pokemon_v2_pokemonspecie]
+    pokemonhabitatname_pokemon_habitats: [Pokemonhabitatname]
+    pokemonspecy_pokemon_habitats: [Pokemonspecy]
 }
 
-type Pokemon_v2_pokemonhabitatname {
+type Pokemonhabitatname {
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
     pokemon_habitat_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_pokemonhabitat: Pokemon_v2_pokemonhabitat
+    pokemonhabitat_pokemon_habitat: Pokemonhabitat
 }
 
-type Pokemon_v2_pokemonitem {
+type Pokemonitem {
     id: ID!
+    item: Item
     item_id: Integer
+    pokemon: Pokemon
     pokemon_id: Integer
-    pokemon_v2_item: Pokemon_v2_item
-    pokemon_v2_pokemon: Pokemon_v2_pokemon
-    pokemon_v2_version: Pokemon_v2_version
     rarity: Integer!
+    version: Version
     version_id: Integer
 }
 
-type Pokemon_v2_pokemonmove {
+type Pokemonmove {
     id: ID!
     level: Integer!
+    move: Move
     move_id: Integer
     move_learn_method_id: Integer
+    movelearnmethod_move_learn_method: Movelearnmethod
     order: Integer
+    pokemon: Pokemon
     pokemon_id: Integer
-    pokemon_v2_move: Pokemon_v2_move
-    pokemon_v2_movelearnmethod: Pokemon_v2_movelearnmethod
-    pokemon_v2_pokemon: Pokemon_v2_pokemon
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_pokemonshape {
+type Pokemonshape {
     id: ID!
     name: String!
-    pokemon_v2_pokemonshapename_collection: [Pokemon_v2_pokemonshapename]
-    pokemon_v2_pokemonspecies_collection: [Pokemon_v2_pokemonspecie]
+    pokemonshapename_pokemon_shapes: [Pokemonshapename]
+    pokemonspecy_pokemon_shapes: [Pokemonspecy]
 }
 
-type Pokemon_v2_pokemonshapename {
+type Pokemonshapename {
     awesome_name: String!
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
     pokemon_shape_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_pokemonshape: Pokemon_v2_pokemonshape
+    pokemonshape_pokemon_shape: Pokemonshape
 }
 
-type Pokemon_v2_pokemonspecie {
+type Pokemonspecy {
     base_happiness: Integer!
     capture_rate: Integer!
     evolution_chain_id: Integer
+    evolutionchain_evolution_chain: Evolutionchain
     evolves_from_species_id: Integer
     forms_switchable: bool!
     gender_rate: Integer!
+    generation: Generation
     generation_id: Integer
     growth_rate_id: Integer
+    growthrate_growth_rate: Growthrate
     has_gender_differences: bool!
     hatch_counter: Integer!
     id: ID!
     is_baby: bool!
     name: String!
     order: Integer
+    palpark_pokemon_species: [Palpark]
     pokemon_color_id: Integer
     pokemon_habitat_id: Integer
     pokemon_shape_id: Integer
-    pokemon_v2_evolutionchain: Pokemon_v2_evolutionchain
-    pokemon_v2_generation: Pokemon_v2_generation
-    pokemon_v2_growthrate: Pokemon_v2_growthrate
-    pokemon_v2_palpark_collection: [Pokemon_v2_palpark]
-    pokemon_v2_pokemon_collection: [Pokemon_v2_pokemon]
-    pokemon_v2_pokemoncolor: Pokemon_v2_pokemoncolor
-    pokemon_v2_pokemondexnumber_collection: [Pokemon_v2_pokemondexnumber]
-    pokemon_v2_pokemonegggroup_collection: [Pokemon_v2_pokemonegggroup]
-    pokemon_v2_pokemonevolution_collection: [Pokemon_v2_pokemonevolution]
-    pokemon_v2_pokemonhabitat: Pokemon_v2_pokemonhabitat
-    pokemon_v2_pokemonshape: Pokemon_v2_pokemonshape
-    pokemon_v2_pokemonspecies: Pokemon_v2_pokemonspecie
-    pokemon_v2_pokemonspecies_collection: [Pokemon_v2_pokemonspecie]
-    pokemon_v2_pokemonspeciesdescription_collection: [Pokemon_v2_pokemonspeciesdescription]
-    pokemon_v2_pokemonspeciesflavortext_collection: [Pokemon_v2_pokemonspeciesflavortext]
-    pokemon_v2_pokemonspeciesname_collection: [Pokemon_v2_pokemonspeciesname]
+    pokemon_species: [Pokemon]
+    pokemoncolor_pokemon_color: Pokemoncolor
+    pokemondexnumber_pokemon_species: [Pokemondexnumber]
+    pokemonegggroup_pokemon_species: [Pokemonegggroup]
+    pokemonevolution_evolved_species: [Pokemonevolution]
+    pokemonevolution_party_species: [Pokemonevolution]
+    pokemonevolution_trade_species: [Pokemonevolution]
+    pokemonhabitat_pokemon_habitat: Pokemonhabitat
+    pokemonshape_pokemon_shape: Pokemonshape
+    pokemonspeciesdescription_pokemon_species: [Pokemonspeciesdescription]
+    pokemonspeciesflavortext_pokemon_species: [Pokemonspeciesflavortext]
+    pokemonspeciesname_pokemon_species: [Pokemonspeciesname]
+    pokemonspecy_evolves_from_species: [Pokemonspecy]
+    pokemonspecy_evolves_from_specy: Pokemonspecy
 }
 
-type Pokemon_v2_pokemonspeciesdescription {
+type Pokemonspeciesdescription {
     description: String!
     id: ID!
+    language: Language
     language_id: Integer
     pokemon_species_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_pokemonspecies: Pokemon_v2_pokemonspecie
+    pokemonspecy_pokemon_specy: Pokemonspecy
 }
 
-type Pokemon_v2_pokemonspeciesflavortext {
+type Pokemonspeciesflavortext {
     flavor_text: String!
     id: ID!
+    language: Language
     language_id: Integer
     pokemon_species_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_pokemonspecies: Pokemon_v2_pokemonspecie
-    pokemon_v2_version: Pokemon_v2_version
+    pokemonspecy_pokemon_specy: Pokemonspecy
+    version: Version
     version_id: Integer
 }
 
-type Pokemon_v2_pokemonspeciesname {
+type Pokemonspeciesname {
     genus: String!
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
     pokemon_species_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_pokemonspecies: Pokemon_v2_pokemonspecie
+    pokemonspecy_pokemon_specy: Pokemonspecy
 }
 
-type Pokemon_v2_pokemonsprite {
+type Pokemonsprite {
     id: ID!
+    pokemon: Pokemon
     pokemon_id: Integer
-    pokemon_v2_pokemon: Pokemon_v2_pokemon
     sprites: String!
 }
 
-type Pokemon_v2_pokemonstat {
+type Pokemonstat {
     base_stat: Integer!
     effort: Integer!
     id: ID!
+    pokemon: Pokemon
     pokemon_id: Integer
-    pokemon_v2_pokemon: Pokemon_v2_pokemon
-    pokemon_v2_stat: Pokemon_v2_stat
+    stat: Stat
     stat_id: Integer
 }
 
-type Pokemon_v2_pokemontype {
+type Pokemontype {
     id: ID!
+    pokemon: Pokemon
     pokemon_id: Integer
-    pokemon_v2_pokemon: Pokemon_v2_pokemon
-    pokemon_v2_type: Pokemon_v2_type
     slot: Integer!
+    type: Type
     type_id: Integer
 }
 
-type Pokemon_v2_region {
+type Region {
+    generation_regions: [Generation]
     id: ID!
+    location_regions: [Location]
     name: String!
-    pokemon_v2_generation_collection: [Pokemon_v2_generation]
-    pokemon_v2_location_collection: [Pokemon_v2_location]
-    pokemon_v2_pokedex_collection: [Pokemon_v2_pokedex]
-    pokemon_v2_regionname_collection: [Pokemon_v2_regionname]
-    pokemon_v2_versiongroupregion_collection: [Pokemon_v2_versiongroupregion]
+    pokedex_regions: [Pokedex]
+    regionname_regions: [Regionname]
+    versiongroupregion_regions: [Versiongroupregion]
 }
 
-type Pokemon_v2_regionname {
+type Regionname {
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_region: Pokemon_v2_region
+    region: Region
     region_id: Integer
 }
 
-type Pokemon_v2_stat {
+type Stat {
+    characteristic_stats: [Characteristic]
     game_index: Integer!
     id: ID!
     is_battle_only: bool!
     move_damage_class_id: Integer
+    movedamageclass_move_damage_class: Movedamageclas
+    movemetastatchange_stats: [Movemetastatchange]
     name: String!
-    pokemon_v2_characteristic_collection: [Pokemon_v2_characteristic]
-    pokemon_v2_movedamageclass: Pokemon_v2_movedamageclas
-    pokemon_v2_movemetastatchange_collection: [Pokemon_v2_movemetastatchange]
-    pokemon_v2_nature_collection: [Pokemon_v2_nature]
-    pokemon_v2_pokemonstat_collection: [Pokemon_v2_pokemonstat]
-    pokemon_v2_statname_collection: [Pokemon_v2_statname]
+    nature_decreased_stats: [Nature]
+    nature_increased_stats: [Nature]
+    pokemonstat_stats: [Pokemonstat]
+    statname_stats: [Statname]
 }
 
-type Pokemon_v2_statname {
+type Statname {
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_stat: Pokemon_v2_stat
+    stat: Stat
     stat_id: Integer
 }
 
-type Pokemon_v2_supercontestcombo {
+type Supercontestcombo {
     first_move_id: Integer
     id: ID!
-    pokemon_v2_move: Pokemon_v2_move
+    move_first: Move
+    move_second: Move
     second_move_id: Integer
 }
 
-type Pokemon_v2_supercontesteffect {
+type Supercontesteffect {
     appeal: Integer!
     id: ID!
-    pokemon_v2_move_collection: [Pokemon_v2_move]
-    pokemon_v2_supercontesteffectflavortext_collection: [Pokemon_v2_supercontesteffectflavortext]
+    move_super_contest_effects: [Move]
+    supercontesteffectflavortext_super_contest_effects: [Supercontesteffectflavortext]
 }
 
-type Pokemon_v2_supercontesteffectflavortext {
+type Supercontesteffectflavortext {
     flavor_text: String!
     id: ID!
+    language: Language
     language_id: Integer
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_supercontesteffect: Pokemon_v2_supercontesteffect
     super_contest_effect_id: Integer
+    supercontesteffect_super_contest_effect: Supercontesteffect
 }
 
-type Pokemon_v2_type {
+type Type {
+    berry_natural_gift_types: [Berry]
+    generation: Generation
     generation_id: Integer
     id: ID!
     move_damage_class_id: Integer
+    move_types: [Move]
+    movechange_types: [Movechange]
+    movedamageclass_move_damage_class: Movedamageclas
     name: String!
-    pokemon_v2_berry_collection: [Pokemon_v2_berry]
-    pokemon_v2_generation: Pokemon_v2_generation
-    pokemon_v2_move_collection: [Pokemon_v2_move]
-    pokemon_v2_movechange_collection: [Pokemon_v2_movechange]
-    pokemon_v2_movedamageclass: Pokemon_v2_movedamageclas
-    pokemon_v2_pokemonevolution_collection: [Pokemon_v2_pokemonevolution]
-    pokemon_v2_pokemontype_collection: [Pokemon_v2_pokemontype]
-    pokemon_v2_typeefficacy_collection: [Pokemon_v2_typeefficacy]
-    pokemon_v2_typegameindex_collection: [Pokemon_v2_typegameindex]
-    pokemon_v2_typename_collection: [Pokemon_v2_typename]
+    pokemonevolution_known_move_types: [Pokemonevolution]
+    pokemonevolution_party_types: [Pokemonevolution]
+    pokemontype_types: [Pokemontype]
+    typeefficacy_damage_types: [Typeefficacy]
+    typeefficacy_target_types: [Typeefficacy]
+    typegameindex_types: [Typegameindex]
+    typename_types: [Typename]
 }
 
-type Pokemon_v2_typeefficacy {
+type Typeefficacy {
     damage_factor: Integer!
     damage_type_id: Integer
     id: ID!
-    pokemon_v2_type: Pokemon_v2_type
     target_type_id: Integer
+    type_damage: Type
+    type_target: Type
 }
 
-type Pokemon_v2_typegameindex {
+type Typegameindex {
     game_index: Integer!
+    generation: Generation
     generation_id: Integer
     id: ID!
-    pokemon_v2_generation: Pokemon_v2_generation
-    pokemon_v2_type: Pokemon_v2_type
+    type: Type
     type_id: Integer
 }
 
-type Pokemon_v2_typename {
+type Typename {
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_type: Pokemon_v2_type
+    type: Type
     type_id: Integer
 }
 
-type Pokemon_v2_version {
+type Version {
+    encounter_versions: [Encounter]
     id: ID!
+    locationareaencounterrate_versions: [Locationareaencounterrate]
     name: String!
-    pokemon_v2_encounter_collection: [Pokemon_v2_encounter]
-    pokemon_v2_locationareaencounterrate_collection: [Pokemon_v2_locationareaencounterrate]
-    pokemon_v2_pokemongameindex_collection: [Pokemon_v2_pokemongameindex]
-    pokemon_v2_pokemonitem_collection: [Pokemon_v2_pokemonitem]
-    pokemon_v2_pokemonspeciesflavortext_collection: [Pokemon_v2_pokemonspeciesflavortext]
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
-    pokemon_v2_versionname_collection: [Pokemon_v2_versionname]
+    pokemongameindex_versions: [Pokemongameindex]
+    pokemonitem_versions: [Pokemonitem]
+    pokemonspeciesflavortext_versions: [Pokemonspeciesflavortext]
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
+    versionname_versions: [Versionname]
 }
 
-type Pokemon_v2_versiongroup {
+type Versiongroup {
+    abilitychange_version_groups: [Abilitychange]
+    abilityflavortext_version_groups: [Abilityflavortext]
+    encounterslot_version_groups: [Encounterslot]
+    generation: Generation
     generation_id: Integer
     id: ID!
+    itemflavortext_version_groups: [Itemflavortext]
+    machine_version_groups: [Machine]
+    movechange_version_groups: [Movechange]
+    moveeffectchange_version_groups: [Moveeffectchange]
+    moveflavortext_version_groups: [Moveflavortext]
     name: String!
     order: Integer
-    pokemon_v2_abilitychange_collection: [Pokemon_v2_abilitychange]
-    pokemon_v2_abilityflavortext_collection: [Pokemon_v2_abilityflavortext]
-    pokemon_v2_encounterslot_collection: [Pokemon_v2_encounterslot]
-    pokemon_v2_generation: Pokemon_v2_generation
-    pokemon_v2_itemflavortext_collection: [Pokemon_v2_itemflavortext]
-    pokemon_v2_machine_collection: [Pokemon_v2_machine]
-    pokemon_v2_movechange_collection: [Pokemon_v2_movechange]
-    pokemon_v2_moveeffectchange_collection: [Pokemon_v2_moveeffectchange]
-    pokemon_v2_moveflavortext_collection: [Pokemon_v2_moveflavortext]
-    pokemon_v2_pokedexversiongroup_collection: [Pokemon_v2_pokedexversiongroup]
-    pokemon_v2_pokemonform_collection: [Pokemon_v2_pokemonform]
-    pokemon_v2_pokemonmove_collection: [Pokemon_v2_pokemonmove]
-    pokemon_v2_version_collection: [Pokemon_v2_version]
-    pokemon_v2_versiongroupmovelearnmethod_collection: [Pokemon_v2_versiongroupmovelearnmethod]
-    pokemon_v2_versiongroupregion_collection: [Pokemon_v2_versiongroupregion]
+    pokedexversiongroup_version_groups: [Pokedexversiongroup]
+    pokemonform_version_groups: [Pokemonform]
+    pokemonmove_version_groups: [Pokemonmove]
+    version_groups: [Version]
+    versiongroupmovelearnmethod_version_groups: [Versiongroupmovelearnmethod]
+    versiongroupregion_version_groups: [Versiongroupregion]
 }
 
-type Pokemon_v2_versiongroupmovelearnmethod {
+type Versiongroupmovelearnmethod {
     id: ID!
     move_learn_method_id: Integer
-    pokemon_v2_movelearnmethod: Pokemon_v2_movelearnmethod
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
+    movelearnmethod_move_learn_method: Movelearnmethod
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_versiongroupregion {
+type Versiongroupregion {
     id: ID!
-    pokemon_v2_region: Pokemon_v2_region
-    pokemon_v2_versiongroup: Pokemon_v2_versiongroup
+    region: Region
     region_id: Integer
     version_group_id: Integer
+    versiongroup_version_group: Versiongroup
 }
 
-type Pokemon_v2_versionname {
+type Versionname {
     id: ID!
+    language: Language
     language_id: Integer
     name: String!
-    pokemon_v2_language: Pokemon_v2_language
-    pokemon_v2_version: Pokemon_v2_version
+    version: Version
     version_id: Integer
 }
 
-type Tastypie_apiacces {
+type TastypieApiacces {
     accessed: Integer!
     id: ID!
     identifier: String!
@@ -1891,8 +1847,8 @@ type Tastypie_apiacces {
     url: String!
 }
 
-type Tastypie_apikey {
-    auth_user: Auth_user
+type TastypieApikey {
+    auth_user: AuthUser
     created: datetime!
     id: ID!
     key: String!
