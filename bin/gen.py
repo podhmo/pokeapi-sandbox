@@ -104,19 +104,10 @@ class Resolver:
             return c.type.python_type.__name__  # xxx
 
 
-def guess_name(local_cls, referred_cls, constraint, target_table, prefix=""):
+def normalize_name(nameset_list):
     r = []
     arrived = set()
-    itr = itertools.chain(
-        [referred_cls.__name__],
-        [
-            col.table.name for col in constraint
-            if col.table not in (local_cls.__table__, referred_cls.__table__)
-        ],
-        [col.name for col in constraint if col.table == target_table],
-    )
-    itr = list(itr)
-    for nameset in itr:
+    for nameset in nameset_list:
         nameset = singularize(nameset.replace("_id", "").replace("pokemon_v2_", ""))
         for name in nameset.split("_"):
             if name not in arrived:
@@ -126,24 +117,31 @@ def guess_name(local_cls, referred_cls, constraint, target_table, prefix=""):
 
 
 def name_for_scalar_relationship(base, local_cls, referred_cls, constraint):
-    return guess_name(local_cls, referred_cls, constraint, local_cls.__table__, prefix="S")
+    itr = itertools.chain(
+        [referred_cls.__name__],
+        [
+            col.table.name for col in constraint
+            if col.table not in (local_cls.__table__, referred_cls.__table__)
+        ],
+        [col.name for col in constraint if col.table == local_cls.__table__],
+    )
+    return normalize_name(itr)
 
 
 def name_for_collection_relationship(base, local_cls, referred_cls, constraint):
-    return pluralize(
-        guess_name(local_cls, referred_cls, constraint, referred_cls.__table__, prefix="C")
+    itr = itertools.chain(
+        [
+            col.table.name for col in constraint
+            if col.table not in (local_cls.__table__, referred_cls.__table__)
+        ],
+        [col.name for col in constraint if col.table == referred_cls.__table__],
+        [referred_cls.__name__],
     )
+    return pluralize(normalize_name(itr))
 
 
 def classname_for_table(tablename):
-    r = []
-    arrived = set()
-    name = tablename.replace("pokemon_v2_", "")
-    for name in singularize(name).split("_"):
-        if name not in arrived:
-            arrived.add(name)
-            r.append(name)
-    return camelize("_".join(r))
+    return camelize(normalize_name([tablename]))
 
 
 def main(src):
