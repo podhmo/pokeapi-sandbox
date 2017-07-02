@@ -5,8 +5,8 @@ type AlertsAlert {
 }
 
 type AuthGroup {
-    auth_group_permissions: [AuthGroupPermission]
-    auth_user_groups: [AuthUserGroup]
+    group_auth_permissions: [AuthGroupPermission]
+    group_auth_users: [AuthUserGroup]
     id: ID!
     name: String!
 }
@@ -20,20 +20,17 @@ type AuthGroupPermission {
 }
 
 type AuthPermission {
-    auth_group_permissions: [AuthGroupPermission]
-    auth_user_permissions: [AuthUserPermission]
     codename: String!
     content_type_id: Integer!
     django_content_type: DjangoContentType
     id: ID!
     name: String!
+    permission_auth_groups: [AuthGroupPermission]
+    permission_auth_users: [AuthUserPermission]
 }
 
 type AuthUser {
-    auth_user_groups: [AuthUserGroup]
-    auth_user_permissions: [AuthUserPermission]
     date_joined: datetime!
-    django_admin_log_users: [DjangoAdminLog]
     email: String!
     first_name: String!
     id: ID!
@@ -43,7 +40,10 @@ type AuthUser {
     last_login: datetime
     last_name: String!
     password: String!
-    tastypie_apikey_users: [TastypieApikey]
+    user_auth_groups: [AuthUserGroup]
+    user_auth_permissions: [AuthUserPermission]
+    user_django_admin_logs: [DjangoAdminLog]
+    user_tastypie_apikeys: [TastypieApikey]
     username: String!
 }
 
@@ -83,8 +83,8 @@ type DjangoAdminLog {
 
 type DjangoContentType {
     app_label: String!
-    auth_permission_content_types: [AuthPermission]
-    django_admin_log_content_types: [DjangoAdminLog]
+    content_type_auth_permissions: [AuthPermission]
+    content_type_django_admin_logs: [DjangoAdminLog]
     id: ID!
     model: String!
 }
@@ -141,10 +141,10 @@ type PokemonDescriptionGame {
 
 type PokemonEgggroup {
     created: datetime!
+    egggroup_pokemon_egg_groups: [PokemonEggGroup]
     id: ID!
     modified: datetime!
     name: String!
-    pokemon_egg_group_egggroups: [PokemonEggGroup]
 }
 
 type PokemonEvolution {
@@ -162,11 +162,11 @@ type PokemonEvolution {
 
 type PokemonGame {
     created: datetime!
+    game_pokemon_descriptions: [PokemonDescriptionGame]
     generation: Integer!
     id: ID!
     modified: datetime!
     name: String!
-    pokemon_description_games: [PokemonDescriptionGame]
     release_year: Integer!
 }
 
@@ -177,9 +177,9 @@ type PokemonMove {
     description: String!
     id: ID!
     modified: datetime!
+    move_pokemon_etypes: [PokemonMoveEtype]
+    move_pokemon_movepokemons: [PokemonMovepokemon]
     name: String!
-    pokemon_move_etypes: [PokemonMoveEtype]
-    pokemon_movepokemon_moves: [PokemonMovepokemon]
     power: Integer!
     pp: Integer!
 }
@@ -213,22 +213,22 @@ type PokemonPokedex {
 
 type Pokemon {
     base_experience: Integer!
-    encounter_pokemons: [Encounter]
     height: Integer!
     id: ID!
     is_default: bool!
     name: String!
     order: Integer
+    pokemon_encounters: [Encounter]
+    pokemon_pokemonabilities: [Pokemonability]
+    pokemon_pokemonforms: [Pokemonform]
+    pokemon_pokemongameindices: [Pokemongameindex]
+    pokemon_pokemonitems: [Pokemonitem]
+    pokemon_pokemonmoves: [Pokemonmove]
+    pokemon_pokemonsprites: [Pokemonsprite]
+    pokemon_pokemonstats: [Pokemonstat]
+    pokemon_pokemontypes: [Pokemontype]
     pokemon_species_id: Integer
-    pokemonability_pokemons: [Pokemonability]
-    pokemonform_pokemons: [Pokemonform]
-    pokemongameindex_pokemons: [Pokemongameindex]
-    pokemonitem_pokemons: [Pokemonitem]
-    pokemonmove_pokemons: [Pokemonmove]
     pokemonspecy_pokemon_specy: Pokemonspecy
-    pokemonsprite_pokemons: [Pokemonsprite]
-    pokemonstat_pokemons: [Pokemonstat]
-    pokemontype_pokemons: [Pokemontype]
     weight: Integer!
 }
 
@@ -246,18 +246,18 @@ type PokemonSprite {
     image: String!
     modified: datetime!
     name: String!
-    pokemon_sprites: [PokemonSprite]
+    sprite_pokemons: [PokemonSprite]
 }
 
 type PokemonType {
     created: datetime!
+    frm_pokemon_typecharts: [PokemonTypechart]
     id: ID!
     modified: datetime!
     name: String!
-    pokemon_move_etype_types: [PokemonMoveEtype]
-    pokemon_typechart_frms: [PokemonTypechart]
-    pokemon_typechart_tos: [PokemonTypechart]
-    pokemon_types: [PokemonType]
+    to_pokemon_typecharts: [PokemonTypechart]
+    type_pokemon_move_etypes: [PokemonMoveEtype]
+    type_pokemons: [PokemonType]
 }
 
 type PokemonTypechart {
@@ -272,22 +272,22 @@ type PokemonTypechart {
 }
 
 type Ability {
-    abilitychange_abilities: [Abilitychange]
-    abilityeffecttext_abilities: [Abilityeffecttext]
-    abilityflavortext_abilities: [Abilityflavortext]
-    abilityname_abilities: [Abilityname]
+    ability_abilitychanges: [Abilitychange]
+    ability_abilityeffecttexts: [Abilityeffecttext]
+    ability_abilityflavortexts: [Abilityflavortext]
+    ability_abilitynames: [Abilityname]
+    ability_pokemonabilities: [Pokemonability]
     generation: Generation
     generation_id: Integer
     id: ID!
     is_main_series: bool!
     name: String!
-    pokemonability_abilities: [Pokemonability]
 }
 
 type Abilitychange {
     ability: Ability
+    ability_change_abilitychangeeffecttexts: [Abilitychangeeffecttext]
     ability_id: Integer
-    abilitychangeeffecttext_ability_changes: [Abilitychangeeffecttext]
     id: ID!
     version_group_id: Integer
     versiongroup_version_group: Versiongroup
@@ -333,9 +333,9 @@ type Abilityname {
 }
 
 type Berry {
+    berry_berryflavormaps: [Berryflavormap]
     berry_firmness_id: Integer
     berryfirmness_berry_firmness: Berryfirmnes
-    berryflavormap_berries: [Berryflavormap]
     growth_time: Integer!
     id: ID!
     item: Item
@@ -351,8 +351,8 @@ type Berry {
 }
 
 type Berryfirmnes {
+    berry_firmness_berryfirmnessnames: [Berryfirmnessname]
     berry_firmnesses: [Berry]
-    berryfirmnessname_berry_firmnesses: [Berryfirmnessname]
     id: ID!
     name: String!
 }
@@ -367,14 +367,14 @@ type Berryfirmnessname {
 }
 
 type Berryflavor {
-    berryflavormap_berry_flavors: [Berryflavormap]
-    berryflavorname_berry_flavors: [Berryflavorname]
+    berry_flavor_berryflavormaps: [Berryflavormap]
+    berry_flavor_berryflavornames: [Berryflavorname]
     contest_type_id: Integer
     contesttype_contest_type: Contesttype
+    hates_flavor_natures: [Nature]
     id: ID!
+    likes_flavor_natures: [Nature]
     name: String!
-    nature_hates_flavors: [Nature]
-    nature_likes_flavors: [Nature]
 }
 
 type Berryflavormap {
@@ -396,7 +396,7 @@ type Berryflavorname {
 }
 
 type Characteristic {
-    characteristicdescription_characteristics: [Characteristicdescription]
+    characteristic_characteristicdescriptions: [Characteristicdescription]
     gene_mod_5: Integer!
     id: ID!
     stat: Stat
@@ -422,11 +422,11 @@ type Contestcombo {
 
 type Contesteffect {
     appeal: Integer!
-    contesteffecteffecttext_contest_effects: [Contesteffecteffecttext]
-    contesteffectflavortext_contest_effects: [Contesteffectflavortext]
+    contest_effect_contesteffecteffecttexts: [Contesteffecteffecttext]
+    contest_effect_contesteffectflavortexts: [Contesteffectflavortext]
+    contest_effect_moves: [Move]
     id: ID!
     jam: Integer!
-    move_contest_effects: [Move]
 }
 
 type Contesteffecteffecttext {
@@ -448,10 +448,10 @@ type Contesteffectflavortext {
 }
 
 type Contesttype {
-    berryflavor_contest_types: [Berryflavor]
-    contesttypename_contest_types: [Contesttypename]
+    contest_type_berryflavors: [Berryflavor]
+    contest_type_contesttypenames: [Contesttypename]
+    contest_type_moves: [Move]
     id: ID!
-    move_contest_types: [Move]
     name: String!
 }
 
@@ -467,10 +467,10 @@ type Contesttypename {
 }
 
 type Egggroup {
-    egggroupname_egg_groups: [Egggroupname]
+    egg_group_egggroupnames: [Egggroupname]
+    egg_group_pokemonegggroups: [Pokemonegggroup]
     id: ID!
     name: String!
-    pokemonegggroup_egg_groups: [Pokemonegggroup]
 }
 
 type Egggroupname {
@@ -483,8 +483,8 @@ type Egggroupname {
 }
 
 type Encounter {
+    encounter_encounterconditionvaluemaps: [Encounterconditionvaluemap]
     encounter_slot_id: Integer
-    encounterconditionvaluemap_encounters: [Encounterconditionvaluemap]
     encounterslot_encounter_slot: Encounterslot
     id: ID!
     location_area_id: Integer
@@ -498,8 +498,8 @@ type Encounter {
 }
 
 type Encountercondition {
-    encounterconditionname_encounter_conditions: [Encounterconditionname]
-    encounterconditionvalue_encounter_conditions: [Encounterconditionvalue]
+    encounter_condition_encounterconditionnames: [Encounterconditionname]
+    encounter_condition_encounterconditionvalues: [Encounterconditionvalue]
     id: ID!
     name: String!
 }
@@ -515,9 +515,9 @@ type Encounterconditionname {
 
 type Encounterconditionvalue {
     encounter_condition_id: Integer
+    encounter_condition_value_encounterconditionvaluemaps: [Encounterconditionvaluemap]
+    encounter_condition_value_encounterconditionvaluenames: [Encounterconditionvaluename]
     encountercondition_encounter_condition: Encountercondition
-    encounterconditionvaluemap_encounter_condition_values: [Encounterconditionvaluemap]
-    encounterconditionvaluename_encounter_condition_values: [Encounterconditionvaluename]
     id: ID!
     is_default: bool!
     name: String!
@@ -541,10 +541,10 @@ type Encounterconditionvaluename {
 }
 
 type Encountermethod {
-    encountermethodname_encounter_methods: [Encountermethodname]
-    encounterslot_encounter_methods: [Encounterslot]
+    encounter_method_encountermethodnames: [Encountermethodname]
+    encounter_method_encounterslots: [Encounterslot]
+    encounter_method_locationareaencounterrates: [Locationareaencounterrate]
     id: ID!
-    locationareaencounterrate_encounter_methods: [Locationareaencounterrate]
     name: String!
     order: Integer
 }
@@ -571,16 +571,16 @@ type Encounterslot {
 
 type Evolutionchain {
     baby_trigger_item_id: Integer
+    evolution_chain_pokemonspecies: [Pokemonspecy]
     id: ID!
     item_baby_trigger: Item
-    pokemonspecy_evolution_chains: [Pokemonspecy]
 }
 
 type Evolutiontrigger {
-    evolutiontriggername_evolution_triggers: [Evolutiontriggername]
+    evolution_trigger_evolutiontriggernames: [Evolutiontriggername]
+    evolution_trigger_pokemonevolutions: [Pokemonevolution]
     id: ID!
     name: String!
-    pokemonevolution_evolution_triggers: [Pokemonevolution]
 }
 
 type Evolutiontriggername {
@@ -601,26 +601,26 @@ type Experience {
 }
 
 type Gender {
+    gender_pokemonevolutions: [Pokemonevolution]
     id: ID!
     name: String!
-    pokemonevolution_genders: [Pokemonevolution]
 }
 
 type Generation {
-    ability_generations: [Ability]
-    generationname_generations: [Generationname]
+    generation_abilities: [Ability]
+    generation_generationnames: [Generationname]
+    generation_itemgameindices: [Itemgameindex]
+    generation_locationgameindices: [Locationgameindex]
+    generation_moves: [Move]
+    generation_pokemonformgenerations: [Pokemonformgeneration]
+    generation_pokemonspecies: [Pokemonspecy]
+    generation_typegameindices: [Typegameindex]
+    generation_types: [Type]
+    generation_versiongroups: [Versiongroup]
     id: ID!
-    itemgameindex_generations: [Itemgameindex]
-    locationgameindex_generations: [Locationgameindex]
-    move_generations: [Move]
     name: String!
-    pokemonformgeneration_generations: [Pokemonformgeneration]
-    pokemonspecy_generations: [Pokemonspecy]
     region: Region
     region_id: Integer
-    type_generations: [Type]
-    typegameindex_generations: [Typegameindex]
-    versiongroup_generations: [Versiongroup]
 }
 
 type Generationname {
@@ -633,13 +633,13 @@ type Generationname {
 }
 
 type Growthrate {
-    experience_growth_rates: [Experience]
     formula: String!
-    growthratedescription_growth_rates: [Growthratedescription]
+    growth_rate_experiences: [Experience]
+    growth_rate_growthratedescriptions: [Growthratedescription]
+    growth_rate_machines: [Machine]
+    growth_rate_pokemonspecies: [Pokemonspecy]
     id: ID!
-    machine_growth_rates: [Machine]
     name: String!
-    pokemonspecy_growth_rates: [Pokemonspecy]
 }
 
 type Growthratedescription {
@@ -652,33 +652,33 @@ type Growthratedescription {
 }
 
 type Item {
-    berry_items: [Berry]
+    baby_trigger_item_evolutionchains: [Evolutionchain]
     cost: Integer
-    evolutionchain_baby_trigger_items: [Evolutionchain]
+    evolution_item_pokemonevolutions: [Pokemonevolution]
     fling_power: Integer
+    held_item_pokemonevolutions: [Pokemonevolution]
     id: ID!
+    item_berries: [Berry]
     item_category_id: Integer
     item_fling_effect_id: Integer
-    itemattributemap_items: [Itemattributemap]
+    item_itemattributemaps: [Itemattributemap]
+    item_itemeffecttexts: [Itemeffecttext]
+    item_itemflavortexts: [Itemflavortext]
+    item_itemgameindices: [Itemgameindex]
+    item_itemnames: [Itemname]
+    item_itemsprites: [Itemsprite]
+    item_machines: [Machine]
+    item_pokemonitems: [Pokemonitem]
     itemcategory_item_category: Itemcategory
-    itemeffecttext_items: [Itemeffecttext]
-    itemflavortext_items: [Itemflavortext]
     itemflingeffect_item_fling_effect: Itemflingeffect
-    itemgameindex_items: [Itemgameindex]
-    itemname_items: [Itemname]
-    itemsprite_items: [Itemsprite]
-    machine_items: [Machine]
     name: String!
-    pokemonevolution_evolution_items: [Pokemonevolution]
-    pokemonevolution_held_items: [Pokemonevolution]
-    pokemonitem_items: [Pokemonitem]
 }
 
 type Itemattribute {
     id: ID!
-    itemattributedescription_item_attributes: [Itemattributedescription]
-    itemattributemap_item_attributes: [Itemattributemap]
-    itemattributename_item_attributes: [Itemattributename]
+    item_attribute_itemattributedescriptions: [Itemattributedescription]
+    item_attribute_itemattributemaps: [Itemattributemap]
+    item_attribute_itemattributenames: [Itemattributename]
     name: String!
 }
 
@@ -711,8 +711,8 @@ type Itemattributename {
 type Itemcategory {
     id: ID!
     item_categories: [Item]
+    item_category_itemcategorynames: [Itemcategoryname]
     item_pocket_id: Integer
-    itemcategoryname_item_categories: [Itemcategoryname]
     itempocket_item_pocket: Itempocket
     name: String!
 }
@@ -749,8 +749,8 @@ type Itemflavortext {
 
 type Itemflingeffect {
     id: ID!
+    item_fling_effect_itemflingeffecteffecttexts: [Itemflingeffecteffecttext]
     item_fling_effects: [Item]
-    itemflingeffecteffecttext_item_fling_effects: [Itemflingeffecteffecttext]
     name: String!
 }
 
@@ -783,8 +783,8 @@ type Itemname {
 
 type Itempocket {
     id: ID!
-    itemcategory_item_pockets: [Itemcategory]
-    itempocketname_item_pockets: [Itempocketname]
+    item_pocket_itemcategories: [Itemcategory]
+    item_pocket_itempocketnames: [Itempocketname]
     name: String!
 }
 
@@ -805,73 +805,73 @@ type Itemsprite {
 }
 
 type Language {
-    abilitychangeeffecttext_languages: [Abilitychangeeffecttext]
-    abilityeffecttext_languages: [Abilityeffecttext]
-    abilityflavortext_languages: [Abilityflavortext]
-    abilityname_languages: [Abilityname]
-    berryfirmnessname_languages: [Berryfirmnessname]
-    berryflavorname_languages: [Berryflavorname]
-    characteristicdescription_languages: [Characteristicdescription]
-    contesteffecteffecttext_languages: [Contesteffecteffecttext]
-    contesteffectflavortext_languages: [Contesteffectflavortext]
-    contesttypename_languages: [Contesttypename]
-    egggroupname_languages: [Egggroupname]
-    encounterconditionname_languages: [Encounterconditionname]
-    encounterconditionvaluename_languages: [Encounterconditionvaluename]
-    encountermethodname_languages: [Encountermethodname]
-    evolutiontriggername_languages: [Evolutiontriggername]
-    generationname_languages: [Generationname]
-    growthratedescription_languages: [Growthratedescription]
     id: ID!
     iso3166: String!
     iso639: String!
-    itemattributedescription_languages: [Itemattributedescription]
-    itemattributename_languages: [Itemattributename]
-    itemcategoryname_languages: [Itemcategoryname]
-    itemeffecttext_languages: [Itemeffecttext]
-    itemflavortext_languages: [Itemflavortext]
-    itemflingeffecteffecttext_languages: [Itemflingeffecteffecttext]
-    itemname_languages: [Itemname]
-    itempocketname_languages: [Itempocketname]
-    languagename_languages: [Languagename]
-    languagename_local_languages: [Languagename]
-    locationareaname_languages: [Locationareaname]
-    locationname_languages: [Locationname]
-    moveattributedescription_languages: [Moveattributedescription]
-    moveattributename_languages: [Moveattributename]
-    movebattlestylename_languages: [Movebattlestylename]
-    movedamageclassdescription_languages: [Movedamageclassdescription]
-    movedamageclassname_languages: [Movedamageclassname]
-    moveeffectchangeeffecttext_languages: [Moveeffectchangeeffecttext]
-    moveeffecteffecttext_languages: [Moveeffecteffecttext]
-    moveflavortext_languages: [Moveflavortext]
-    movelearnmethoddescription_languages: [Movelearnmethoddescription]
-    movelearnmethodname_languages: [Movelearnmethodname]
-    movemetaailmentname_languages: [Movemetaailmentname]
-    movemetacategorydescription_languages: [Movemetacategorydescription]
-    movename_languages: [Movename]
-    movetargetdescription_languages: [Movetargetdescription]
-    movetargetname_languages: [Movetargetname]
+    language_abilitychangeeffecttexts: [Abilitychangeeffecttext]
+    language_abilityeffecttexts: [Abilityeffecttext]
+    language_abilityflavortexts: [Abilityflavortext]
+    language_abilitynames: [Abilityname]
+    language_berryfirmnessnames: [Berryfirmnessname]
+    language_berryflavornames: [Berryflavorname]
+    language_characteristicdescriptions: [Characteristicdescription]
+    language_contesteffecteffecttexts: [Contesteffecteffecttext]
+    language_contesteffectflavortexts: [Contesteffectflavortext]
+    language_contesttypenames: [Contesttypename]
+    language_egggroupnames: [Egggroupname]
+    language_encounterconditionnames: [Encounterconditionname]
+    language_encounterconditionvaluenames: [Encounterconditionvaluename]
+    language_encountermethodnames: [Encountermethodname]
+    language_evolutiontriggernames: [Evolutiontriggername]
+    language_generationnames: [Generationname]
+    language_growthratedescriptions: [Growthratedescription]
+    language_itemattributedescriptions: [Itemattributedescription]
+    language_itemattributenames: [Itemattributename]
+    language_itemcategorynames: [Itemcategoryname]
+    language_itemeffecttexts: [Itemeffecttext]
+    language_itemflavortexts: [Itemflavortext]
+    language_itemflingeffecteffecttexts: [Itemflingeffecteffecttext]
+    language_itemnames: [Itemname]
+    language_itempocketnames: [Itempocketname]
+    language_languagenames: [Languagename]
+    language_locationareanames: [Locationareaname]
+    language_locationnames: [Locationname]
+    language_moveattributedescriptions: [Moveattributedescription]
+    language_moveattributenames: [Moveattributename]
+    language_movebattlestylenames: [Movebattlestylename]
+    language_movedamageclassdescriptions: [Movedamageclassdescription]
+    language_movedamageclassnames: [Movedamageclassname]
+    language_moveeffectchangeeffecttexts: [Moveeffectchangeeffecttext]
+    language_moveeffecteffecttexts: [Moveeffecteffecttext]
+    language_moveflavortexts: [Moveflavortext]
+    language_movelearnmethoddescriptions: [Movelearnmethoddescription]
+    language_movelearnmethodnames: [Movelearnmethodname]
+    language_movemetaailmentnames: [Movemetaailmentname]
+    language_movemetacategorydescriptions: [Movemetacategorydescription]
+    language_movenames: [Movename]
+    language_movetargetdescriptions: [Movetargetdescription]
+    language_movetargetnames: [Movetargetname]
+    language_naturenames: [Naturename]
+    language_palparkareanames: [Palparkareaname]
+    language_pokeathlonstatnames: [Pokeathlonstatname]
+    language_pokedexdescriptions: [Pokedexdescription]
+    language_pokedexnames: [Pokedexname]
+    language_pokemoncolornames: [Pokemoncolorname]
+    language_pokemonformnames: [Pokemonformname]
+    language_pokemonhabitatnames: [Pokemonhabitatname]
+    language_pokemonshapenames: [Pokemonshapename]
+    language_pokemonspeciesdescriptions: [Pokemonspeciesdescription]
+    language_pokemonspeciesflavortexts: [Pokemonspeciesflavortext]
+    language_pokemonspeciesnames: [Pokemonspeciesname]
+    language_regionnames: [Regionname]
+    language_statnames: [Statname]
+    language_supercontesteffectflavortexts: [Supercontesteffectflavortext]
+    language_typenames: [Typename]
+    language_versionnames: [Versionname]
+    local_language_languagenames: [Languagename]
     name: String!
-    naturename_languages: [Naturename]
     official: bool!
     order: Integer
-    palparkareaname_languages: [Palparkareaname]
-    pokeathlonstatname_languages: [Pokeathlonstatname]
-    pokedexdescription_languages: [Pokedexdescription]
-    pokedexname_languages: [Pokedexname]
-    pokemoncolorname_languages: [Pokemoncolorname]
-    pokemonformname_languages: [Pokemonformname]
-    pokemonhabitatname_languages: [Pokemonhabitatname]
-    pokemonshapename_languages: [Pokemonshapename]
-    pokemonspeciesdescription_languages: [Pokemonspeciesdescription]
-    pokemonspeciesflavortext_languages: [Pokemonspeciesflavortext]
-    pokemonspeciesname_languages: [Pokemonspeciesname]
-    regionname_languages: [Regionname]
-    statname_languages: [Statname]
-    supercontesteffectflavortext_languages: [Supercontesteffectflavortext]
-    typename_languages: [Typename]
-    versionname_languages: [Versionname]
 }
 
 type Languagename {
@@ -885,23 +885,23 @@ type Languagename {
 
 type Location {
     id: ID!
-    locationarea_locations: [Locationarea]
-    locationgameindex_locations: [Locationgameindex]
-    locationname_locations: [Locationname]
+    location_locationareas: [Locationarea]
+    location_locationgameindices: [Locationgameindex]
+    location_locationnames: [Locationname]
+    location_pokemonevolutions: [Pokemonevolution]
     name: String!
-    pokemonevolution_locations: [Pokemonevolution]
     region: Region
     region_id: Integer
 }
 
 type Locationarea {
-    encounter_location_areas: [Encounter]
     game_index: Integer!
     id: ID!
     location: Location
+    location_area_encounters: [Encounter]
+    location_area_locationareaencounterrates: [Locationareaencounterrate]
+    location_area_locationareanames: [Locationareaname]
     location_id: Integer
-    locationareaencounterrate_location_areas: [Locationareaencounterrate]
-    locationareaname_location_areas: [Locationareaname]
     name: String!
 }
 
@@ -960,36 +960,36 @@ type Move {
     accuracy: Integer
     contest_effect_id: Integer
     contest_type_id: Integer
-    contestcombo_first_moves: [Contestcombo]
-    contestcombo_second_moves: [Contestcombo]
     contesteffect_contest_effect: Contesteffect
     contesttype_contest_type: Contesttype
+    first_move_contestcombos: [Contestcombo]
+    first_move_supercontestcombos: [Supercontestcombo]
     generation: Generation
     generation_id: Integer
     id: ID!
-    machine_moves: [Machine]
+    known_move_pokemonevolutions: [Pokemonevolution]
     move_damage_class_id: Integer
     move_effect_chance: Integer
     move_effect_id: Integer
+    move_machines: [Machine]
+    move_moveattributemaps: [Moveattributemap]
+    move_movechanges: [Movechange]
+    move_moveflavortexts: [Moveflavortext]
+    move_movemeta: [Movemetum]
+    move_movemetastatchanges: [Movemetastatchange]
+    move_movenames: [Movename]
+    move_pokemonmoves: [Pokemonmove]
     move_target_id: Integer
-    moveattributemap_moves: [Moveattributemap]
-    movechange_moves: [Movechange]
     movedamageclass_move_damage_class: Movedamageclas
     moveeffect_move_effect: Moveeffect
-    moveflavortext_moves: [Moveflavortext]
-    movemetastatchange_moves: [Movemetastatchange]
-    movemetum_moves: [Movemetum]
-    movename_moves: [Movename]
     movetarget_move_target: Movetarget
     name: String!
-    pokemonevolution_known_moves: [Pokemonevolution]
-    pokemonmove_moves: [Pokemonmove]
     power: Integer
     pp: Integer
     priority: Integer
+    second_move_contestcombos: [Contestcombo]
+    second_move_supercontestcombos: [Supercontestcombo]
     super_contest_effect_id: Integer
-    supercontestcombo_first_moves: [Supercontestcombo]
-    supercontestcombo_second_moves: [Supercontestcombo]
     supercontesteffect_super_contest_effect: Supercontesteffect
     type: Type
     type_id: Integer
@@ -997,9 +997,9 @@ type Move {
 
 type Moveattribute {
     id: ID!
-    moveattributedescription_move_attributes: [Moveattributedescription]
-    moveattributemap_move_attributes: [Moveattributemap]
-    moveattributename_move_attributes: [Moveattributename]
+    move_attribute_moveattributedescriptions: [Moveattributedescription]
+    move_attribute_moveattributemaps: [Moveattributemap]
+    move_attribute_moveattributenames: [Moveattributename]
     name: String!
 }
 
@@ -1031,9 +1031,9 @@ type Moveattributename {
 
 type Movebattlestyle {
     id: ID!
-    movebattlestylename_move_battle_styles: [Movebattlestylename]
+    move_battle_style_movebattlestylenames: [Movebattlestylename]
+    move_battle_style_naturebattlestylepreferences: [Naturebattlestylepreference]
     name: String!
-    naturebattlestylepreference_move_battle_styles: [Naturebattlestylepreference]
 }
 
 type Movebattlestylename {
@@ -1063,12 +1063,12 @@ type Movechange {
 
 type Movedamageclas {
     id: ID!
+    move_damage_class_movedamageclassdescriptions: [Movedamageclassdescription]
+    move_damage_class_movedamageclassnames: [Movedamageclassname]
+    move_damage_class_stats: [Stat]
+    move_damage_class_types: [Type]
     move_damage_classes: [Move]
-    movedamageclassdescription_move_damage_classes: [Movedamageclassdescription]
-    movedamageclassname_move_damage_classes: [Movedamageclassname]
     name: String!
-    stat_move_damage_classes: [Stat]
-    type_move_damage_classes: [Type]
 }
 
 type Movedamageclassdescription {
@@ -1091,17 +1091,17 @@ type Movedamageclassname {
 
 type Moveeffect {
     id: ID!
+    move_effect_movechanges: [Movechange]
+    move_effect_moveeffectchanges: [Moveeffectchange]
+    move_effect_moveeffecteffecttexts: [Moveeffecteffecttext]
     move_effects: [Move]
-    movechange_move_effects: [Movechange]
-    moveeffectchange_move_effects: [Moveeffectchange]
-    moveeffecteffecttext_move_effects: [Moveeffecteffecttext]
 }
 
 type Moveeffectchange {
     id: ID!
+    move_effect_change_moveeffectchangeeffecttexts: [Moveeffectchangeeffecttext]
     move_effect_id: Integer
     moveeffect_move_effect: Moveeffect
-    moveeffectchangeeffecttext_move_effect_changes: [Moveeffectchangeeffecttext]
     version_group_id: Integer
     versiongroup_version_group: Versiongroup
 }
@@ -1138,11 +1138,11 @@ type Moveflavortext {
 
 type Movelearnmethod {
     id: ID!
-    movelearnmethoddescription_move_learn_methods: [Movelearnmethoddescription]
-    movelearnmethodname_move_learn_methods: [Movelearnmethodname]
+    move_learn_method_movelearnmethoddescriptions: [Movelearnmethoddescription]
+    move_learn_method_movelearnmethodnames: [Movelearnmethodname]
+    move_learn_method_pokemonmoves: [Pokemonmove]
+    move_learn_method_versiongroupmovelearnmethods: [Versiongroupmovelearnmethod]
     name: String!
-    pokemonmove_move_learn_methods: [Pokemonmove]
-    versiongroupmovelearnmethod_move_learn_methods: [Versiongroupmovelearnmethod]
 }
 
 type Movelearnmethoddescription {
@@ -1185,8 +1185,8 @@ type Movemetum {
 
 type Movemetaailment {
     id: ID!
-    movemetaailmentname_move_meta_ailments: [Movemetaailmentname]
-    movemetum_move_meta_ailments: [Movemetum]
+    move_meta_ailment_movemeta: [Movemetum]
+    move_meta_ailment_movemetaailmentnames: [Movemetaailmentname]
     name: String!
 }
 
@@ -1201,8 +1201,8 @@ type Movemetaailmentname {
 
 type Movemetacategory {
     id: ID!
-    movemetacategorydescription_move_meta_categories: [Movemetacategorydescription]
-    movemetum_move_meta_categories: [Movemetum]
+    move_meta_category_movemeta: [Movemetum]
+    move_meta_category_movemetacategorydescriptions: [Movemetacategorydescription]
     name: String!
 }
 
@@ -1235,9 +1235,9 @@ type Movename {
 
 type Movetarget {
     id: ID!
+    move_target_movetargetdescriptions: [Movetargetdescription]
+    move_target_movetargetnames: [Movetargetname]
     move_targets: [Move]
-    movetargetdescription_move_targets: [Movetargetdescription]
-    movetargetname_move_targets: [Movetargetname]
     name: String!
 }
 
@@ -1269,9 +1269,9 @@ type Nature {
     increased_stat_id: Integer
     likes_flavor_id: Integer
     name: String!
-    naturebattlestylepreference_natures: [Naturebattlestylepreference]
-    naturename_natures: [Naturename]
-    naturepokeathlonstat_natures: [Naturepokeathlonstat]
+    nature_naturebattlestylepreferences: [Naturebattlestylepreference]
+    nature_naturenames: [Naturename]
+    nature_naturepokeathlonstats: [Naturepokeathlonstat]
     stat_decreased: Stat
     stat_increased: Stat
 }
@@ -1317,8 +1317,8 @@ type Palpark {
 type Palparkarea {
     id: ID!
     name: String!
-    palpark_pal_park_areas: [Palpark]
-    palparkareaname_pal_park_areas: [Palparkareaname]
+    pal_park_area_palparkareanames: [Palparkareaname]
+    pal_park_area_palparks: [Palpark]
 }
 
 type Palparkareaname {
@@ -1333,8 +1333,8 @@ type Palparkareaname {
 type Pokeathlonstat {
     id: ID!
     name: String!
-    naturepokeathlonstat_pokeathlon_stats: [Naturepokeathlonstat]
-    pokeathlonstatname_pokeathlon_stats: [Pokeathlonstatname]
+    pokeathlon_stat_naturepokeathlonstats: [Naturepokeathlonstat]
+    pokeathlon_stat_pokeathlonstatnames: [Pokeathlonstatname]
 }
 
 type Pokeathlonstatname {
@@ -1350,10 +1350,10 @@ type Pokedex {
     id: ID!
     is_main_series: bool!
     name: String!
-    pokedexdescription_pokedexes: [Pokedexdescription]
-    pokedexname_pokedexes: [Pokedexname]
-    pokedexversiongroup_pokedexes: [Pokedexversiongroup]
-    pokemondexnumber_pokedexes: [Pokemondexnumber]
+    pokedex_pokedexdescriptions: [Pokedexdescription]
+    pokedex_pokedexnames: [Pokedexname]
+    pokedex_pokedexversiongroups: [Pokedexversiongroup]
+    pokedex_pokemondexnumbers: [Pokemondexnumber]
     region: Region
     region_id: Integer
 }
@@ -1397,8 +1397,8 @@ type Pokemonability {
 type Pokemoncolor {
     id: ID!
     name: String!
-    pokemoncolorname_pokemon_colors: [Pokemoncolorname]
-    pokemonspecy_pokemon_colors: [Pokemonspecy]
+    pokemon_color_pokemoncolornames: [Pokemoncolorname]
+    pokemon_color_pokemonspecies: [Pokemonspecy]
 }
 
 type Pokemoncolorname {
@@ -1471,10 +1471,10 @@ type Pokemonform {
     name: String!
     order: Integer
     pokemon: Pokemon
+    pokemon_form_pokemonformgenerations: [Pokemonformgeneration]
+    pokemon_form_pokemonformnames: [Pokemonformname]
+    pokemon_form_pokemonformsprites: [Pokemonformsprite]
     pokemon_id: Integer
-    pokemonformgeneration_pokemon_forms: [Pokemonformgeneration]
-    pokemonformname_pokemon_forms: [Pokemonformname]
-    pokemonformsprite_pokemon_forms: [Pokemonformsprite]
     version_group_id: Integer
     versiongroup_version_group: Versiongroup
 }
@@ -1517,8 +1517,8 @@ type Pokemongameindex {
 type Pokemonhabitat {
     id: ID!
     name: String!
-    pokemonhabitatname_pokemon_habitats: [Pokemonhabitatname]
-    pokemonspecy_pokemon_habitats: [Pokemonspecy]
+    pokemon_habitat_pokemonhabitatnames: [Pokemonhabitatname]
+    pokemon_habitat_pokemonspecies: [Pokemonspecy]
 }
 
 type Pokemonhabitatname {
@@ -1558,8 +1558,8 @@ type Pokemonmove {
 type Pokemonshape {
     id: ID!
     name: String!
-    pokemonshapename_pokemon_shapes: [Pokemonshapename]
-    pokemonspecy_pokemon_shapes: [Pokemonspecy]
+    pokemon_shape_pokemonshapenames: [Pokemonshapename]
+    pokemon_shape_pokemonspecies: [Pokemonspecy]
 }
 
 type Pokemonshapename {
@@ -1577,7 +1577,9 @@ type Pokemonspecy {
     capture_rate: Integer!
     evolution_chain_id: Integer
     evolutionchain_evolution_chain: Evolutionchain
+    evolved_specy_pokemonevolutions: [Pokemonevolution]
     evolves_from_species_id: Integer
+    evolves_from_specy_pokemonspecies: [Pokemonspecy]
     forms_switchable: bool!
     gender_rate: Integer!
     generation: Generation
@@ -1590,24 +1592,22 @@ type Pokemonspecy {
     is_baby: bool!
     name: String!
     order: Integer
-    palpark_pokemon_species: [Palpark]
+    party_specy_pokemonevolutions: [Pokemonevolution]
     pokemon_color_id: Integer
     pokemon_habitat_id: Integer
     pokemon_shape_id: Integer
     pokemon_species: [Pokemon]
+    pokemon_specy_palparks: [Palpark]
+    pokemon_specy_pokemondexnumbers: [Pokemondexnumber]
+    pokemon_specy_pokemonegggroups: [Pokemonegggroup]
+    pokemon_specy_pokemonspeciesdescriptions: [Pokemonspeciesdescription]
+    pokemon_specy_pokemonspeciesflavortexts: [Pokemonspeciesflavortext]
+    pokemon_specy_pokemonspeciesnames: [Pokemonspeciesname]
     pokemoncolor_pokemon_color: Pokemoncolor
-    pokemondexnumber_pokemon_species: [Pokemondexnumber]
-    pokemonegggroup_pokemon_species: [Pokemonegggroup]
-    pokemonevolution_evolved_species: [Pokemonevolution]
-    pokemonevolution_party_species: [Pokemonevolution]
-    pokemonevolution_trade_species: [Pokemonevolution]
     pokemonhabitat_pokemon_habitat: Pokemonhabitat
     pokemonshape_pokemon_shape: Pokemonshape
-    pokemonspeciesdescription_pokemon_species: [Pokemonspeciesdescription]
-    pokemonspeciesflavortext_pokemon_species: [Pokemonspeciesflavortext]
-    pokemonspeciesname_pokemon_species: [Pokemonspeciesname]
-    pokemonspecy_evolves_from_species: [Pokemonspecy]
     pokemonspecy_evolves_from_specy: Pokemonspecy
+    trade_specy_pokemonevolutions: [Pokemonevolution]
 }
 
 type Pokemonspeciesdescription {
@@ -1667,13 +1667,13 @@ type Pokemontype {
 }
 
 type Region {
-    generation_regions: [Generation]
     id: ID!
-    location_regions: [Location]
     name: String!
-    pokedex_regions: [Pokedex]
-    regionname_regions: [Regionname]
-    versiongroupregion_regions: [Versiongroupregion]
+    region_generations: [Generation]
+    region_locations: [Location]
+    region_pokedexes: [Pokedex]
+    region_regionnames: [Regionname]
+    region_versiongroupregions: [Versiongroupregion]
 }
 
 type Regionname {
@@ -1686,18 +1686,18 @@ type Regionname {
 }
 
 type Stat {
-    characteristic_stats: [Characteristic]
+    decreased_stat_natures: [Nature]
     game_index: Integer!
     id: ID!
+    increased_stat_natures: [Nature]
     is_battle_only: bool!
     move_damage_class_id: Integer
     movedamageclass_move_damage_class: Movedamageclas
-    movemetastatchange_stats: [Movemetastatchange]
     name: String!
-    nature_decreased_stats: [Nature]
-    nature_increased_stats: [Nature]
-    pokemonstat_stats: [Pokemonstat]
-    statname_stats: [Statname]
+    stat_characteristics: [Characteristic]
+    stat_movemetastatchanges: [Movemetastatchange]
+    stat_pokemonstats: [Pokemonstat]
+    stat_statnames: [Statname]
 }
 
 type Statname {
@@ -1720,8 +1720,8 @@ type Supercontestcombo {
 type Supercontesteffect {
     appeal: Integer!
     id: ID!
-    move_super_contest_effects: [Move]
-    supercontesteffectflavortext_super_contest_effects: [Supercontesteffectflavortext]
+    super_contest_effect_moves: [Move]
+    super_contest_effect_supercontesteffectflavortexts: [Supercontesteffectflavortext]
 }
 
 type Supercontesteffectflavortext {
@@ -1734,22 +1734,22 @@ type Supercontesteffectflavortext {
 }
 
 type Type {
-    berry_natural_gift_types: [Berry]
+    damage_type_typeefficacies: [Typeefficacy]
     generation: Generation
     generation_id: Integer
     id: ID!
+    known_move_type_pokemonevolutions: [Pokemonevolution]
     move_damage_class_id: Integer
-    move_types: [Move]
-    movechange_types: [Movechange]
     movedamageclass_move_damage_class: Movedamageclas
     name: String!
-    pokemonevolution_known_move_types: [Pokemonevolution]
-    pokemonevolution_party_types: [Pokemonevolution]
-    pokemontype_types: [Pokemontype]
-    typeefficacy_damage_types: [Typeefficacy]
-    typeefficacy_target_types: [Typeefficacy]
-    typegameindex_types: [Typegameindex]
-    typename_types: [Typename]
+    natural_gift_type_berries: [Berry]
+    party_type_pokemonevolutions: [Pokemonevolution]
+    target_type_typeefficacies: [Typeefficacy]
+    type_movechanges: [Movechange]
+    type_moves: [Move]
+    type_pokemontypes: [Pokemontype]
+    type_typegameindices: [Typegameindex]
+    type_typenames: [Typename]
 }
 
 type Typeefficacy {
@@ -1780,38 +1780,38 @@ type Typename {
 }
 
 type Version {
-    encounter_versions: [Encounter]
     id: ID!
-    locationareaencounterrate_versions: [Locationareaencounterrate]
     name: String!
-    pokemongameindex_versions: [Pokemongameindex]
-    pokemonitem_versions: [Pokemonitem]
-    pokemonspeciesflavortext_versions: [Pokemonspeciesflavortext]
+    version_encounters: [Encounter]
     version_group_id: Integer
+    version_locationareaencounterrates: [Locationareaencounterrate]
+    version_pokemongameindices: [Pokemongameindex]
+    version_pokemonitems: [Pokemonitem]
+    version_pokemonspeciesflavortexts: [Pokemonspeciesflavortext]
+    version_versionnames: [Versionname]
     versiongroup_version_group: Versiongroup
-    versionname_versions: [Versionname]
 }
 
 type Versiongroup {
-    abilitychange_version_groups: [Abilitychange]
-    abilityflavortext_version_groups: [Abilityflavortext]
-    encounterslot_version_groups: [Encounterslot]
     generation: Generation
     generation_id: Integer
     id: ID!
-    itemflavortext_version_groups: [Itemflavortext]
-    machine_version_groups: [Machine]
-    movechange_version_groups: [Movechange]
-    moveeffectchange_version_groups: [Moveeffectchange]
-    moveflavortext_version_groups: [Moveflavortext]
     name: String!
     order: Integer
-    pokedexversiongroup_version_groups: [Pokedexversiongroup]
-    pokemonform_version_groups: [Pokemonform]
-    pokemonmove_version_groups: [Pokemonmove]
+    version_group_abilitychanges: [Abilitychange]
+    version_group_abilityflavortexts: [Abilityflavortext]
+    version_group_encounterslots: [Encounterslot]
+    version_group_itemflavortexts: [Itemflavortext]
+    version_group_machines: [Machine]
+    version_group_movechanges: [Movechange]
+    version_group_moveeffectchanges: [Moveeffectchange]
+    version_group_moveflavortexts: [Moveflavortext]
+    version_group_pokedexversiongroups: [Pokedexversiongroup]
+    version_group_pokemonforms: [Pokemonform]
+    version_group_pokemonmoves: [Pokemonmove]
+    version_group_versiongroupmovelearnmethods: [Versiongroupmovelearnmethod]
+    version_group_versiongroupregions: [Versiongroupregion]
     version_groups: [Version]
-    versiongroupmovelearnmethod_version_groups: [Versiongroupmovelearnmethod]
-    versiongroupregion_version_groups: [Versiongroupregion]
 }
 
 type Versiongroupmovelearnmethod {

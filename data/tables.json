@@ -14,7 +14,7 @@
     }
   },
   "AuthGroup": {
-    "auth_group_permissions": {
+    "group_auth_permissions": {
       "table": "auth_group_permissions",
       "clsname": "AuthGroupPermission",
       "direction": "ONETOMANY",
@@ -26,7 +26,7 @@
         }
       ]
     },
-    "auth_user_groups": {
+    "group_auth_users": {
       "table": "auth_user_groups",
       "clsname": "AuthUserGroup",
       "direction": "ONETOMANY",
@@ -86,30 +86,6 @@
     }
   },
   "AuthPermission": {
-    "auth_group_permissions": {
-      "table": "auth_group_permissions",
-      "clsname": "AuthGroupPermission",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "auth_permission.id",
-          "to": "auth_group_permissions.permission_id"
-        }
-      ]
-    },
-    "auth_user_permissions": {
-      "table": "auth_user_user_permissions",
-      "clsname": "AuthUserPermission",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "auth_permission.id",
-          "to": "auth_user_user_permissions.permission_id"
-        }
-      ]
-    },
     "codename": {
       "type": "String",
       "nullable": false
@@ -137,48 +113,36 @@
     "name": {
       "type": "String",
       "nullable": false
-    }
-  },
-  "AuthUser": {
-    "auth_user_groups": {
-      "table": "auth_user_groups",
-      "clsname": "AuthUserGroup",
+    },
+    "permission_auth_groups": {
+      "table": "auth_group_permissions",
+      "clsname": "AuthGroupPermission",
       "direction": "ONETOMANY",
       "uselist": true,
       "relation": [
         {
-          "from": "auth_user.id",
-          "to": "auth_user_groups.user_id"
+          "from": "auth_permission.id",
+          "to": "auth_group_permissions.permission_id"
         }
       ]
     },
-    "auth_user_permissions": {
+    "permission_auth_users": {
       "table": "auth_user_user_permissions",
       "clsname": "AuthUserPermission",
       "direction": "ONETOMANY",
       "uselist": true,
       "relation": [
         {
-          "from": "auth_user.id",
-          "to": "auth_user_user_permissions.user_id"
+          "from": "auth_permission.id",
+          "to": "auth_user_user_permissions.permission_id"
         }
       ]
-    },
+    }
+  },
+  "AuthUser": {
     "date_joined": {
       "type": "datetime",
       "nullable": false
-    },
-    "django_admin_log_users": {
-      "table": "django_admin_log",
-      "clsname": "DjangoAdminLog",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "auth_user.id",
-          "to": "django_admin_log.user_id"
-        }
-      ]
     },
     "email": {
       "type": "String",
@@ -216,7 +180,43 @@
       "type": "String",
       "nullable": false
     },
-    "tastypie_apikey_users": {
+    "user_auth_groups": {
+      "table": "auth_user_groups",
+      "clsname": "AuthUserGroup",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "auth_user.id",
+          "to": "auth_user_groups.user_id"
+        }
+      ]
+    },
+    "user_auth_permissions": {
+      "table": "auth_user_user_permissions",
+      "clsname": "AuthUserPermission",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "auth_user.id",
+          "to": "auth_user_user_permissions.user_id"
+        }
+      ]
+    },
+    "user_django_admin_logs": {
+      "table": "django_admin_log",
+      "clsname": "DjangoAdminLog",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "auth_user.id",
+          "to": "django_admin_log.user_id"
+        }
+      ]
+    },
+    "user_tastypie_apikeys": {
       "table": "tastypie_apikey",
       "clsname": "TastypieApikey",
       "direction": "ONETOMANY",
@@ -382,7 +382,7 @@
       "type": "String",
       "nullable": false
     },
-    "auth_permission_content_types": {
+    "content_type_auth_permissions": {
       "table": "auth_permission",
       "clsname": "AuthPermission",
       "direction": "ONETOMANY",
@@ -394,7 +394,7 @@
         }
       ]
     },
-    "django_admin_log_content_types": {
+    "content_type_django_admin_logs": {
       "table": "django_admin_log",
       "clsname": "DjangoAdminLog",
       "direction": "ONETOMANY",
@@ -598,6 +598,18 @@
       "type": "datetime",
       "nullable": false
     },
+    "egggroup_pokemon_egg_groups": {
+      "table": "pokemon_pokemon_egg_group",
+      "clsname": "PokemonEggGroup",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_egggroup.id",
+          "to": "pokemon_pokemon_egg_group.egggroup_id"
+        }
+      ]
+    },
     "id": {
       "type": "ID",
       "nullable": false
@@ -609,18 +621,6 @@
     "name": {
       "type": "String",
       "nullable": false
-    },
-    "pokemon_egg_group_egggroups": {
-      "table": "pokemon_pokemon_egg_group",
-      "clsname": "PokemonEggGroup",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_egggroup.id",
-          "to": "pokemon_pokemon_egg_group.egggroup_id"
-        }
-      ]
     }
   },
   "PokemonEvolution": {
@@ -686,6 +686,18 @@
       "type": "datetime",
       "nullable": false
     },
+    "game_pokemon_descriptions": {
+      "table": "pokemon_description_game",
+      "clsname": "PokemonDescriptionGame",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_game.id",
+          "to": "pokemon_description_game.game_id"
+        }
+      ]
+    },
     "generation": {
       "type": "Integer",
       "nullable": false
@@ -701,18 +713,6 @@
     "name": {
       "type": "String",
       "nullable": false
-    },
-    "pokemon_description_games": {
-      "table": "pokemon_description_game",
-      "clsname": "PokemonDescriptionGame",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_game.id",
-          "to": "pokemon_description_game.game_id"
-        }
-      ]
     },
     "release_year": {
       "type": "Integer",
@@ -744,11 +744,7 @@
       "type": "datetime",
       "nullable": false
     },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "pokemon_move_etypes": {
+    "move_pokemon_etypes": {
       "table": "pokemon_move_etype",
       "clsname": "PokemonMoveEtype",
       "direction": "ONETOMANY",
@@ -760,7 +756,7 @@
         }
       ]
     },
-    "pokemon_movepokemon_moves": {
+    "move_pokemon_movepokemons": {
       "table": "pokemon_movepokemon",
       "clsname": "PokemonMovepokemon",
       "direction": "ONETOMANY",
@@ -771,6 +767,10 @@
           "to": "pokemon_movepokemon.move_id"
         }
       ]
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
     },
     "power": {
       "type": "Integer",
@@ -896,18 +896,6 @@
       "type": "Integer",
       "nullable": false
     },
-    "encounter_pokemons": {
-      "table": "pokemon_v2_encounter",
-      "clsname": "Encounter",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_pokemon.id",
-          "to": "pokemon_v2_encounter.pokemon_id"
-        }
-      ]
-    },
     "height": {
       "type": "Integer",
       "nullable": false
@@ -928,11 +916,19 @@
       "type": "Integer",
       "nullable": true
     },
-    "pokemon_species_id": {
-      "type": "Integer",
-      "nullable": true
+    "pokemon_encounters": {
+      "table": "pokemon_v2_encounter",
+      "clsname": "Encounter",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_pokemon.id",
+          "to": "pokemon_v2_encounter.pokemon_id"
+        }
+      ]
     },
-    "pokemonability_pokemons": {
+    "pokemon_pokemonabilities": {
       "table": "pokemon_v2_pokemonability",
       "clsname": "Pokemonability",
       "direction": "ONETOMANY",
@@ -944,7 +940,7 @@
         }
       ]
     },
-    "pokemonform_pokemons": {
+    "pokemon_pokemonforms": {
       "table": "pokemon_v2_pokemonform",
       "clsname": "Pokemonform",
       "direction": "ONETOMANY",
@@ -956,7 +952,7 @@
         }
       ]
     },
-    "pokemongameindex_pokemons": {
+    "pokemon_pokemongameindices": {
       "table": "pokemon_v2_pokemongameindex",
       "clsname": "Pokemongameindex",
       "direction": "ONETOMANY",
@@ -968,7 +964,7 @@
         }
       ]
     },
-    "pokemonitem_pokemons": {
+    "pokemon_pokemonitems": {
       "table": "pokemon_v2_pokemonitem",
       "clsname": "Pokemonitem",
       "direction": "ONETOMANY",
@@ -980,7 +976,7 @@
         }
       ]
     },
-    "pokemonmove_pokemons": {
+    "pokemon_pokemonmoves": {
       "table": "pokemon_v2_pokemonmove",
       "clsname": "Pokemonmove",
       "direction": "ONETOMANY",
@@ -992,19 +988,7 @@
         }
       ]
     },
-    "pokemonspecy_pokemon_specy": {
-      "table": "pokemon_v2_pokemonspecies",
-      "clsname": "Pokemonspecy",
-      "direction": "MANYTOONE",
-      "uselist": false,
-      "relation": [
-        {
-          "from": "pokemon_v2_pokemon.pokemon_species_id",
-          "to": "pokemon_v2_pokemonspecies.id"
-        }
-      ]
-    },
-    "pokemonsprite_pokemons": {
+    "pokemon_pokemonsprites": {
       "table": "pokemon_v2_pokemonsprites",
       "clsname": "Pokemonsprite",
       "direction": "ONETOMANY",
@@ -1016,7 +1000,7 @@
         }
       ]
     },
-    "pokemonstat_pokemons": {
+    "pokemon_pokemonstats": {
       "table": "pokemon_v2_pokemonstat",
       "clsname": "Pokemonstat",
       "direction": "ONETOMANY",
@@ -1028,7 +1012,7 @@
         }
       ]
     },
-    "pokemontype_pokemons": {
+    "pokemon_pokemontypes": {
       "table": "pokemon_v2_pokemontype",
       "clsname": "Pokemontype",
       "direction": "ONETOMANY",
@@ -1037,6 +1021,22 @@
         {
           "from": "pokemon_v2_pokemon.id",
           "to": "pokemon_v2_pokemontype.pokemon_id"
+        }
+      ]
+    },
+    "pokemon_species_id": {
+      "type": "Integer",
+      "nullable": true
+    },
+    "pokemonspecy_pokemon_specy": {
+      "table": "pokemon_v2_pokemonspecies",
+      "clsname": "Pokemonspecy",
+      "direction": "MANYTOONE",
+      "uselist": false,
+      "relation": [
+        {
+          "from": "pokemon_v2_pokemon.pokemon_species_id",
+          "to": "pokemon_v2_pokemonspecies.id"
         }
       ]
     },
@@ -1104,7 +1104,7 @@
       "type": "String",
       "nullable": false
     },
-    "pokemon_sprites": {
+    "sprite_pokemons": {
       "table": "pokemon_pokemon_sprites",
       "clsname": "PokemonSprite",
       "direction": "ONETOMANY",
@@ -1122,6 +1122,18 @@
       "type": "datetime",
       "nullable": false
     },
+    "frm_pokemon_typecharts": {
+      "table": "pokemon_typechart",
+      "clsname": "PokemonTypechart",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_type.id",
+          "to": "pokemon_typechart.frm_id"
+        }
+      ]
+    },
     "id": {
       "type": "ID",
       "nullable": false
@@ -1134,31 +1146,7 @@
       "type": "String",
       "nullable": false
     },
-    "pokemon_move_etype_types": {
-      "table": "pokemon_move_etype",
-      "clsname": "PokemonMoveEtype",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_type.id",
-          "to": "pokemon_move_etype.type_id"
-        }
-      ]
-    },
-    "pokemon_typechart_frms": {
-      "table": "pokemon_typechart",
-      "clsname": "PokemonTypechart",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_type.id",
-          "to": "pokemon_typechart.frm_id"
-        }
-      ]
-    },
-    "pokemon_typechart_tos": {
+    "to_pokemon_typecharts": {
       "table": "pokemon_typechart",
       "clsname": "PokemonTypechart",
       "direction": "ONETOMANY",
@@ -1170,7 +1158,19 @@
         }
       ]
     },
-    "pokemon_types": {
+    "type_pokemon_move_etypes": {
+      "table": "pokemon_move_etype",
+      "clsname": "PokemonMoveEtype",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_type.id",
+          "to": "pokemon_move_etype.type_id"
+        }
+      ]
+    },
+    "type_pokemons": {
       "table": "pokemon_pokemon_types",
       "clsname": "PokemonType",
       "direction": "ONETOMANY",
@@ -1234,7 +1234,7 @@
     }
   },
   "Ability": {
-    "abilitychange_abilities": {
+    "ability_abilitychanges": {
       "table": "pokemon_v2_abilitychange",
       "clsname": "Abilitychange",
       "direction": "ONETOMANY",
@@ -1246,7 +1246,7 @@
         }
       ]
     },
-    "abilityeffecttext_abilities": {
+    "ability_abilityeffecttexts": {
       "table": "pokemon_v2_abilityeffecttext",
       "clsname": "Abilityeffecttext",
       "direction": "ONETOMANY",
@@ -1258,7 +1258,7 @@
         }
       ]
     },
-    "abilityflavortext_abilities": {
+    "ability_abilityflavortexts": {
       "table": "pokemon_v2_abilityflavortext",
       "clsname": "Abilityflavortext",
       "direction": "ONETOMANY",
@@ -1270,7 +1270,7 @@
         }
       ]
     },
-    "abilityname_abilities": {
+    "ability_abilitynames": {
       "table": "pokemon_v2_abilityname",
       "clsname": "Abilityname",
       "direction": "ONETOMANY",
@@ -1279,6 +1279,18 @@
         {
           "from": "pokemon_v2_ability.id",
           "to": "pokemon_v2_abilityname.ability_id"
+        }
+      ]
+    },
+    "ability_pokemonabilities": {
+      "table": "pokemon_v2_pokemonability",
+      "clsname": "Pokemonability",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_ability.id",
+          "to": "pokemon_v2_pokemonability.ability_id"
         }
       ]
     },
@@ -1309,18 +1321,6 @@
     "name": {
       "type": "String",
       "nullable": false
-    },
-    "pokemonability_abilities": {
-      "table": "pokemon_v2_pokemonability",
-      "clsname": "Pokemonability",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_ability.id",
-          "to": "pokemon_v2_pokemonability.ability_id"
-        }
-      ]
     }
   },
   "Abilitychange": {
@@ -1336,11 +1336,7 @@
         }
       ]
     },
-    "ability_id": {
-      "type": "Integer",
-      "nullable": true
-    },
-    "abilitychangeeffecttext_ability_changes": {
+    "ability_change_abilitychangeeffecttexts": {
       "table": "pokemon_v2_abilitychangeeffecttext",
       "clsname": "Abilitychangeeffecttext",
       "direction": "ONETOMANY",
@@ -1351,6 +1347,10 @@
           "to": "pokemon_v2_abilitychangeeffecttext.ability_change_id"
         }
       ]
+    },
+    "ability_id": {
+      "type": "Integer",
+      "nullable": true
     },
     "id": {
       "type": "ID",
@@ -1562,6 +1562,18 @@
     }
   },
   "Berry": {
+    "berry_berryflavormaps": {
+      "table": "pokemon_v2_berryflavormap",
+      "clsname": "Berryflavormap",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_berry.id",
+          "to": "pokemon_v2_berryflavormap.berry_id"
+        }
+      ]
+    },
     "berry_firmness_id": {
       "type": "Integer",
       "nullable": true
@@ -1575,18 +1587,6 @@
         {
           "from": "pokemon_v2_berry.berry_firmness_id",
           "to": "pokemon_v2_berryfirmness.id"
-        }
-      ]
-    },
-    "berryflavormap_berries": {
-      "table": "pokemon_v2_berryflavormap",
-      "clsname": "Berryflavormap",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_berry.id",
-          "to": "pokemon_v2_berryflavormap.berry_id"
         }
       ]
     },
@@ -1656,6 +1656,18 @@
     }
   },
   "Berryfirmness": {
+    "berry_firmness_berryfirmnessnames": {
+      "table": "pokemon_v2_berryfirmnessname",
+      "clsname": "Berryfirmnessname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_berryfirmness.id",
+          "to": "pokemon_v2_berryfirmnessname.berry_firmness_id"
+        }
+      ]
+    },
     "berry_firmnesses": {
       "table": "pokemon_v2_berry",
       "clsname": "Berry",
@@ -1665,18 +1677,6 @@
         {
           "from": "pokemon_v2_berryfirmness.id",
           "to": "pokemon_v2_berry.berry_firmness_id"
-        }
-      ]
-    },
-    "berryfirmnessname_berry_firmnesses": {
-      "table": "pokemon_v2_berryfirmnessname",
-      "clsname": "Berryfirmnessname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_berryfirmness.id",
-          "to": "pokemon_v2_berryfirmnessname.berry_firmness_id"
         }
       ]
     },
@@ -1732,7 +1732,7 @@
     }
   },
   "Berryflavor": {
-    "berryflavormap_berry_flavors": {
+    "berry_flavor_berryflavormaps": {
       "table": "pokemon_v2_berryflavormap",
       "clsname": "Berryflavormap",
       "direction": "ONETOMANY",
@@ -1744,7 +1744,7 @@
         }
       ]
     },
-    "berryflavorname_berry_flavors": {
+    "berry_flavor_berryflavornames": {
       "table": "pokemon_v2_berryflavorname",
       "clsname": "Berryflavorname",
       "direction": "ONETOMANY",
@@ -1772,15 +1772,7 @@
         }
       ]
     },
-    "id": {
-      "type": "ID",
-      "nullable": false
-    },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "nature_hates_flavors": {
+    "hates_flavor_natures": {
       "table": "pokemon_v2_nature",
       "clsname": "Nature",
       "direction": "ONETOMANY",
@@ -1792,7 +1784,11 @@
         }
       ]
     },
-    "nature_likes_flavors": {
+    "id": {
+      "type": "ID",
+      "nullable": false
+    },
+    "likes_flavor_natures": {
       "table": "pokemon_v2_nature",
       "clsname": "Nature",
       "direction": "ONETOMANY",
@@ -1803,6 +1799,10 @@
           "to": "pokemon_v2_nature.likes_flavor_id"
         }
       ]
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
     }
   },
   "Berryflavormap": {
@@ -1890,7 +1890,7 @@
     }
   },
   "Characteristic": {
-    "characteristicdescription_characteristics": {
+    "characteristic_characteristicdescriptions": {
       "table": "pokemon_v2_characteristicdescription",
       "clsname": "Characteristicdescription",
       "direction": "ONETOMANY",
@@ -2012,7 +2012,7 @@
       "type": "Integer",
       "nullable": false
     },
-    "contesteffecteffecttext_contest_effects": {
+    "contest_effect_contesteffecteffecttexts": {
       "table": "pokemon_v2_contesteffecteffecttext",
       "clsname": "Contesteffecteffecttext",
       "direction": "ONETOMANY",
@@ -2024,7 +2024,7 @@
         }
       ]
     },
-    "contesteffectflavortext_contest_effects": {
+    "contest_effect_contesteffectflavortexts": {
       "table": "pokemon_v2_contesteffectflavortext",
       "clsname": "Contesteffectflavortext",
       "direction": "ONETOMANY",
@@ -2036,15 +2036,7 @@
         }
       ]
     },
-    "id": {
-      "type": "ID",
-      "nullable": false
-    },
-    "jam": {
-      "type": "Integer",
-      "nullable": false
-    },
-    "move_contest_effects": {
+    "contest_effect_moves": {
       "table": "pokemon_v2_move",
       "clsname": "Move",
       "direction": "ONETOMANY",
@@ -2055,6 +2047,14 @@
           "to": "pokemon_v2_move.contest_effect_id"
         }
       ]
+    },
+    "id": {
+      "type": "ID",
+      "nullable": false
+    },
+    "jam": {
+      "type": "Integer",
+      "nullable": false
     }
   },
   "Contesteffecteffecttext": {
@@ -2142,7 +2142,7 @@
     }
   },
   "Contesttype": {
-    "berryflavor_contest_types": {
+    "contest_type_berryflavors": {
       "table": "pokemon_v2_berryflavor",
       "clsname": "Berryflavor",
       "direction": "ONETOMANY",
@@ -2154,7 +2154,7 @@
         }
       ]
     },
-    "contesttypename_contest_types": {
+    "contest_type_contesttypenames": {
       "table": "pokemon_v2_contesttypename",
       "clsname": "Contesttypename",
       "direction": "ONETOMANY",
@@ -2166,11 +2166,7 @@
         }
       ]
     },
-    "id": {
-      "type": "ID",
-      "nullable": false
-    },
-    "move_contest_types": {
+    "contest_type_moves": {
       "table": "pokemon_v2_move",
       "clsname": "Move",
       "direction": "ONETOMANY",
@@ -2181,6 +2177,10 @@
           "to": "pokemon_v2_move.contest_type_id"
         }
       ]
+    },
+    "id": {
+      "type": "ID",
+      "nullable": false
     },
     "name": {
       "type": "String",
@@ -2238,7 +2238,7 @@
     }
   },
   "Egggroup": {
-    "egggroupname_egg_groups": {
+    "egg_group_egggroupnames": {
       "table": "pokemon_v2_egggroupname",
       "clsname": "Egggroupname",
       "direction": "ONETOMANY",
@@ -2250,15 +2250,7 @@
         }
       ]
     },
-    "id": {
-      "type": "ID",
-      "nullable": false
-    },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "pokemonegggroup_egg_groups": {
+    "egg_group_pokemonegggroups": {
       "table": "pokemon_v2_pokemonegggroup",
       "clsname": "Pokemonegggroup",
       "direction": "ONETOMANY",
@@ -2269,6 +2261,14 @@
           "to": "pokemon_v2_pokemonegggroup.egg_group_id"
         }
       ]
+    },
+    "id": {
+      "type": "ID",
+      "nullable": false
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
     }
   },
   "Egggroupname": {
@@ -2314,11 +2314,7 @@
     }
   },
   "Encounter": {
-    "encounter_slot_id": {
-      "type": "Integer",
-      "nullable": true
-    },
-    "encounterconditionvaluemap_encounters": {
+    "encounter_encounterconditionvaluemaps": {
       "table": "pokemon_v2_encounterconditionvaluemap",
       "clsname": "Encounterconditionvaluemap",
       "direction": "ONETOMANY",
@@ -2329,6 +2325,10 @@
           "to": "pokemon_v2_encounterconditionvaluemap.encounter_id"
         }
       ]
+    },
+    "encounter_slot_id": {
+      "type": "Integer",
+      "nullable": true
     },
     "encounterslot_encounter_slot": {
       "table": "pokemon_v2_encounterslot",
@@ -2404,7 +2404,7 @@
     }
   },
   "Encountercondition": {
-    "encounterconditionname_encounter_conditions": {
+    "encounter_condition_encounterconditionnames": {
       "table": "pokemon_v2_encounterconditionname",
       "clsname": "Encounterconditionname",
       "direction": "ONETOMANY",
@@ -2416,7 +2416,7 @@
         }
       ]
     },
-    "encounterconditionvalue_encounter_conditions": {
+    "encounter_condition_encounterconditionvalues": {
       "table": "pokemon_v2_encounterconditionvalue",
       "clsname": "Encounterconditionvalue",
       "direction": "ONETOMANY",
@@ -2484,19 +2484,7 @@
       "type": "Integer",
       "nullable": true
     },
-    "encountercondition_encounter_condition": {
-      "table": "pokemon_v2_encountercondition",
-      "clsname": "Encountercondition",
-      "direction": "MANYTOONE",
-      "uselist": false,
-      "relation": [
-        {
-          "from": "pokemon_v2_encounterconditionvalue.encounter_condition_id",
-          "to": "pokemon_v2_encountercondition.id"
-        }
-      ]
-    },
-    "encounterconditionvaluemap_encounter_condition_values": {
+    "encounter_condition_value_encounterconditionvaluemaps": {
       "table": "pokemon_v2_encounterconditionvaluemap",
       "clsname": "Encounterconditionvaluemap",
       "direction": "ONETOMANY",
@@ -2508,7 +2496,7 @@
         }
       ]
     },
-    "encounterconditionvaluename_encounter_condition_values": {
+    "encounter_condition_value_encounterconditionvaluenames": {
       "table": "pokemon_v2_encounterconditionvaluename",
       "clsname": "Encounterconditionvaluename",
       "direction": "ONETOMANY",
@@ -2517,6 +2505,18 @@
         {
           "from": "pokemon_v2_encounterconditionvalue.id",
           "to": "pokemon_v2_encounterconditionvaluename.encounter_condition_value_id"
+        }
+      ]
+    },
+    "encountercondition_encounter_condition": {
+      "table": "pokemon_v2_encountercondition",
+      "clsname": "Encountercondition",
+      "direction": "MANYTOONE",
+      "uselist": false,
+      "relation": [
+        {
+          "from": "pokemon_v2_encounterconditionvalue.encounter_condition_id",
+          "to": "pokemon_v2_encountercondition.id"
         }
       ]
     },
@@ -2614,7 +2614,7 @@
     }
   },
   "Encountermethod": {
-    "encountermethodname_encounter_methods": {
+    "encounter_method_encountermethodnames": {
       "table": "pokemon_v2_encountermethodname",
       "clsname": "Encountermethodname",
       "direction": "ONETOMANY",
@@ -2626,7 +2626,7 @@
         }
       ]
     },
-    "encounterslot_encounter_methods": {
+    "encounter_method_encounterslots": {
       "table": "pokemon_v2_encounterslot",
       "clsname": "Encounterslot",
       "direction": "ONETOMANY",
@@ -2638,11 +2638,7 @@
         }
       ]
     },
-    "id": {
-      "type": "ID",
-      "nullable": false
-    },
-    "locationareaencounterrate_encounter_methods": {
+    "encounter_method_locationareaencounterrates": {
       "table": "pokemon_v2_locationareaencounterrate",
       "clsname": "Locationareaencounterrate",
       "direction": "ONETOMANY",
@@ -2653,6 +2649,10 @@
           "to": "pokemon_v2_locationareaencounterrate.encounter_method_id"
         }
       ]
+    },
+    "id": {
+      "type": "ID",
+      "nullable": false
     },
     "name": {
       "type": "String",
@@ -2768,6 +2768,18 @@
       "type": "Integer",
       "nullable": true
     },
+    "evolution_chain_pokemonspecies": {
+      "table": "pokemon_v2_pokemonspecies",
+      "clsname": "Pokemonspecy",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_evolutionchain.id",
+          "to": "pokemon_v2_pokemonspecies.evolution_chain_id"
+        }
+      ]
+    },
     "id": {
       "type": "ID",
       "nullable": false
@@ -2783,22 +2795,10 @@
           "to": "pokemon_v2_item.id"
         }
       ]
-    },
-    "pokemonspecy_evolution_chains": {
-      "table": "pokemon_v2_pokemonspecies",
-      "clsname": "Pokemonspecy",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_evolutionchain.id",
-          "to": "pokemon_v2_pokemonspecies.evolution_chain_id"
-        }
-      ]
     }
   },
   "Evolutiontrigger": {
-    "evolutiontriggername_evolution_triggers": {
+    "evolution_trigger_evolutiontriggernames": {
       "table": "pokemon_v2_evolutiontriggername",
       "clsname": "Evolutiontriggername",
       "direction": "ONETOMANY",
@@ -2810,15 +2810,7 @@
         }
       ]
     },
-    "id": {
-      "type": "ID",
-      "nullable": false
-    },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "pokemonevolution_evolution_triggers": {
+    "evolution_trigger_pokemonevolutions": {
       "table": "pokemon_v2_pokemonevolution",
       "clsname": "Pokemonevolution",
       "direction": "ONETOMANY",
@@ -2829,6 +2821,14 @@
           "to": "pokemon_v2_pokemonevolution.evolution_trigger_id"
         }
       ]
+    },
+    "id": {
+      "type": "ID",
+      "nullable": false
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
     }
   },
   "Evolutiontriggername": {
@@ -2904,15 +2904,7 @@
     }
   },
   "Gender": {
-    "id": {
-      "type": "ID",
-      "nullable": false
-    },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "pokemonevolution_genders": {
+    "gender_pokemonevolutions": {
       "table": "pokemon_v2_pokemonevolution",
       "clsname": "Pokemonevolution",
       "direction": "ONETOMANY",
@@ -2923,10 +2915,18 @@
           "to": "pokemon_v2_pokemonevolution.gender_id"
         }
       ]
+    },
+    "id": {
+      "type": "ID",
+      "nullable": false
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
     }
   },
   "Generation": {
-    "ability_generations": {
+    "generation_abilities": {
       "table": "pokemon_v2_ability",
       "clsname": "Ability",
       "direction": "ONETOMANY",
@@ -2938,7 +2938,7 @@
         }
       ]
     },
-    "generationname_generations": {
+    "generation_generationnames": {
       "table": "pokemon_v2_generationname",
       "clsname": "Generationname",
       "direction": "ONETOMANY",
@@ -2950,11 +2950,7 @@
         }
       ]
     },
-    "id": {
-      "type": "ID",
-      "nullable": false
-    },
-    "itemgameindex_generations": {
+    "generation_itemgameindices": {
       "table": "pokemon_v2_itemgameindex",
       "clsname": "Itemgameindex",
       "direction": "ONETOMANY",
@@ -2966,7 +2962,7 @@
         }
       ]
     },
-    "locationgameindex_generations": {
+    "generation_locationgameindices": {
       "table": "pokemon_v2_locationgameindex",
       "clsname": "Locationgameindex",
       "direction": "ONETOMANY",
@@ -2978,7 +2974,7 @@
         }
       ]
     },
-    "move_generations": {
+    "generation_moves": {
       "table": "pokemon_v2_move",
       "clsname": "Move",
       "direction": "ONETOMANY",
@@ -2990,11 +2986,7 @@
         }
       ]
     },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "pokemonformgeneration_generations": {
+    "generation_pokemonformgenerations": {
       "table": "pokemon_v2_pokemonformgeneration",
       "clsname": "Pokemonformgeneration",
       "direction": "ONETOMANY",
@@ -3006,7 +2998,7 @@
         }
       ]
     },
-    "pokemonspecy_generations": {
+    "generation_pokemonspecies": {
       "table": "pokemon_v2_pokemonspecies",
       "clsname": "Pokemonspecy",
       "direction": "ONETOMANY",
@@ -3017,6 +3009,50 @@
           "to": "pokemon_v2_pokemonspecies.generation_id"
         }
       ]
+    },
+    "generation_typegameindices": {
+      "table": "pokemon_v2_typegameindex",
+      "clsname": "Typegameindex",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_generation.id",
+          "to": "pokemon_v2_typegameindex.generation_id"
+        }
+      ]
+    },
+    "generation_types": {
+      "table": "pokemon_v2_type",
+      "clsname": "Type",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_generation.id",
+          "to": "pokemon_v2_type.generation_id"
+        }
+      ]
+    },
+    "generation_versiongroups": {
+      "table": "pokemon_v2_versiongroup",
+      "clsname": "Versiongroup",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_generation.id",
+          "to": "pokemon_v2_versiongroup.generation_id"
+        }
+      ]
+    },
+    "id": {
+      "type": "ID",
+      "nullable": false
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
     },
     "region": {
       "table": "pokemon_v2_region",
@@ -3033,42 +3069,6 @@
     "region_id": {
       "type": "Integer",
       "nullable": true
-    },
-    "type_generations": {
-      "table": "pokemon_v2_type",
-      "clsname": "Type",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_generation.id",
-          "to": "pokemon_v2_type.generation_id"
-        }
-      ]
-    },
-    "typegameindex_generations": {
-      "table": "pokemon_v2_typegameindex",
-      "clsname": "Typegameindex",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_generation.id",
-          "to": "pokemon_v2_typegameindex.generation_id"
-        }
-      ]
-    },
-    "versiongroup_generations": {
-      "table": "pokemon_v2_versiongroup",
-      "clsname": "Versiongroup",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_generation.id",
-          "to": "pokemon_v2_versiongroup.generation_id"
-        }
-      ]
     }
   },
   "Generationname": {
@@ -3114,7 +3114,11 @@
     }
   },
   "Growthrate": {
-    "experience_growth_rates": {
+    "formula": {
+      "type": "String",
+      "nullable": false
+    },
+    "growth_rate_experiences": {
       "table": "pokemon_v2_experience",
       "clsname": "Experience",
       "direction": "ONETOMANY",
@@ -3126,11 +3130,7 @@
         }
       ]
     },
-    "formula": {
-      "type": "String",
-      "nullable": false
-    },
-    "growthratedescription_growth_rates": {
+    "growth_rate_growthratedescriptions": {
       "table": "pokemon_v2_growthratedescription",
       "clsname": "Growthratedescription",
       "direction": "ONETOMANY",
@@ -3142,11 +3142,7 @@
         }
       ]
     },
-    "id": {
-      "type": "ID",
-      "nullable": false
-    },
-    "machine_growth_rates": {
+    "growth_rate_machines": {
       "table": "pokemon_v2_machine",
       "clsname": "Machine",
       "direction": "ONETOMANY",
@@ -3158,11 +3154,7 @@
         }
       ]
     },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "pokemonspecy_growth_rates": {
+    "growth_rate_pokemonspecies": {
       "table": "pokemon_v2_pokemonspecies",
       "clsname": "Pokemonspecy",
       "direction": "ONETOMANY",
@@ -3173,6 +3165,14 @@
           "to": "pokemon_v2_pokemonspecies.growth_rate_id"
         }
       ]
+    },
+    "id": {
+      "type": "ID",
+      "nullable": false
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
     }
   },
   "Growthratedescription": {
@@ -3218,23 +3218,7 @@
     }
   },
   "Item": {
-    "berry_items": {
-      "table": "pokemon_v2_berry",
-      "clsname": "Berry",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_item.id",
-          "to": "pokemon_v2_berry.item_id"
-        }
-      ]
-    },
-    "cost": {
-      "type": "Integer",
-      "nullable": true
-    },
-    "evolutionchain_baby_trigger_items": {
+    "baby_trigger_item_evolutionchains": {
       "table": "pokemon_v2_evolutionchain",
       "clsname": "Evolutionchain",
       "direction": "ONETOMANY",
@@ -3246,13 +3230,53 @@
         }
       ]
     },
+    "cost": {
+      "type": "Integer",
+      "nullable": true
+    },
+    "evolution_item_pokemonevolutions": {
+      "table": "pokemon_v2_pokemonevolution",
+      "clsname": "Pokemonevolution",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_item.id",
+          "to": "pokemon_v2_pokemonevolution.evolution_item_id"
+        }
+      ]
+    },
     "fling_power": {
       "type": "Integer",
       "nullable": true
     },
+    "held_item_pokemonevolutions": {
+      "table": "pokemon_v2_pokemonevolution",
+      "clsname": "Pokemonevolution",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_item.id",
+          "to": "pokemon_v2_pokemonevolution.held_item_id"
+        }
+      ]
+    },
     "id": {
       "type": "ID",
       "nullable": false
+    },
+    "item_berries": {
+      "table": "pokemon_v2_berry",
+      "clsname": "Berry",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_item.id",
+          "to": "pokemon_v2_berry.item_id"
+        }
+      ]
     },
     "item_category_id": {
       "type": "Integer",
@@ -3262,7 +3286,7 @@
       "type": "Integer",
       "nullable": true
     },
-    "itemattributemap_items": {
+    "item_itemattributemaps": {
       "table": "pokemon_v2_itemattributemap",
       "clsname": "Itemattributemap",
       "direction": "ONETOMANY",
@@ -3271,6 +3295,90 @@
         {
           "from": "pokemon_v2_item.id",
           "to": "pokemon_v2_itemattributemap.item_id"
+        }
+      ]
+    },
+    "item_itemeffecttexts": {
+      "table": "pokemon_v2_itemeffecttext",
+      "clsname": "Itemeffecttext",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_item.id",
+          "to": "pokemon_v2_itemeffecttext.item_id"
+        }
+      ]
+    },
+    "item_itemflavortexts": {
+      "table": "pokemon_v2_itemflavortext",
+      "clsname": "Itemflavortext",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_item.id",
+          "to": "pokemon_v2_itemflavortext.item_id"
+        }
+      ]
+    },
+    "item_itemgameindices": {
+      "table": "pokemon_v2_itemgameindex",
+      "clsname": "Itemgameindex",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_item.id",
+          "to": "pokemon_v2_itemgameindex.item_id"
+        }
+      ]
+    },
+    "item_itemnames": {
+      "table": "pokemon_v2_itemname",
+      "clsname": "Itemname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_item.id",
+          "to": "pokemon_v2_itemname.item_id"
+        }
+      ]
+    },
+    "item_itemsprites": {
+      "table": "pokemon_v2_itemsprites",
+      "clsname": "Itemsprite",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_item.id",
+          "to": "pokemon_v2_itemsprites.item_id"
+        }
+      ]
+    },
+    "item_machines": {
+      "table": "pokemon_v2_machine",
+      "clsname": "Machine",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_item.id",
+          "to": "pokemon_v2_machine.item_id"
+        }
+      ]
+    },
+    "item_pokemonitems": {
+      "table": "pokemon_v2_pokemonitem",
+      "clsname": "Pokemonitem",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_item.id",
+          "to": "pokemon_v2_pokemonitem.item_id"
         }
       ]
     },
@@ -3286,30 +3394,6 @@
         }
       ]
     },
-    "itemeffecttext_items": {
-      "table": "pokemon_v2_itemeffecttext",
-      "clsname": "Itemeffecttext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_item.id",
-          "to": "pokemon_v2_itemeffecttext.item_id"
-        }
-      ]
-    },
-    "itemflavortext_items": {
-      "table": "pokemon_v2_itemflavortext",
-      "clsname": "Itemflavortext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_item.id",
-          "to": "pokemon_v2_itemflavortext.item_id"
-        }
-      ]
-    },
     "itemflingeffect_item_fling_effect": {
       "table": "pokemon_v2_itemflingeffect",
       "clsname": "Itemflingeffect",
@@ -3322,93 +3406,9 @@
         }
       ]
     },
-    "itemgameindex_items": {
-      "table": "pokemon_v2_itemgameindex",
-      "clsname": "Itemgameindex",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_item.id",
-          "to": "pokemon_v2_itemgameindex.item_id"
-        }
-      ]
-    },
-    "itemname_items": {
-      "table": "pokemon_v2_itemname",
-      "clsname": "Itemname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_item.id",
-          "to": "pokemon_v2_itemname.item_id"
-        }
-      ]
-    },
-    "itemsprite_items": {
-      "table": "pokemon_v2_itemsprites",
-      "clsname": "Itemsprite",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_item.id",
-          "to": "pokemon_v2_itemsprites.item_id"
-        }
-      ]
-    },
-    "machine_items": {
-      "table": "pokemon_v2_machine",
-      "clsname": "Machine",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_item.id",
-          "to": "pokemon_v2_machine.item_id"
-        }
-      ]
-    },
     "name": {
       "type": "String",
       "nullable": false
-    },
-    "pokemonevolution_evolution_items": {
-      "table": "pokemon_v2_pokemonevolution",
-      "clsname": "Pokemonevolution",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_item.id",
-          "to": "pokemon_v2_pokemonevolution.evolution_item_id"
-        }
-      ]
-    },
-    "pokemonevolution_held_items": {
-      "table": "pokemon_v2_pokemonevolution",
-      "clsname": "Pokemonevolution",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_item.id",
-          "to": "pokemon_v2_pokemonevolution.held_item_id"
-        }
-      ]
-    },
-    "pokemonitem_items": {
-      "table": "pokemon_v2_pokemonitem",
-      "clsname": "Pokemonitem",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_item.id",
-          "to": "pokemon_v2_pokemonitem.item_id"
-        }
-      ]
     }
   },
   "Itemattribute": {
@@ -3416,7 +3416,7 @@
       "type": "ID",
       "nullable": false
     },
-    "itemattributedescription_item_attributes": {
+    "item_attribute_itemattributedescriptions": {
       "table": "pokemon_v2_itemattributedescription",
       "clsname": "Itemattributedescription",
       "direction": "ONETOMANY",
@@ -3428,7 +3428,7 @@
         }
       ]
     },
-    "itemattributemap_item_attributes": {
+    "item_attribute_itemattributemaps": {
       "table": "pokemon_v2_itemattributemap",
       "clsname": "Itemattributemap",
       "direction": "ONETOMANY",
@@ -3440,7 +3440,7 @@
         }
       ]
     },
-    "itemattributename_item_attributes": {
+    "item_attribute_itemattributenames": {
       "table": "pokemon_v2_itemattributename",
       "clsname": "Itemattributename",
       "direction": "ONETOMANY",
@@ -3596,11 +3596,7 @@
         }
       ]
     },
-    "item_pocket_id": {
-      "type": "Integer",
-      "nullable": true
-    },
-    "itemcategoryname_item_categories": {
+    "item_category_itemcategorynames": {
       "table": "pokemon_v2_itemcategoryname",
       "clsname": "Itemcategoryname",
       "direction": "ONETOMANY",
@@ -3611,6 +3607,10 @@
           "to": "pokemon_v2_itemcategoryname.item_category_id"
         }
       ]
+    },
+    "item_pocket_id": {
+      "type": "Integer",
+      "nullable": true
     },
     "itempocket_item_pocket": {
       "table": "pokemon_v2_itempocket",
@@ -3780,6 +3780,18 @@
       "type": "ID",
       "nullable": false
     },
+    "item_fling_effect_itemflingeffecteffecttexts": {
+      "table": "pokemon_v2_itemflingeffecteffecttext",
+      "clsname": "Itemflingeffecteffecttext",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_itemflingeffect.id",
+          "to": "pokemon_v2_itemflingeffecteffecttext.item_fling_effect_id"
+        }
+      ]
+    },
     "item_fling_effects": {
       "table": "pokemon_v2_item",
       "clsname": "Item",
@@ -3789,18 +3801,6 @@
         {
           "from": "pokemon_v2_itemflingeffect.id",
           "to": "pokemon_v2_item.item_fling_effect_id"
-        }
-      ]
-    },
-    "itemflingeffecteffecttext_item_fling_effects": {
-      "table": "pokemon_v2_itemflingeffecteffecttext",
-      "clsname": "Itemflingeffecteffecttext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_itemflingeffect.id",
-          "to": "pokemon_v2_itemflingeffecteffecttext.item_fling_effect_id"
         }
       ]
     },
@@ -3940,7 +3940,7 @@
       "type": "ID",
       "nullable": false
     },
-    "itemcategory_item_pockets": {
+    "item_pocket_itemcategories": {
       "table": "pokemon_v2_itemcategory",
       "clsname": "Itemcategory",
       "direction": "ONETOMANY",
@@ -3952,7 +3952,7 @@
         }
       ]
     },
-    "itempocketname_item_pockets": {
+    "item_pocket_itempocketnames": {
       "table": "pokemon_v2_itempocketname",
       "clsname": "Itempocketname",
       "direction": "ONETOMANY",
@@ -4038,210 +4038,6 @@
     }
   },
   "Language": {
-    "abilitychangeeffecttext_languages": {
-      "table": "pokemon_v2_abilitychangeeffecttext",
-      "clsname": "Abilitychangeeffecttext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_abilitychangeeffecttext.language_id"
-        }
-      ]
-    },
-    "abilityeffecttext_languages": {
-      "table": "pokemon_v2_abilityeffecttext",
-      "clsname": "Abilityeffecttext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_abilityeffecttext.language_id"
-        }
-      ]
-    },
-    "abilityflavortext_languages": {
-      "table": "pokemon_v2_abilityflavortext",
-      "clsname": "Abilityflavortext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_abilityflavortext.language_id"
-        }
-      ]
-    },
-    "abilityname_languages": {
-      "table": "pokemon_v2_abilityname",
-      "clsname": "Abilityname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_abilityname.language_id"
-        }
-      ]
-    },
-    "berryfirmnessname_languages": {
-      "table": "pokemon_v2_berryfirmnessname",
-      "clsname": "Berryfirmnessname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_berryfirmnessname.language_id"
-        }
-      ]
-    },
-    "berryflavorname_languages": {
-      "table": "pokemon_v2_berryflavorname",
-      "clsname": "Berryflavorname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_berryflavorname.language_id"
-        }
-      ]
-    },
-    "characteristicdescription_languages": {
-      "table": "pokemon_v2_characteristicdescription",
-      "clsname": "Characteristicdescription",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_characteristicdescription.language_id"
-        }
-      ]
-    },
-    "contesteffecteffecttext_languages": {
-      "table": "pokemon_v2_contesteffecteffecttext",
-      "clsname": "Contesteffecteffecttext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_contesteffecteffecttext.language_id"
-        }
-      ]
-    },
-    "contesteffectflavortext_languages": {
-      "table": "pokemon_v2_contesteffectflavortext",
-      "clsname": "Contesteffectflavortext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_contesteffectflavortext.language_id"
-        }
-      ]
-    },
-    "contesttypename_languages": {
-      "table": "pokemon_v2_contesttypename",
-      "clsname": "Contesttypename",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_contesttypename.language_id"
-        }
-      ]
-    },
-    "egggroupname_languages": {
-      "table": "pokemon_v2_egggroupname",
-      "clsname": "Egggroupname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_egggroupname.language_id"
-        }
-      ]
-    },
-    "encounterconditionname_languages": {
-      "table": "pokemon_v2_encounterconditionname",
-      "clsname": "Encounterconditionname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_encounterconditionname.language_id"
-        }
-      ]
-    },
-    "encounterconditionvaluename_languages": {
-      "table": "pokemon_v2_encounterconditionvaluename",
-      "clsname": "Encounterconditionvaluename",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_encounterconditionvaluename.language_id"
-        }
-      ]
-    },
-    "encountermethodname_languages": {
-      "table": "pokemon_v2_encountermethodname",
-      "clsname": "Encountermethodname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_encountermethodname.language_id"
-        }
-      ]
-    },
-    "evolutiontriggername_languages": {
-      "table": "pokemon_v2_evolutiontriggername",
-      "clsname": "Evolutiontriggername",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_evolutiontriggername.language_id"
-        }
-      ]
-    },
-    "generationname_languages": {
-      "table": "pokemon_v2_generationname",
-      "clsname": "Generationname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_generationname.language_id"
-        }
-      ]
-    },
-    "growthratedescription_languages": {
-      "table": "pokemon_v2_growthratedescription",
-      "clsname": "Growthratedescription",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_growthratedescription.language_id"
-        }
-      ]
-    },
     "id": {
       "type": "ID",
       "nullable": false
@@ -4254,7 +4050,211 @@
       "type": "String",
       "nullable": false
     },
-    "itemattributedescription_languages": {
+    "language_abilitychangeeffecttexts": {
+      "table": "pokemon_v2_abilitychangeeffecttext",
+      "clsname": "Abilitychangeeffecttext",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_abilitychangeeffecttext.language_id"
+        }
+      ]
+    },
+    "language_abilityeffecttexts": {
+      "table": "pokemon_v2_abilityeffecttext",
+      "clsname": "Abilityeffecttext",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_abilityeffecttext.language_id"
+        }
+      ]
+    },
+    "language_abilityflavortexts": {
+      "table": "pokemon_v2_abilityflavortext",
+      "clsname": "Abilityflavortext",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_abilityflavortext.language_id"
+        }
+      ]
+    },
+    "language_abilitynames": {
+      "table": "pokemon_v2_abilityname",
+      "clsname": "Abilityname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_abilityname.language_id"
+        }
+      ]
+    },
+    "language_berryfirmnessnames": {
+      "table": "pokemon_v2_berryfirmnessname",
+      "clsname": "Berryfirmnessname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_berryfirmnessname.language_id"
+        }
+      ]
+    },
+    "language_berryflavornames": {
+      "table": "pokemon_v2_berryflavorname",
+      "clsname": "Berryflavorname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_berryflavorname.language_id"
+        }
+      ]
+    },
+    "language_characteristicdescriptions": {
+      "table": "pokemon_v2_characteristicdescription",
+      "clsname": "Characteristicdescription",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_characteristicdescription.language_id"
+        }
+      ]
+    },
+    "language_contesteffecteffecttexts": {
+      "table": "pokemon_v2_contesteffecteffecttext",
+      "clsname": "Contesteffecteffecttext",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_contesteffecteffecttext.language_id"
+        }
+      ]
+    },
+    "language_contesteffectflavortexts": {
+      "table": "pokemon_v2_contesteffectflavortext",
+      "clsname": "Contesteffectflavortext",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_contesteffectflavortext.language_id"
+        }
+      ]
+    },
+    "language_contesttypenames": {
+      "table": "pokemon_v2_contesttypename",
+      "clsname": "Contesttypename",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_contesttypename.language_id"
+        }
+      ]
+    },
+    "language_egggroupnames": {
+      "table": "pokemon_v2_egggroupname",
+      "clsname": "Egggroupname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_egggroupname.language_id"
+        }
+      ]
+    },
+    "language_encounterconditionnames": {
+      "table": "pokemon_v2_encounterconditionname",
+      "clsname": "Encounterconditionname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_encounterconditionname.language_id"
+        }
+      ]
+    },
+    "language_encounterconditionvaluenames": {
+      "table": "pokemon_v2_encounterconditionvaluename",
+      "clsname": "Encounterconditionvaluename",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_encounterconditionvaluename.language_id"
+        }
+      ]
+    },
+    "language_encountermethodnames": {
+      "table": "pokemon_v2_encountermethodname",
+      "clsname": "Encountermethodname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_encountermethodname.language_id"
+        }
+      ]
+    },
+    "language_evolutiontriggernames": {
+      "table": "pokemon_v2_evolutiontriggername",
+      "clsname": "Evolutiontriggername",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_evolutiontriggername.language_id"
+        }
+      ]
+    },
+    "language_generationnames": {
+      "table": "pokemon_v2_generationname",
+      "clsname": "Generationname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_generationname.language_id"
+        }
+      ]
+    },
+    "language_growthratedescriptions": {
+      "table": "pokemon_v2_growthratedescription",
+      "clsname": "Growthratedescription",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_growthratedescription.language_id"
+        }
+      ]
+    },
+    "language_itemattributedescriptions": {
       "table": "pokemon_v2_itemattributedescription",
       "clsname": "Itemattributedescription",
       "direction": "ONETOMANY",
@@ -4266,7 +4266,7 @@
         }
       ]
     },
-    "itemattributename_languages": {
+    "language_itemattributenames": {
       "table": "pokemon_v2_itemattributename",
       "clsname": "Itemattributename",
       "direction": "ONETOMANY",
@@ -4278,7 +4278,7 @@
         }
       ]
     },
-    "itemcategoryname_languages": {
+    "language_itemcategorynames": {
       "table": "pokemon_v2_itemcategoryname",
       "clsname": "Itemcategoryname",
       "direction": "ONETOMANY",
@@ -4290,7 +4290,7 @@
         }
       ]
     },
-    "itemeffecttext_languages": {
+    "language_itemeffecttexts": {
       "table": "pokemon_v2_itemeffecttext",
       "clsname": "Itemeffecttext",
       "direction": "ONETOMANY",
@@ -4302,7 +4302,7 @@
         }
       ]
     },
-    "itemflavortext_languages": {
+    "language_itemflavortexts": {
       "table": "pokemon_v2_itemflavortext",
       "clsname": "Itemflavortext",
       "direction": "ONETOMANY",
@@ -4314,7 +4314,7 @@
         }
       ]
     },
-    "itemflingeffecteffecttext_languages": {
+    "language_itemflingeffecteffecttexts": {
       "table": "pokemon_v2_itemflingeffecteffecttext",
       "clsname": "Itemflingeffecteffecttext",
       "direction": "ONETOMANY",
@@ -4326,7 +4326,7 @@
         }
       ]
     },
-    "itemname_languages": {
+    "language_itemnames": {
       "table": "pokemon_v2_itemname",
       "clsname": "Itemname",
       "direction": "ONETOMANY",
@@ -4338,7 +4338,7 @@
         }
       ]
     },
-    "itempocketname_languages": {
+    "language_itempocketnames": {
       "table": "pokemon_v2_itempocketname",
       "clsname": "Itempocketname",
       "direction": "ONETOMANY",
@@ -4350,7 +4350,7 @@
         }
       ]
     },
-    "languagename_languages": {
+    "language_languagenames": {
       "table": "pokemon_v2_languagename",
       "clsname": "Languagename",
       "direction": "ONETOMANY",
@@ -4362,19 +4362,7 @@
         }
       ]
     },
-    "languagename_local_languages": {
-      "table": "pokemon_v2_languagename",
-      "clsname": "Languagename",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_language.id",
-          "to": "pokemon_v2_languagename.local_language_id"
-        }
-      ]
-    },
-    "locationareaname_languages": {
+    "language_locationareanames": {
       "table": "pokemon_v2_locationareaname",
       "clsname": "Locationareaname",
       "direction": "ONETOMANY",
@@ -4386,7 +4374,7 @@
         }
       ]
     },
-    "locationname_languages": {
+    "language_locationnames": {
       "table": "pokemon_v2_locationname",
       "clsname": "Locationname",
       "direction": "ONETOMANY",
@@ -4398,7 +4386,7 @@
         }
       ]
     },
-    "moveattributedescription_languages": {
+    "language_moveattributedescriptions": {
       "table": "pokemon_v2_moveattributedescription",
       "clsname": "Moveattributedescription",
       "direction": "ONETOMANY",
@@ -4410,7 +4398,7 @@
         }
       ]
     },
-    "moveattributename_languages": {
+    "language_moveattributenames": {
       "table": "pokemon_v2_moveattributename",
       "clsname": "Moveattributename",
       "direction": "ONETOMANY",
@@ -4422,7 +4410,7 @@
         }
       ]
     },
-    "movebattlestylename_languages": {
+    "language_movebattlestylenames": {
       "table": "pokemon_v2_movebattlestylename",
       "clsname": "Movebattlestylename",
       "direction": "ONETOMANY",
@@ -4434,7 +4422,7 @@
         }
       ]
     },
-    "movedamageclassdescription_languages": {
+    "language_movedamageclassdescriptions": {
       "table": "pokemon_v2_movedamageclassdescription",
       "clsname": "Movedamageclassdescription",
       "direction": "ONETOMANY",
@@ -4446,7 +4434,7 @@
         }
       ]
     },
-    "movedamageclassname_languages": {
+    "language_movedamageclassnames": {
       "table": "pokemon_v2_movedamageclassname",
       "clsname": "Movedamageclassname",
       "direction": "ONETOMANY",
@@ -4458,7 +4446,7 @@
         }
       ]
     },
-    "moveeffectchangeeffecttext_languages": {
+    "language_moveeffectchangeeffecttexts": {
       "table": "pokemon_v2_moveeffectchangeeffecttext",
       "clsname": "Moveeffectchangeeffecttext",
       "direction": "ONETOMANY",
@@ -4470,7 +4458,7 @@
         }
       ]
     },
-    "moveeffecteffecttext_languages": {
+    "language_moveeffecteffecttexts": {
       "table": "pokemon_v2_moveeffecteffecttext",
       "clsname": "Moveeffecteffecttext",
       "direction": "ONETOMANY",
@@ -4482,7 +4470,7 @@
         }
       ]
     },
-    "moveflavortext_languages": {
+    "language_moveflavortexts": {
       "table": "pokemon_v2_moveflavortext",
       "clsname": "Moveflavortext",
       "direction": "ONETOMANY",
@@ -4494,7 +4482,7 @@
         }
       ]
     },
-    "movelearnmethoddescription_languages": {
+    "language_movelearnmethoddescriptions": {
       "table": "pokemon_v2_movelearnmethoddescription",
       "clsname": "Movelearnmethoddescription",
       "direction": "ONETOMANY",
@@ -4506,7 +4494,7 @@
         }
       ]
     },
-    "movelearnmethodname_languages": {
+    "language_movelearnmethodnames": {
       "table": "pokemon_v2_movelearnmethodname",
       "clsname": "Movelearnmethodname",
       "direction": "ONETOMANY",
@@ -4518,7 +4506,7 @@
         }
       ]
     },
-    "movemetaailmentname_languages": {
+    "language_movemetaailmentnames": {
       "table": "pokemon_v2_movemetaailmentname",
       "clsname": "Movemetaailmentname",
       "direction": "ONETOMANY",
@@ -4530,7 +4518,7 @@
         }
       ]
     },
-    "movemetacategorydescription_languages": {
+    "language_movemetacategorydescriptions": {
       "table": "pokemon_v2_movemetacategorydescription",
       "clsname": "Movemetacategorydescription",
       "direction": "ONETOMANY",
@@ -4542,7 +4530,7 @@
         }
       ]
     },
-    "movename_languages": {
+    "language_movenames": {
       "table": "pokemon_v2_movename",
       "clsname": "Movename",
       "direction": "ONETOMANY",
@@ -4554,7 +4542,7 @@
         }
       ]
     },
-    "movetargetdescription_languages": {
+    "language_movetargetdescriptions": {
       "table": "pokemon_v2_movetargetdescription",
       "clsname": "Movetargetdescription",
       "direction": "ONETOMANY",
@@ -4566,7 +4554,7 @@
         }
       ]
     },
-    "movetargetname_languages": {
+    "language_movetargetnames": {
       "table": "pokemon_v2_movetargetname",
       "clsname": "Movetargetname",
       "direction": "ONETOMANY",
@@ -4578,11 +4566,7 @@
         }
       ]
     },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "naturename_languages": {
+    "language_naturenames": {
       "table": "pokemon_v2_naturename",
       "clsname": "Naturename",
       "direction": "ONETOMANY",
@@ -4594,15 +4578,7 @@
         }
       ]
     },
-    "official": {
-      "type": "bool",
-      "nullable": false
-    },
-    "order": {
-      "type": "Integer",
-      "nullable": true
-    },
-    "palparkareaname_languages": {
+    "language_palparkareanames": {
       "table": "pokemon_v2_palparkareaname",
       "clsname": "Palparkareaname",
       "direction": "ONETOMANY",
@@ -4614,7 +4590,7 @@
         }
       ]
     },
-    "pokeathlonstatname_languages": {
+    "language_pokeathlonstatnames": {
       "table": "pokemon_v2_pokeathlonstatname",
       "clsname": "Pokeathlonstatname",
       "direction": "ONETOMANY",
@@ -4626,7 +4602,7 @@
         }
       ]
     },
-    "pokedexdescription_languages": {
+    "language_pokedexdescriptions": {
       "table": "pokemon_v2_pokedexdescription",
       "clsname": "Pokedexdescription",
       "direction": "ONETOMANY",
@@ -4638,7 +4614,7 @@
         }
       ]
     },
-    "pokedexname_languages": {
+    "language_pokedexnames": {
       "table": "pokemon_v2_pokedexname",
       "clsname": "Pokedexname",
       "direction": "ONETOMANY",
@@ -4650,7 +4626,7 @@
         }
       ]
     },
-    "pokemoncolorname_languages": {
+    "language_pokemoncolornames": {
       "table": "pokemon_v2_pokemoncolorname",
       "clsname": "Pokemoncolorname",
       "direction": "ONETOMANY",
@@ -4662,7 +4638,7 @@
         }
       ]
     },
-    "pokemonformname_languages": {
+    "language_pokemonformnames": {
       "table": "pokemon_v2_pokemonformname",
       "clsname": "Pokemonformname",
       "direction": "ONETOMANY",
@@ -4674,7 +4650,7 @@
         }
       ]
     },
-    "pokemonhabitatname_languages": {
+    "language_pokemonhabitatnames": {
       "table": "pokemon_v2_pokemonhabitatname",
       "clsname": "Pokemonhabitatname",
       "direction": "ONETOMANY",
@@ -4686,7 +4662,7 @@
         }
       ]
     },
-    "pokemonshapename_languages": {
+    "language_pokemonshapenames": {
       "table": "pokemon_v2_pokemonshapename",
       "clsname": "Pokemonshapename",
       "direction": "ONETOMANY",
@@ -4698,7 +4674,7 @@
         }
       ]
     },
-    "pokemonspeciesdescription_languages": {
+    "language_pokemonspeciesdescriptions": {
       "table": "pokemon_v2_pokemonspeciesdescription",
       "clsname": "Pokemonspeciesdescription",
       "direction": "ONETOMANY",
@@ -4710,7 +4686,7 @@
         }
       ]
     },
-    "pokemonspeciesflavortext_languages": {
+    "language_pokemonspeciesflavortexts": {
       "table": "pokemon_v2_pokemonspeciesflavortext",
       "clsname": "Pokemonspeciesflavortext",
       "direction": "ONETOMANY",
@@ -4722,7 +4698,7 @@
         }
       ]
     },
-    "pokemonspeciesname_languages": {
+    "language_pokemonspeciesnames": {
       "table": "pokemon_v2_pokemonspeciesname",
       "clsname": "Pokemonspeciesname",
       "direction": "ONETOMANY",
@@ -4734,7 +4710,7 @@
         }
       ]
     },
-    "regionname_languages": {
+    "language_regionnames": {
       "table": "pokemon_v2_regionname",
       "clsname": "Regionname",
       "direction": "ONETOMANY",
@@ -4746,7 +4722,7 @@
         }
       ]
     },
-    "statname_languages": {
+    "language_statnames": {
       "table": "pokemon_v2_statname",
       "clsname": "Statname",
       "direction": "ONETOMANY",
@@ -4758,7 +4734,7 @@
         }
       ]
     },
-    "supercontesteffectflavortext_languages": {
+    "language_supercontesteffectflavortexts": {
       "table": "pokemon_v2_supercontesteffectflavortext",
       "clsname": "Supercontesteffectflavortext",
       "direction": "ONETOMANY",
@@ -4770,7 +4746,7 @@
         }
       ]
     },
-    "typename_languages": {
+    "language_typenames": {
       "table": "pokemon_v2_typename",
       "clsname": "Typename",
       "direction": "ONETOMANY",
@@ -4782,7 +4758,7 @@
         }
       ]
     },
-    "versionname_languages": {
+    "language_versionnames": {
       "table": "pokemon_v2_versionname",
       "clsname": "Versionname",
       "direction": "ONETOMANY",
@@ -4793,6 +4769,30 @@
           "to": "pokemon_v2_versionname.language_id"
         }
       ]
+    },
+    "local_language_languagenames": {
+      "table": "pokemon_v2_languagename",
+      "clsname": "Languagename",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_language.id",
+          "to": "pokemon_v2_languagename.local_language_id"
+        }
+      ]
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
+    },
+    "official": {
+      "type": "bool",
+      "nullable": false
+    },
+    "order": {
+      "type": "Integer",
+      "nullable": true
     }
   },
   "Languagename": {
@@ -4842,7 +4842,7 @@
       "type": "ID",
       "nullable": false
     },
-    "locationarea_locations": {
+    "location_locationareas": {
       "table": "pokemon_v2_locationarea",
       "clsname": "Locationarea",
       "direction": "ONETOMANY",
@@ -4854,7 +4854,7 @@
         }
       ]
     },
-    "locationgameindex_locations": {
+    "location_locationgameindices": {
       "table": "pokemon_v2_locationgameindex",
       "clsname": "Locationgameindex",
       "direction": "ONETOMANY",
@@ -4866,7 +4866,7 @@
         }
       ]
     },
-    "locationname_locations": {
+    "location_locationnames": {
       "table": "pokemon_v2_locationname",
       "clsname": "Locationname",
       "direction": "ONETOMANY",
@@ -4878,11 +4878,7 @@
         }
       ]
     },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "pokemonevolution_locations": {
+    "location_pokemonevolutions": {
       "table": "pokemon_v2_pokemonevolution",
       "clsname": "Pokemonevolution",
       "direction": "ONETOMANY",
@@ -4893,6 +4889,10 @@
           "to": "pokemon_v2_pokemonevolution.location_id"
         }
       ]
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
     },
     "region": {
       "table": "pokemon_v2_region",
@@ -4912,18 +4912,6 @@
     }
   },
   "Locationarea": {
-    "encounter_location_areas": {
-      "table": "pokemon_v2_encounter",
-      "clsname": "Encounter",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_locationarea.id",
-          "to": "pokemon_v2_encounter.location_area_id"
-        }
-      ]
-    },
     "game_index": {
       "type": "Integer",
       "nullable": false
@@ -4944,11 +4932,19 @@
         }
       ]
     },
-    "location_id": {
-      "type": "Integer",
-      "nullable": true
+    "location_area_encounters": {
+      "table": "pokemon_v2_encounter",
+      "clsname": "Encounter",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_locationarea.id",
+          "to": "pokemon_v2_encounter.location_area_id"
+        }
+      ]
     },
-    "locationareaencounterrate_location_areas": {
+    "location_area_locationareaencounterrates": {
       "table": "pokemon_v2_locationareaencounterrate",
       "clsname": "Locationareaencounterrate",
       "direction": "ONETOMANY",
@@ -4960,7 +4956,7 @@
         }
       ]
     },
-    "locationareaname_location_areas": {
+    "location_area_locationareanames": {
       "table": "pokemon_v2_locationareaname",
       "clsname": "Locationareaname",
       "direction": "ONETOMANY",
@@ -4971,6 +4967,10 @@
           "to": "pokemon_v2_locationareaname.location_area_id"
         }
       ]
+    },
+    "location_id": {
+      "type": "Integer",
+      "nullable": true
     },
     "name": {
       "type": "String",
@@ -5248,30 +5248,6 @@
       "type": "Integer",
       "nullable": true
     },
-    "contestcombo_first_moves": {
-      "table": "pokemon_v2_contestcombo",
-      "clsname": "Contestcombo",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_move.id",
-          "to": "pokemon_v2_contestcombo.first_move_id"
-        }
-      ]
-    },
-    "contestcombo_second_moves": {
-      "table": "pokemon_v2_contestcombo",
-      "clsname": "Contestcombo",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_move.id",
-          "to": "pokemon_v2_contestcombo.second_move_id"
-        }
-      ]
-    },
     "contesteffect_contest_effect": {
       "table": "pokemon_v2_contesteffect",
       "clsname": "Contesteffect",
@@ -5296,6 +5272,30 @@
         }
       ]
     },
+    "first_move_contestcombos": {
+      "table": "pokemon_v2_contestcombo",
+      "clsname": "Contestcombo",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_move.id",
+          "to": "pokemon_v2_contestcombo.first_move_id"
+        }
+      ]
+    },
+    "first_move_supercontestcombos": {
+      "table": "pokemon_v2_supercontestcombo",
+      "clsname": "Supercontestcombo",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_move.id",
+          "to": "pokemon_v2_supercontestcombo.first_move_id"
+        }
+      ]
+    },
     "generation": {
       "table": "pokemon_v2_generation",
       "clsname": "Generation",
@@ -5316,15 +5316,15 @@
       "type": "ID",
       "nullable": false
     },
-    "machine_moves": {
-      "table": "pokemon_v2_machine",
-      "clsname": "Machine",
+    "known_move_pokemonevolutions": {
+      "table": "pokemon_v2_pokemonevolution",
+      "clsname": "Pokemonevolution",
       "direction": "ONETOMANY",
       "uselist": true,
       "relation": [
         {
           "from": "pokemon_v2_move.id",
-          "to": "pokemon_v2_machine.move_id"
+          "to": "pokemon_v2_pokemonevolution.known_move_id"
         }
       ]
     },
@@ -5340,11 +5340,19 @@
       "type": "Integer",
       "nullable": true
     },
-    "move_target_id": {
-      "type": "Integer",
-      "nullable": true
+    "move_machines": {
+      "table": "pokemon_v2_machine",
+      "clsname": "Machine",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_move.id",
+          "to": "pokemon_v2_machine.move_id"
+        }
+      ]
     },
-    "moveattributemap_moves": {
+    "move_moveattributemaps": {
       "table": "pokemon_v2_moveattributemap",
       "clsname": "Moveattributemap",
       "direction": "ONETOMANY",
@@ -5356,7 +5364,7 @@
         }
       ]
     },
-    "movechange_moves": {
+    "move_movechanges": {
       "table": "pokemon_v2_movechange",
       "clsname": "Movechange",
       "direction": "ONETOMANY",
@@ -5367,6 +5375,70 @@
           "to": "pokemon_v2_movechange.move_id"
         }
       ]
+    },
+    "move_moveflavortexts": {
+      "table": "pokemon_v2_moveflavortext",
+      "clsname": "Moveflavortext",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_move.id",
+          "to": "pokemon_v2_moveflavortext.move_id"
+        }
+      ]
+    },
+    "move_movemeta": {
+      "table": "pokemon_v2_movemeta",
+      "clsname": "Movemetum",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_move.id",
+          "to": "pokemon_v2_movemeta.move_id"
+        }
+      ]
+    },
+    "move_movemetastatchanges": {
+      "table": "pokemon_v2_movemetastatchange",
+      "clsname": "Movemetastatchange",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_move.id",
+          "to": "pokemon_v2_movemetastatchange.move_id"
+        }
+      ]
+    },
+    "move_movenames": {
+      "table": "pokemon_v2_movename",
+      "clsname": "Movename",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_move.id",
+          "to": "pokemon_v2_movename.move_id"
+        }
+      ]
+    },
+    "move_pokemonmoves": {
+      "table": "pokemon_v2_pokemonmove",
+      "clsname": "Pokemonmove",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_move.id",
+          "to": "pokemon_v2_pokemonmove.move_id"
+        }
+      ]
+    },
+    "move_target_id": {
+      "type": "Integer",
+      "nullable": true
     },
     "movedamageclass_move_damage_class": {
       "table": "pokemon_v2_movedamageclass",
@@ -5392,54 +5464,6 @@
         }
       ]
     },
-    "moveflavortext_moves": {
-      "table": "pokemon_v2_moveflavortext",
-      "clsname": "Moveflavortext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_move.id",
-          "to": "pokemon_v2_moveflavortext.move_id"
-        }
-      ]
-    },
-    "movemetastatchange_moves": {
-      "table": "pokemon_v2_movemetastatchange",
-      "clsname": "Movemetastatchange",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_move.id",
-          "to": "pokemon_v2_movemetastatchange.move_id"
-        }
-      ]
-    },
-    "movemetum_moves": {
-      "table": "pokemon_v2_movemeta",
-      "clsname": "Movemetum",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_move.id",
-          "to": "pokemon_v2_movemeta.move_id"
-        }
-      ]
-    },
-    "movename_moves": {
-      "table": "pokemon_v2_movename",
-      "clsname": "Movename",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_move.id",
-          "to": "pokemon_v2_movename.move_id"
-        }
-      ]
-    },
     "movetarget_move_target": {
       "table": "pokemon_v2_movetarget",
       "clsname": "Movetarget",
@@ -5456,30 +5480,6 @@
       "type": "String",
       "nullable": false
     },
-    "pokemonevolution_known_moves": {
-      "table": "pokemon_v2_pokemonevolution",
-      "clsname": "Pokemonevolution",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_move.id",
-          "to": "pokemon_v2_pokemonevolution.known_move_id"
-        }
-      ]
-    },
-    "pokemonmove_moves": {
-      "table": "pokemon_v2_pokemonmove",
-      "clsname": "Pokemonmove",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_move.id",
-          "to": "pokemon_v2_pokemonmove.move_id"
-        }
-      ]
-    },
     "power": {
       "type": "Integer",
       "nullable": true
@@ -5492,23 +5492,19 @@
       "type": "Integer",
       "nullable": true
     },
-    "super_contest_effect_id": {
-      "type": "Integer",
-      "nullable": true
-    },
-    "supercontestcombo_first_moves": {
-      "table": "pokemon_v2_supercontestcombo",
-      "clsname": "Supercontestcombo",
+    "second_move_contestcombos": {
+      "table": "pokemon_v2_contestcombo",
+      "clsname": "Contestcombo",
       "direction": "ONETOMANY",
       "uselist": true,
       "relation": [
         {
           "from": "pokemon_v2_move.id",
-          "to": "pokemon_v2_supercontestcombo.first_move_id"
+          "to": "pokemon_v2_contestcombo.second_move_id"
         }
       ]
     },
-    "supercontestcombo_second_moves": {
+    "second_move_supercontestcombos": {
       "table": "pokemon_v2_supercontestcombo",
       "clsname": "Supercontestcombo",
       "direction": "ONETOMANY",
@@ -5519,6 +5515,10 @@
           "to": "pokemon_v2_supercontestcombo.second_move_id"
         }
       ]
+    },
+    "super_contest_effect_id": {
+      "type": "Integer",
+      "nullable": true
     },
     "supercontesteffect_super_contest_effect": {
       "table": "pokemon_v2_supercontesteffect",
@@ -5554,7 +5554,7 @@
       "type": "ID",
       "nullable": false
     },
-    "moveattributedescription_move_attributes": {
+    "move_attribute_moveattributedescriptions": {
       "table": "pokemon_v2_moveattributedescription",
       "clsname": "Moveattributedescription",
       "direction": "ONETOMANY",
@@ -5566,7 +5566,7 @@
         }
       ]
     },
-    "moveattributemap_move_attributes": {
+    "move_attribute_moveattributemaps": {
       "table": "pokemon_v2_moveattributemap",
       "clsname": "Moveattributemap",
       "direction": "ONETOMANY",
@@ -5578,7 +5578,7 @@
         }
       ]
     },
-    "moveattributename_move_attributes": {
+    "move_attribute_moveattributenames": {
       "table": "pokemon_v2_moveattributename",
       "clsname": "Moveattributename",
       "direction": "ONETOMANY",
@@ -5722,7 +5722,7 @@
       "type": "ID",
       "nullable": false
     },
-    "movebattlestylename_move_battle_styles": {
+    "move_battle_style_movebattlestylenames": {
       "table": "pokemon_v2_movebattlestylename",
       "clsname": "Movebattlestylename",
       "direction": "ONETOMANY",
@@ -5734,11 +5734,7 @@
         }
       ]
     },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "naturebattlestylepreference_move_battle_styles": {
+    "move_battle_style_naturebattlestylepreferences": {
       "table": "pokemon_v2_naturebattlestylepreference",
       "clsname": "Naturebattlestylepreference",
       "direction": "ONETOMANY",
@@ -5749,6 +5745,10 @@
           "to": "pokemon_v2_naturebattlestylepreference.move_battle_style_id"
         }
       ]
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
     }
   },
   "Movebattlestylename": {
@@ -5884,6 +5884,54 @@
       "type": "ID",
       "nullable": false
     },
+    "move_damage_class_movedamageclassdescriptions": {
+      "table": "pokemon_v2_movedamageclassdescription",
+      "clsname": "Movedamageclassdescription",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_movedamageclass.id",
+          "to": "pokemon_v2_movedamageclassdescription.move_damage_class_id"
+        }
+      ]
+    },
+    "move_damage_class_movedamageclassnames": {
+      "table": "pokemon_v2_movedamageclassname",
+      "clsname": "Movedamageclassname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_movedamageclass.id",
+          "to": "pokemon_v2_movedamageclassname.move_damage_class_id"
+        }
+      ]
+    },
+    "move_damage_class_stats": {
+      "table": "pokemon_v2_stat",
+      "clsname": "Stat",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_movedamageclass.id",
+          "to": "pokemon_v2_stat.move_damage_class_id"
+        }
+      ]
+    },
+    "move_damage_class_types": {
+      "table": "pokemon_v2_type",
+      "clsname": "Type",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_movedamageclass.id",
+          "to": "pokemon_v2_type.move_damage_class_id"
+        }
+      ]
+    },
     "move_damage_classes": {
       "table": "pokemon_v2_move",
       "clsname": "Move",
@@ -5896,57 +5944,9 @@
         }
       ]
     },
-    "movedamageclassdescription_move_damage_classes": {
-      "table": "pokemon_v2_movedamageclassdescription",
-      "clsname": "Movedamageclassdescription",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_movedamageclass.id",
-          "to": "pokemon_v2_movedamageclassdescription.move_damage_class_id"
-        }
-      ]
-    },
-    "movedamageclassname_move_damage_classes": {
-      "table": "pokemon_v2_movedamageclassname",
-      "clsname": "Movedamageclassname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_movedamageclass.id",
-          "to": "pokemon_v2_movedamageclassname.move_damage_class_id"
-        }
-      ]
-    },
     "name": {
       "type": "String",
       "nullable": false
-    },
-    "stat_move_damage_classes": {
-      "table": "pokemon_v2_stat",
-      "clsname": "Stat",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_movedamageclass.id",
-          "to": "pokemon_v2_stat.move_damage_class_id"
-        }
-      ]
-    },
-    "type_move_damage_classes": {
-      "table": "pokemon_v2_type",
-      "clsname": "Type",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_movedamageclass.id",
-          "to": "pokemon_v2_type.move_damage_class_id"
-        }
-      ]
     }
   },
   "Movedamageclassdescription": {
@@ -6038,19 +6038,7 @@
       "type": "ID",
       "nullable": false
     },
-    "move_effects": {
-      "table": "pokemon_v2_move",
-      "clsname": "Move",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_moveeffect.id",
-          "to": "pokemon_v2_move.move_effect_id"
-        }
-      ]
-    },
-    "movechange_move_effects": {
+    "move_effect_movechanges": {
       "table": "pokemon_v2_movechange",
       "clsname": "Movechange",
       "direction": "ONETOMANY",
@@ -6062,7 +6050,7 @@
         }
       ]
     },
-    "moveeffectchange_move_effects": {
+    "move_effect_moveeffectchanges": {
       "table": "pokemon_v2_moveeffectchange",
       "clsname": "Moveeffectchange",
       "direction": "ONETOMANY",
@@ -6074,7 +6062,7 @@
         }
       ]
     },
-    "moveeffecteffecttext_move_effects": {
+    "move_effect_moveeffecteffecttexts": {
       "table": "pokemon_v2_moveeffecteffecttext",
       "clsname": "Moveeffecteffecttext",
       "direction": "ONETOMANY",
@@ -6085,12 +6073,36 @@
           "to": "pokemon_v2_moveeffecteffecttext.move_effect_id"
         }
       ]
+    },
+    "move_effects": {
+      "table": "pokemon_v2_move",
+      "clsname": "Move",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_moveeffect.id",
+          "to": "pokemon_v2_move.move_effect_id"
+        }
+      ]
     }
   },
   "Moveeffectchange": {
     "id": {
       "type": "ID",
       "nullable": false
+    },
+    "move_effect_change_moveeffectchangeeffecttexts": {
+      "table": "pokemon_v2_moveeffectchangeeffecttext",
+      "clsname": "Moveeffectchangeeffecttext",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_moveeffectchange.id",
+          "to": "pokemon_v2_moveeffectchangeeffecttext.move_effect_change_id"
+        }
+      ]
     },
     "move_effect_id": {
       "type": "Integer",
@@ -6105,18 +6117,6 @@
         {
           "from": "pokemon_v2_moveeffectchange.move_effect_id",
           "to": "pokemon_v2_moveeffect.id"
-        }
-      ]
-    },
-    "moveeffectchangeeffecttext_move_effect_changes": {
-      "table": "pokemon_v2_moveeffectchangeeffecttext",
-      "clsname": "Moveeffectchangeeffecttext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_moveeffectchange.id",
-          "to": "pokemon_v2_moveeffectchangeeffecttext.move_effect_change_id"
         }
       ]
     },
@@ -6288,7 +6288,7 @@
       "type": "ID",
       "nullable": false
     },
-    "movelearnmethoddescription_move_learn_methods": {
+    "move_learn_method_movelearnmethoddescriptions": {
       "table": "pokemon_v2_movelearnmethoddescription",
       "clsname": "Movelearnmethoddescription",
       "direction": "ONETOMANY",
@@ -6300,7 +6300,7 @@
         }
       ]
     },
-    "movelearnmethodname_move_learn_methods": {
+    "move_learn_method_movelearnmethodnames": {
       "table": "pokemon_v2_movelearnmethodname",
       "clsname": "Movelearnmethodname",
       "direction": "ONETOMANY",
@@ -6312,11 +6312,7 @@
         }
       ]
     },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "pokemonmove_move_learn_methods": {
+    "move_learn_method_pokemonmoves": {
       "table": "pokemon_v2_pokemonmove",
       "clsname": "Pokemonmove",
       "direction": "ONETOMANY",
@@ -6328,7 +6324,7 @@
         }
       ]
     },
-    "versiongroupmovelearnmethod_move_learn_methods": {
+    "move_learn_method_versiongroupmovelearnmethods": {
       "table": "pokemon_v2_versiongroupmovelearnmethod",
       "clsname": "Versiongroupmovelearnmethod",
       "direction": "ONETOMANY",
@@ -6339,6 +6335,10 @@
           "to": "pokemon_v2_versiongroupmovelearnmethod.move_learn_method_id"
         }
       ]
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
     }
   },
   "Movelearnmethoddescription": {
@@ -6524,19 +6524,7 @@
       "type": "ID",
       "nullable": false
     },
-    "movemetaailmentname_move_meta_ailments": {
-      "table": "pokemon_v2_movemetaailmentname",
-      "clsname": "Movemetaailmentname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_movemetaailment.id",
-          "to": "pokemon_v2_movemetaailmentname.move_meta_ailment_id"
-        }
-      ]
-    },
-    "movemetum_move_meta_ailments": {
+    "move_meta_ailment_movemeta": {
       "table": "pokemon_v2_movemeta",
       "clsname": "Movemetum",
       "direction": "ONETOMANY",
@@ -6545,6 +6533,18 @@
         {
           "from": "pokemon_v2_movemetaailment.id",
           "to": "pokemon_v2_movemeta.move_meta_ailment_id"
+        }
+      ]
+    },
+    "move_meta_ailment_movemetaailmentnames": {
+      "table": "pokemon_v2_movemetaailmentname",
+      "clsname": "Movemetaailmentname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_movemetaailment.id",
+          "to": "pokemon_v2_movemetaailmentname.move_meta_ailment_id"
         }
       ]
     },
@@ -6600,19 +6600,7 @@
       "type": "ID",
       "nullable": false
     },
-    "movemetacategorydescription_move_meta_categories": {
-      "table": "pokemon_v2_movemetacategorydescription",
-      "clsname": "Movemetacategorydescription",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_movemetacategory.id",
-          "to": "pokemon_v2_movemetacategorydescription.move_meta_category_id"
-        }
-      ]
-    },
-    "movemetum_move_meta_categories": {
+    "move_meta_category_movemeta": {
       "table": "pokemon_v2_movemeta",
       "clsname": "Movemetum",
       "direction": "ONETOMANY",
@@ -6621,6 +6609,18 @@
         {
           "from": "pokemon_v2_movemetacategory.id",
           "to": "pokemon_v2_movemeta.move_meta_category_id"
+        }
+      ]
+    },
+    "move_meta_category_movemetacategorydescriptions": {
+      "table": "pokemon_v2_movemetacategorydescription",
+      "clsname": "Movemetacategorydescription",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_movemetacategory.id",
+          "to": "pokemon_v2_movemetacategorydescription.move_meta_category_id"
         }
       ]
     },
@@ -6760,19 +6760,7 @@
       "type": "ID",
       "nullable": false
     },
-    "move_targets": {
-      "table": "pokemon_v2_move",
-      "clsname": "Move",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_movetarget.id",
-          "to": "pokemon_v2_move.move_target_id"
-        }
-      ]
-    },
-    "movetargetdescription_move_targets": {
+    "move_target_movetargetdescriptions": {
       "table": "pokemon_v2_movetargetdescription",
       "clsname": "Movetargetdescription",
       "direction": "ONETOMANY",
@@ -6784,7 +6772,7 @@
         }
       ]
     },
-    "movetargetname_move_targets": {
+    "move_target_movetargetnames": {
       "table": "pokemon_v2_movetargetname",
       "clsname": "Movetargetname",
       "direction": "ONETOMANY",
@@ -6793,6 +6781,18 @@
         {
           "from": "pokemon_v2_movetarget.id",
           "to": "pokemon_v2_movetargetname.move_target_id"
+        }
+      ]
+    },
+    "move_targets": {
+      "table": "pokemon_v2_move",
+      "clsname": "Move",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_movetarget.id",
+          "to": "pokemon_v2_move.move_target_id"
         }
       ]
     },
@@ -6938,7 +6938,7 @@
       "type": "String",
       "nullable": false
     },
-    "naturebattlestylepreference_natures": {
+    "nature_naturebattlestylepreferences": {
       "table": "pokemon_v2_naturebattlestylepreference",
       "clsname": "Naturebattlestylepreference",
       "direction": "ONETOMANY",
@@ -6950,7 +6950,7 @@
         }
       ]
     },
-    "naturename_natures": {
+    "nature_naturenames": {
       "table": "pokemon_v2_naturename",
       "clsname": "Naturename",
       "direction": "ONETOMANY",
@@ -6962,7 +6962,7 @@
         }
       ]
     },
-    "naturepokeathlonstat_natures": {
+    "nature_naturepokeathlonstats": {
       "table": "pokemon_v2_naturepokeathlonstat",
       "clsname": "Naturepokeathlonstat",
       "direction": "ONETOMANY",
@@ -7184,19 +7184,7 @@
       "type": "String",
       "nullable": false
     },
-    "palpark_pal_park_areas": {
-      "table": "pokemon_v2_palpark",
-      "clsname": "Palpark",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_palparkarea.id",
-          "to": "pokemon_v2_palpark.pal_park_area_id"
-        }
-      ]
-    },
-    "palparkareaname_pal_park_areas": {
+    "pal_park_area_palparkareanames": {
       "table": "pokemon_v2_palparkareaname",
       "clsname": "Palparkareaname",
       "direction": "ONETOMANY",
@@ -7205,6 +7193,18 @@
         {
           "from": "pokemon_v2_palparkarea.id",
           "to": "pokemon_v2_palparkareaname.pal_park_area_id"
+        }
+      ]
+    },
+    "pal_park_area_palparks": {
+      "table": "pokemon_v2_palpark",
+      "clsname": "Palpark",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_palparkarea.id",
+          "to": "pokemon_v2_palpark.pal_park_area_id"
         }
       ]
     }
@@ -7260,7 +7260,7 @@
       "type": "String",
       "nullable": false
     },
-    "naturepokeathlonstat_pokeathlon_stats": {
+    "pokeathlon_stat_naturepokeathlonstats": {
       "table": "pokemon_v2_naturepokeathlonstat",
       "clsname": "Naturepokeathlonstat",
       "direction": "ONETOMANY",
@@ -7272,7 +7272,7 @@
         }
       ]
     },
-    "pokeathlonstatname_pokeathlon_stats": {
+    "pokeathlon_stat_pokeathlonstatnames": {
       "table": "pokemon_v2_pokeathlonstatname",
       "clsname": "Pokeathlonstatname",
       "direction": "ONETOMANY",
@@ -7340,7 +7340,7 @@
       "type": "String",
       "nullable": false
     },
-    "pokedexdescription_pokedexes": {
+    "pokedex_pokedexdescriptions": {
       "table": "pokemon_v2_pokedexdescription",
       "clsname": "Pokedexdescription",
       "direction": "ONETOMANY",
@@ -7352,7 +7352,7 @@
         }
       ]
     },
-    "pokedexname_pokedexes": {
+    "pokedex_pokedexnames": {
       "table": "pokemon_v2_pokedexname",
       "clsname": "Pokedexname",
       "direction": "ONETOMANY",
@@ -7364,7 +7364,7 @@
         }
       ]
     },
-    "pokedexversiongroup_pokedexes": {
+    "pokedex_pokedexversiongroups": {
       "table": "pokemon_v2_pokedexversiongroup",
       "clsname": "Pokedexversiongroup",
       "direction": "ONETOMANY",
@@ -7376,7 +7376,7 @@
         }
       ]
     },
-    "pokemondexnumber_pokedexes": {
+    "pokedex_pokemondexnumbers": {
       "table": "pokemon_v2_pokemondexnumber",
       "clsname": "Pokemondexnumber",
       "direction": "ONETOMANY",
@@ -7582,7 +7582,7 @@
       "type": "String",
       "nullable": false
     },
-    "pokemoncolorname_pokemon_colors": {
+    "pokemon_color_pokemoncolornames": {
       "table": "pokemon_v2_pokemoncolorname",
       "clsname": "Pokemoncolorname",
       "direction": "ONETOMANY",
@@ -7594,7 +7594,7 @@
         }
       ]
     },
-    "pokemonspecy_pokemon_colors": {
+    "pokemon_color_pokemonspecies": {
       "table": "pokemon_v2_pokemonspecies",
       "clsname": "Pokemonspecy",
       "direction": "ONETOMANY",
@@ -7988,11 +7988,7 @@
         }
       ]
     },
-    "pokemon_id": {
-      "type": "Integer",
-      "nullable": true
-    },
-    "pokemonformgeneration_pokemon_forms": {
+    "pokemon_form_pokemonformgenerations": {
       "table": "pokemon_v2_pokemonformgeneration",
       "clsname": "Pokemonformgeneration",
       "direction": "ONETOMANY",
@@ -8004,7 +8000,7 @@
         }
       ]
     },
-    "pokemonformname_pokemon_forms": {
+    "pokemon_form_pokemonformnames": {
       "table": "pokemon_v2_pokemonformname",
       "clsname": "Pokemonformname",
       "direction": "ONETOMANY",
@@ -8016,7 +8012,7 @@
         }
       ]
     },
-    "pokemonformsprite_pokemon_forms": {
+    "pokemon_form_pokemonformsprites": {
       "table": "pokemon_v2_pokemonformsprites",
       "clsname": "Pokemonformsprite",
       "direction": "ONETOMANY",
@@ -8027,6 +8023,10 @@
           "to": "pokemon_v2_pokemonformsprites.pokemon_form_id"
         }
       ]
+    },
+    "pokemon_id": {
+      "type": "Integer",
+      "nullable": true
     },
     "version_group_id": {
       "type": "Integer",
@@ -8210,7 +8210,7 @@
       "type": "String",
       "nullable": false
     },
-    "pokemonhabitatname_pokemon_habitats": {
+    "pokemon_habitat_pokemonhabitatnames": {
       "table": "pokemon_v2_pokemonhabitatname",
       "clsname": "Pokemonhabitatname",
       "direction": "ONETOMANY",
@@ -8222,7 +8222,7 @@
         }
       ]
     },
-    "pokemonspecy_pokemon_habitats": {
+    "pokemon_habitat_pokemonspecies": {
       "table": "pokemon_v2_pokemonspecies",
       "clsname": "Pokemonspecy",
       "direction": "ONETOMANY",
@@ -8422,7 +8422,7 @@
       "type": "String",
       "nullable": false
     },
-    "pokemonshapename_pokemon_shapes": {
+    "pokemon_shape_pokemonshapenames": {
       "table": "pokemon_v2_pokemonshapename",
       "clsname": "Pokemonshapename",
       "direction": "ONETOMANY",
@@ -8434,7 +8434,7 @@
         }
       ]
     },
-    "pokemonspecy_pokemon_shapes": {
+    "pokemon_shape_pokemonspecies": {
       "table": "pokemon_v2_pokemonspecies",
       "clsname": "Pokemonspecy",
       "direction": "ONETOMANY",
@@ -8518,9 +8518,33 @@
         }
       ]
     },
+    "evolved_specy_pokemonevolutions": {
+      "table": "pokemon_v2_pokemonevolution",
+      "clsname": "Pokemonevolution",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_pokemonspecies.id",
+          "to": "pokemon_v2_pokemonevolution.evolved_species_id"
+        }
+      ]
+    },
     "evolves_from_species_id": {
       "type": "Integer",
       "nullable": true
+    },
+    "evolves_from_specy_pokemonspecies": {
+      "table": "pokemon_v2_pokemonspecies",
+      "clsname": "Pokemonspecy",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_pokemonspecies.id",
+          "to": "pokemon_v2_pokemonspecies.evolves_from_species_id"
+        }
+      ]
     },
     "forms_switchable": {
       "type": "bool",
@@ -8586,15 +8610,15 @@
       "type": "Integer",
       "nullable": true
     },
-    "palpark_pokemon_species": {
-      "table": "pokemon_v2_palpark",
-      "clsname": "Palpark",
+    "party_specy_pokemonevolutions": {
+      "table": "pokemon_v2_pokemonevolution",
+      "clsname": "Pokemonevolution",
       "direction": "ONETOMANY",
       "uselist": true,
       "relation": [
         {
           "from": "pokemon_v2_pokemonspecies.id",
-          "to": "pokemon_v2_palpark.pokemon_species_id"
+          "to": "pokemon_v2_pokemonevolution.party_species_id"
         }
       ]
     },
@@ -8622,19 +8646,19 @@
         }
       ]
     },
-    "pokemoncolor_pokemon_color": {
-      "table": "pokemon_v2_pokemoncolor",
-      "clsname": "Pokemoncolor",
-      "direction": "MANYTOONE",
-      "uselist": false,
+    "pokemon_specy_palparks": {
+      "table": "pokemon_v2_palpark",
+      "clsname": "Palpark",
+      "direction": "ONETOMANY",
+      "uselist": true,
       "relation": [
         {
-          "from": "pokemon_v2_pokemonspecies.pokemon_color_id",
-          "to": "pokemon_v2_pokemoncolor.id"
+          "from": "pokemon_v2_pokemonspecies.id",
+          "to": "pokemon_v2_palpark.pokemon_species_id"
         }
       ]
     },
-    "pokemondexnumber_pokemon_species": {
+    "pokemon_specy_pokemondexnumbers": {
       "table": "pokemon_v2_pokemondexnumber",
       "clsname": "Pokemondexnumber",
       "direction": "ONETOMANY",
@@ -8646,7 +8670,7 @@
         }
       ]
     },
-    "pokemonegggroup_pokemon_species": {
+    "pokemon_specy_pokemonegggroups": {
       "table": "pokemon_v2_pokemonegggroup",
       "clsname": "Pokemonegggroup",
       "direction": "ONETOMANY",
@@ -8658,39 +8682,51 @@
         }
       ]
     },
-    "pokemonevolution_evolved_species": {
-      "table": "pokemon_v2_pokemonevolution",
-      "clsname": "Pokemonevolution",
+    "pokemon_specy_pokemonspeciesdescriptions": {
+      "table": "pokemon_v2_pokemonspeciesdescription",
+      "clsname": "Pokemonspeciesdescription",
       "direction": "ONETOMANY",
       "uselist": true,
       "relation": [
         {
           "from": "pokemon_v2_pokemonspecies.id",
-          "to": "pokemon_v2_pokemonevolution.evolved_species_id"
+          "to": "pokemon_v2_pokemonspeciesdescription.pokemon_species_id"
         }
       ]
     },
-    "pokemonevolution_party_species": {
-      "table": "pokemon_v2_pokemonevolution",
-      "clsname": "Pokemonevolution",
+    "pokemon_specy_pokemonspeciesflavortexts": {
+      "table": "pokemon_v2_pokemonspeciesflavortext",
+      "clsname": "Pokemonspeciesflavortext",
       "direction": "ONETOMANY",
       "uselist": true,
       "relation": [
         {
           "from": "pokemon_v2_pokemonspecies.id",
-          "to": "pokemon_v2_pokemonevolution.party_species_id"
+          "to": "pokemon_v2_pokemonspeciesflavortext.pokemon_species_id"
         }
       ]
     },
-    "pokemonevolution_trade_species": {
-      "table": "pokemon_v2_pokemonevolution",
-      "clsname": "Pokemonevolution",
+    "pokemon_specy_pokemonspeciesnames": {
+      "table": "pokemon_v2_pokemonspeciesname",
+      "clsname": "Pokemonspeciesname",
       "direction": "ONETOMANY",
       "uselist": true,
       "relation": [
         {
           "from": "pokemon_v2_pokemonspecies.id",
-          "to": "pokemon_v2_pokemonevolution.trade_species_id"
+          "to": "pokemon_v2_pokemonspeciesname.pokemon_species_id"
+        }
+      ]
+    },
+    "pokemoncolor_pokemon_color": {
+      "table": "pokemon_v2_pokemoncolor",
+      "clsname": "Pokemoncolor",
+      "direction": "MANYTOONE",
+      "uselist": false,
+      "relation": [
+        {
+          "from": "pokemon_v2_pokemonspecies.pokemon_color_id",
+          "to": "pokemon_v2_pokemoncolor.id"
         }
       ]
     },
@@ -8718,54 +8754,6 @@
         }
       ]
     },
-    "pokemonspeciesdescription_pokemon_species": {
-      "table": "pokemon_v2_pokemonspeciesdescription",
-      "clsname": "Pokemonspeciesdescription",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_pokemonspecies.id",
-          "to": "pokemon_v2_pokemonspeciesdescription.pokemon_species_id"
-        }
-      ]
-    },
-    "pokemonspeciesflavortext_pokemon_species": {
-      "table": "pokemon_v2_pokemonspeciesflavortext",
-      "clsname": "Pokemonspeciesflavortext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_pokemonspecies.id",
-          "to": "pokemon_v2_pokemonspeciesflavortext.pokemon_species_id"
-        }
-      ]
-    },
-    "pokemonspeciesname_pokemon_species": {
-      "table": "pokemon_v2_pokemonspeciesname",
-      "clsname": "Pokemonspeciesname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_pokemonspecies.id",
-          "to": "pokemon_v2_pokemonspeciesname.pokemon_species_id"
-        }
-      ]
-    },
-    "pokemonspecy_evolves_from_species": {
-      "table": "pokemon_v2_pokemonspecies",
-      "clsname": "Pokemonspecy",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_pokemonspecies.id",
-          "to": "pokemon_v2_pokemonspecies.evolves_from_species_id"
-        }
-      ]
-    },
     "pokemonspecy_evolves_from_specy": {
       "table": "pokemon_v2_pokemonspecies",
       "clsname": "Pokemonspecy",
@@ -8775,6 +8763,18 @@
         {
           "from": "pokemon_v2_pokemonspecies.id",
           "to": "pokemon_v2_pokemonspecies.evolves_from_species_id"
+        }
+      ]
+    },
+    "trade_specy_pokemonevolutions": {
+      "table": "pokemon_v2_pokemonevolution",
+      "clsname": "Pokemonevolution",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_pokemonspecies.id",
+          "to": "pokemon_v2_pokemonevolution.trade_species_id"
         }
       ]
     }
@@ -9040,7 +9040,15 @@
     }
   },
   "Region": {
-    "generation_regions": {
+    "id": {
+      "type": "ID",
+      "nullable": false
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
+    },
+    "region_generations": {
       "table": "pokemon_v2_generation",
       "clsname": "Generation",
       "direction": "ONETOMANY",
@@ -9052,11 +9060,7 @@
         }
       ]
     },
-    "id": {
-      "type": "ID",
-      "nullable": false
-    },
-    "location_regions": {
+    "region_locations": {
       "table": "pokemon_v2_location",
       "clsname": "Location",
       "direction": "ONETOMANY",
@@ -9068,11 +9072,7 @@
         }
       ]
     },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "pokedex_regions": {
+    "region_pokedexes": {
       "table": "pokemon_v2_pokedex",
       "clsname": "Pokedex",
       "direction": "ONETOMANY",
@@ -9084,7 +9084,7 @@
         }
       ]
     },
-    "regionname_regions": {
+    "region_regionnames": {
       "table": "pokemon_v2_regionname",
       "clsname": "Regionname",
       "direction": "ONETOMANY",
@@ -9096,7 +9096,7 @@
         }
       ]
     },
-    "versiongroupregion_regions": {
+    "region_versiongroupregions": {
       "table": "pokemon_v2_versiongroupregion",
       "clsname": "Versiongroupregion",
       "direction": "ONETOMANY",
@@ -9152,15 +9152,15 @@
     }
   },
   "Stat": {
-    "characteristic_stats": {
-      "table": "pokemon_v2_characteristic",
-      "clsname": "Characteristic",
+    "decreased_stat_natures": {
+      "table": "pokemon_v2_nature",
+      "clsname": "Nature",
       "direction": "ONETOMANY",
       "uselist": true,
       "relation": [
         {
           "from": "pokemon_v2_stat.id",
-          "to": "pokemon_v2_characteristic.stat_id"
+          "to": "pokemon_v2_nature.decreased_stat_id"
         }
       ]
     },
@@ -9171,6 +9171,18 @@
     "id": {
       "type": "ID",
       "nullable": false
+    },
+    "increased_stat_natures": {
+      "table": "pokemon_v2_nature",
+      "clsname": "Nature",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_stat.id",
+          "to": "pokemon_v2_nature.increased_stat_id"
+        }
+      ]
     },
     "is_battle_only": {
       "type": "bool",
@@ -9192,7 +9204,23 @@
         }
       ]
     },
-    "movemetastatchange_stats": {
+    "name": {
+      "type": "String",
+      "nullable": false
+    },
+    "stat_characteristics": {
+      "table": "pokemon_v2_characteristic",
+      "clsname": "Characteristic",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_stat.id",
+          "to": "pokemon_v2_characteristic.stat_id"
+        }
+      ]
+    },
+    "stat_movemetastatchanges": {
       "table": "pokemon_v2_movemetastatchange",
       "clsname": "Movemetastatchange",
       "direction": "ONETOMANY",
@@ -9204,35 +9232,7 @@
         }
       ]
     },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "nature_decreased_stats": {
-      "table": "pokemon_v2_nature",
-      "clsname": "Nature",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_stat.id",
-          "to": "pokemon_v2_nature.decreased_stat_id"
-        }
-      ]
-    },
-    "nature_increased_stats": {
-      "table": "pokemon_v2_nature",
-      "clsname": "Nature",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_stat.id",
-          "to": "pokemon_v2_nature.increased_stat_id"
-        }
-      ]
-    },
-    "pokemonstat_stats": {
+    "stat_pokemonstats": {
       "table": "pokemon_v2_pokemonstat",
       "clsname": "Pokemonstat",
       "direction": "ONETOMANY",
@@ -9244,7 +9244,7 @@
         }
       ]
     },
-    "statname_stats": {
+    "stat_statnames": {
       "table": "pokemon_v2_statname",
       "clsname": "Statname",
       "direction": "ONETOMANY",
@@ -9346,7 +9346,7 @@
       "type": "ID",
       "nullable": false
     },
-    "move_super_contest_effects": {
+    "super_contest_effect_moves": {
       "table": "pokemon_v2_move",
       "clsname": "Move",
       "direction": "ONETOMANY",
@@ -9358,7 +9358,7 @@
         }
       ]
     },
-    "supercontesteffectflavortext_super_contest_effects": {
+    "super_contest_effect_supercontesteffectflavortexts": {
       "table": "pokemon_v2_supercontesteffectflavortext",
       "clsname": "Supercontesteffectflavortext",
       "direction": "ONETOMANY",
@@ -9414,15 +9414,15 @@
     }
   },
   "Type": {
-    "berry_natural_gift_types": {
-      "table": "pokemon_v2_berry",
-      "clsname": "Berry",
+    "damage_type_typeefficacies": {
+      "table": "pokemon_v2_typeefficacy",
+      "clsname": "Typeefficacy",
       "direction": "ONETOMANY",
       "uselist": true,
       "relation": [
         {
           "from": "pokemon_v2_type.id",
-          "to": "pokemon_v2_berry.natural_gift_type_id"
+          "to": "pokemon_v2_typeefficacy.damage_type_id"
         }
       ]
     },
@@ -9446,33 +9446,21 @@
       "type": "ID",
       "nullable": false
     },
+    "known_move_type_pokemonevolutions": {
+      "table": "pokemon_v2_pokemonevolution",
+      "clsname": "Pokemonevolution",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_type.id",
+          "to": "pokemon_v2_pokemonevolution.known_move_type_id"
+        }
+      ]
+    },
     "move_damage_class_id": {
       "type": "Integer",
       "nullable": true
-    },
-    "move_types": {
-      "table": "pokemon_v2_move",
-      "clsname": "Move",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_type.id",
-          "to": "pokemon_v2_move.type_id"
-        }
-      ]
-    },
-    "movechange_types": {
-      "table": "pokemon_v2_movechange",
-      "clsname": "Movechange",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_type.id",
-          "to": "pokemon_v2_movechange.type_id"
-        }
-      ]
     },
     "movedamageclass_move_damage_class": {
       "table": "pokemon_v2_movedamageclass",
@@ -9490,19 +9478,19 @@
       "type": "String",
       "nullable": false
     },
-    "pokemonevolution_known_move_types": {
-      "table": "pokemon_v2_pokemonevolution",
-      "clsname": "Pokemonevolution",
+    "natural_gift_type_berries": {
+      "table": "pokemon_v2_berry",
+      "clsname": "Berry",
       "direction": "ONETOMANY",
       "uselist": true,
       "relation": [
         {
           "from": "pokemon_v2_type.id",
-          "to": "pokemon_v2_pokemonevolution.known_move_type_id"
+          "to": "pokemon_v2_berry.natural_gift_type_id"
         }
       ]
     },
-    "pokemonevolution_party_types": {
+    "party_type_pokemonevolutions": {
       "table": "pokemon_v2_pokemonevolution",
       "clsname": "Pokemonevolution",
       "direction": "ONETOMANY",
@@ -9514,31 +9502,7 @@
         }
       ]
     },
-    "pokemontype_types": {
-      "table": "pokemon_v2_pokemontype",
-      "clsname": "Pokemontype",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_type.id",
-          "to": "pokemon_v2_pokemontype.type_id"
-        }
-      ]
-    },
-    "typeefficacy_damage_types": {
-      "table": "pokemon_v2_typeefficacy",
-      "clsname": "Typeefficacy",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_type.id",
-          "to": "pokemon_v2_typeefficacy.damage_type_id"
-        }
-      ]
-    },
-    "typeefficacy_target_types": {
+    "target_type_typeefficacies": {
       "table": "pokemon_v2_typeefficacy",
       "clsname": "Typeefficacy",
       "direction": "ONETOMANY",
@@ -9550,7 +9514,43 @@
         }
       ]
     },
-    "typegameindex_types": {
+    "type_movechanges": {
+      "table": "pokemon_v2_movechange",
+      "clsname": "Movechange",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_type.id",
+          "to": "pokemon_v2_movechange.type_id"
+        }
+      ]
+    },
+    "type_moves": {
+      "table": "pokemon_v2_move",
+      "clsname": "Move",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_type.id",
+          "to": "pokemon_v2_move.type_id"
+        }
+      ]
+    },
+    "type_pokemontypes": {
+      "table": "pokemon_v2_pokemontype",
+      "clsname": "Pokemontype",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_type.id",
+          "to": "pokemon_v2_pokemontype.type_id"
+        }
+      ]
+    },
+    "type_typegameindices": {
       "table": "pokemon_v2_typegameindex",
       "clsname": "Typegameindex",
       "direction": "ONETOMANY",
@@ -9562,7 +9562,7 @@
         }
       ]
     },
-    "typename_types": {
+    "type_typenames": {
       "table": "pokemon_v2_typename",
       "clsname": "Typename",
       "direction": "ONETOMANY",
@@ -9702,7 +9702,15 @@
     }
   },
   "Version": {
-    "encounter_versions": {
+    "id": {
+      "type": "ID",
+      "nullable": false
+    },
+    "name": {
+      "type": "String",
+      "nullable": false
+    },
+    "version_encounters": {
       "table": "pokemon_v2_encounter",
       "clsname": "Encounter",
       "direction": "ONETOMANY",
@@ -9714,11 +9722,11 @@
         }
       ]
     },
-    "id": {
-      "type": "ID",
-      "nullable": false
+    "version_group_id": {
+      "type": "Integer",
+      "nullable": true
     },
-    "locationareaencounterrate_versions": {
+    "version_locationareaencounterrates": {
       "table": "pokemon_v2_locationareaencounterrate",
       "clsname": "Locationareaencounterrate",
       "direction": "ONETOMANY",
@@ -9730,11 +9738,7 @@
         }
       ]
     },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "pokemongameindex_versions": {
+    "version_pokemongameindices": {
       "table": "pokemon_v2_pokemongameindex",
       "clsname": "Pokemongameindex",
       "direction": "ONETOMANY",
@@ -9746,7 +9750,7 @@
         }
       ]
     },
-    "pokemonitem_versions": {
+    "version_pokemonitems": {
       "table": "pokemon_v2_pokemonitem",
       "clsname": "Pokemonitem",
       "direction": "ONETOMANY",
@@ -9758,7 +9762,7 @@
         }
       ]
     },
-    "pokemonspeciesflavortext_versions": {
+    "version_pokemonspeciesflavortexts": {
       "table": "pokemon_v2_pokemonspeciesflavortext",
       "clsname": "Pokemonspeciesflavortext",
       "direction": "ONETOMANY",
@@ -9770,9 +9774,17 @@
         }
       ]
     },
-    "version_group_id": {
-      "type": "Integer",
-      "nullable": true
+    "version_versionnames": {
+      "table": "pokemon_v2_versionname",
+      "clsname": "Versionname",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_version.id",
+          "to": "pokemon_v2_versionname.version_id"
+        }
+      ]
     },
     "versiongroup_version_group": {
       "table": "pokemon_v2_versiongroup",
@@ -9785,57 +9797,9 @@
           "to": "pokemon_v2_versiongroup.id"
         }
       ]
-    },
-    "versionname_versions": {
-      "table": "pokemon_v2_versionname",
-      "clsname": "Versionname",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_version.id",
-          "to": "pokemon_v2_versionname.version_id"
-        }
-      ]
     }
   },
   "Versiongroup": {
-    "abilitychange_version_groups": {
-      "table": "pokemon_v2_abilitychange",
-      "clsname": "Abilitychange",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_versiongroup.id",
-          "to": "pokemon_v2_abilitychange.version_group_id"
-        }
-      ]
-    },
-    "abilityflavortext_version_groups": {
-      "table": "pokemon_v2_abilityflavortext",
-      "clsname": "Abilityflavortext",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_versiongroup.id",
-          "to": "pokemon_v2_abilityflavortext.version_group_id"
-        }
-      ]
-    },
-    "encounterslot_version_groups": {
-      "table": "pokemon_v2_encounterslot",
-      "clsname": "Encounterslot",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_versiongroup.id",
-          "to": "pokemon_v2_encounterslot.version_group_id"
-        }
-      ]
-    },
     "generation": {
       "table": "pokemon_v2_generation",
       "clsname": "Generation",
@@ -9856,7 +9820,51 @@
       "type": "ID",
       "nullable": false
     },
-    "itemflavortext_version_groups": {
+    "name": {
+      "type": "String",
+      "nullable": false
+    },
+    "order": {
+      "type": "Integer",
+      "nullable": true
+    },
+    "version_group_abilitychanges": {
+      "table": "pokemon_v2_abilitychange",
+      "clsname": "Abilitychange",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_versiongroup.id",
+          "to": "pokemon_v2_abilitychange.version_group_id"
+        }
+      ]
+    },
+    "version_group_abilityflavortexts": {
+      "table": "pokemon_v2_abilityflavortext",
+      "clsname": "Abilityflavortext",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_versiongroup.id",
+          "to": "pokemon_v2_abilityflavortext.version_group_id"
+        }
+      ]
+    },
+    "version_group_encounterslots": {
+      "table": "pokemon_v2_encounterslot",
+      "clsname": "Encounterslot",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_versiongroup.id",
+          "to": "pokemon_v2_encounterslot.version_group_id"
+        }
+      ]
+    },
+    "version_group_itemflavortexts": {
       "table": "pokemon_v2_itemflavortext",
       "clsname": "Itemflavortext",
       "direction": "ONETOMANY",
@@ -9868,7 +9876,7 @@
         }
       ]
     },
-    "machine_version_groups": {
+    "version_group_machines": {
       "table": "pokemon_v2_machine",
       "clsname": "Machine",
       "direction": "ONETOMANY",
@@ -9880,7 +9888,7 @@
         }
       ]
     },
-    "movechange_version_groups": {
+    "version_group_movechanges": {
       "table": "pokemon_v2_movechange",
       "clsname": "Movechange",
       "direction": "ONETOMANY",
@@ -9892,7 +9900,7 @@
         }
       ]
     },
-    "moveeffectchange_version_groups": {
+    "version_group_moveeffectchanges": {
       "table": "pokemon_v2_moveeffectchange",
       "clsname": "Moveeffectchange",
       "direction": "ONETOMANY",
@@ -9904,7 +9912,7 @@
         }
       ]
     },
-    "moveflavortext_version_groups": {
+    "version_group_moveflavortexts": {
       "table": "pokemon_v2_moveflavortext",
       "clsname": "Moveflavortext",
       "direction": "ONETOMANY",
@@ -9916,15 +9924,7 @@
         }
       ]
     },
-    "name": {
-      "type": "String",
-      "nullable": false
-    },
-    "order": {
-      "type": "Integer",
-      "nullable": true
-    },
-    "pokedexversiongroup_version_groups": {
+    "version_group_pokedexversiongroups": {
       "table": "pokemon_v2_pokedexversiongroup",
       "clsname": "Pokedexversiongroup",
       "direction": "ONETOMANY",
@@ -9936,7 +9936,7 @@
         }
       ]
     },
-    "pokemonform_version_groups": {
+    "version_group_pokemonforms": {
       "table": "pokemon_v2_pokemonform",
       "clsname": "Pokemonform",
       "direction": "ONETOMANY",
@@ -9948,7 +9948,7 @@
         }
       ]
     },
-    "pokemonmove_version_groups": {
+    "version_group_pokemonmoves": {
       "table": "pokemon_v2_pokemonmove",
       "clsname": "Pokemonmove",
       "direction": "ONETOMANY",
@@ -9957,6 +9957,30 @@
         {
           "from": "pokemon_v2_versiongroup.id",
           "to": "pokemon_v2_pokemonmove.version_group_id"
+        }
+      ]
+    },
+    "version_group_versiongroupmovelearnmethods": {
+      "table": "pokemon_v2_versiongroupmovelearnmethod",
+      "clsname": "Versiongroupmovelearnmethod",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_versiongroup.id",
+          "to": "pokemon_v2_versiongroupmovelearnmethod.version_group_id"
+        }
+      ]
+    },
+    "version_group_versiongroupregions": {
+      "table": "pokemon_v2_versiongroupregion",
+      "clsname": "Versiongroupregion",
+      "direction": "ONETOMANY",
+      "uselist": true,
+      "relation": [
+        {
+          "from": "pokemon_v2_versiongroup.id",
+          "to": "pokemon_v2_versiongroupregion.version_group_id"
         }
       ]
     },
@@ -9969,30 +9993,6 @@
         {
           "from": "pokemon_v2_versiongroup.id",
           "to": "pokemon_v2_version.version_group_id"
-        }
-      ]
-    },
-    "versiongroupmovelearnmethod_version_groups": {
-      "table": "pokemon_v2_versiongroupmovelearnmethod",
-      "clsname": "Versiongroupmovelearnmethod",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_versiongroup.id",
-          "to": "pokemon_v2_versiongroupmovelearnmethod.version_group_id"
-        }
-      ]
-    },
-    "versiongroupregion_version_groups": {
-      "table": "pokemon_v2_versiongroupregion",
-      "clsname": "Versiongroupregion",
-      "direction": "ONETOMANY",
-      "uselist": true,
-      "relation": [
-        {
-          "from": "pokemon_v2_versiongroup.id",
-          "to": "pokemon_v2_versiongroupregion.version_group_id"
         }
       ]
     }
