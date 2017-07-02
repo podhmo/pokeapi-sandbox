@@ -14,8 +14,8 @@ def titleize(name):
 
 def singular(name):
     if name.endswith("s"):
-        return titleize(name[:-1])
-    return titleize(name)
+        return name[:-1]
+    return name
 
 
 class Array:
@@ -49,9 +49,9 @@ def emit(m, d):
                     m.field(k, v["type"], nullable=v.get("nullable", True))
                 else:
                     if v["uselist"]:
-                        m.field(k, Array(singular(v["table"])), nullable=v.get("nullable", True))
+                        m.field(k, Array(singular(v["clsname"])), nullable=v.get("nullable", True))
                     else:
-                        m.field(k, singular(v["table"]), nullable=v.get("nullable", True))
+                        m.field(k, singular(v["clsname"]), nullable=v.get("nullable", True))
         m.stmt("")
 
 
