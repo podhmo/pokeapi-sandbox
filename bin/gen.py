@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import itertools
+from inflection import camelize, singularize, pluralize
 from collections import OrderedDict
 from sqlalchemy.ext import automap
 from sqlalchemy import create_engine
@@ -21,7 +22,7 @@ class Collector:
         d = OrderedDict()
         for c in classes:
             mapper = inspect(c)
-            d[mapper.local_table.fullname] = self._collect_from_mapper(mapper)
+            d[classname_for_table(mapper.local_table.fullname)] = self._collect_from_mapper(mapper)
         return d
 
     def _collect_from_mapper(self, m):
@@ -31,6 +32,7 @@ class Collector:
                 d[prop.key] = OrderedDict(
                     [
                         ("table", prop.target.fullname),
+                        ("clsname", classname_for_table(prop.target.fullname)),
                         ("direction", prop.direction.name),
                         ("uselist", prop.uselist),
                         (
@@ -102,8 +104,8 @@ class Resolver:
             return c.type.python_type.__name__  # xxx
 
 
-def guess_name(local_cls, referred_cls, constraint):
-    names = []
+def guess_name(local_cls, referred_cls, constraint, target_table, prefix=""):
+    r = []
     arrived = set()
     itr = itertools.chain(
         [referred_cls.__name__],
@@ -111,23 +113,37 @@ def guess_name(local_cls, referred_cls, constraint):
             col.table.name for col in constraint
             if col.table not in (local_cls.__table__, referred_cls.__table__)
         ],
-        [col.name for col in constraint if col.table == local_cls.__table__],
+        [col.name for col in constraint if col.table == target_table],
     )
-    for name in itr:
-        name = name.replace("_id", "")
-        if name.lower() in arrived:
-            continue
-        arrived.add(name)
-        names.append(name)
-    return "_".join(names)
+    itr = list(itr)
+    for nameset in itr:
+        nameset = singularize(nameset.replace("_id", "").replace("pokemon_v2_", ""))
+        for name in nameset.split("_"):
+            if name not in arrived:
+                arrived.add(name)
+                r.append(name)
+    return "_".join(r)
 
 
 def name_for_scalar_relationship(base, local_cls, referred_cls, constraint):
-    return guess_name(local_cls, referred_cls, constraint)
+    return guess_name(local_cls, referred_cls, constraint, local_cls.__table__, prefix="S")
 
 
 def name_for_collection_relationship(base, local_cls, referred_cls, constraint):
-    return guess_name(local_cls, referred_cls, constraint) + "_collection"
+    return pluralize(
+        guess_name(local_cls, referred_cls, constraint, referred_cls.__table__, prefix="C")
+    )
+
+
+def classname_for_table(tablename):
+    r = []
+    arrived = set()
+    name = tablename.replace("pokemon_v2_", "")
+    for name in singularize(name).split("_"):
+        if name not in arrived:
+            arrived.add(name)
+            r.append(name)
+    return camelize("_".join(r))
 
 
 def main(src):
