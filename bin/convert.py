@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import itertools
 from dictknife import loading
 from prestring import Module
 import contextlib
@@ -44,7 +45,8 @@ class GraphQLModule(Module):
 def emit(m, d):
     for name, fields in d.items():
         with m.type_(singular(name)):
-            for k, v in fields.items():
+            itr = itertools.chain(fields.get("column", {}).items(), fields.get("relationship", {}).items())
+            for k, v in itr:
                 if "type" in v:
                     m.field(k, v["type"], nullable=v.get("nullable", True))
                 else:

@@ -27,9 +27,12 @@ class Collector:
 
     def _collect_from_mapper(self, m):
         d = OrderedDict()
+        d["table"] = m.local_table.fullname
         for prop in sorted(m.iterate_properties, key=lambda x: x.key):
             if hasattr(prop, "direction"):
-                d[prop.key] = OrderedDict(
+                if "relationship" not in d:
+                    d["relationship"] = OrderedDict()
+                d["relationship"][prop.key] = OrderedDict(
                     [
                         ("table", prop.target.fullname),
                         ("clsname", classname_for_table(prop.target.fullname)),
@@ -44,9 +47,11 @@ class Collector:
                     ]
                 )
             else:
+                if "column" not in d:
+                    d["column"] = OrderedDict()
                 assert len(prop.columns) == 1, "multi keys are not supported"
                 c = prop.columns[0]
-                d[prop.key] = OrderedDict(
+                d["column"][prop.key] = OrderedDict(
                     [
                         ("type", self.resolver.resolve_type(c)),
                         ("nullable", c.nullable),
