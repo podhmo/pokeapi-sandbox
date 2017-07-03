@@ -5,26 +5,26 @@ type AlertsAlert {
 }
 
 type AuthGroup {
-    group_auth_permissions: [AuthGroupPermission]
-    group_auth_users: [AuthUserGroup]
     id: ID!
     name: String!
+    group_auth_permissions: [AuthGroupPermission]
+    group_auth_users: [AuthUserGroup]
 }
 
 type AuthGroupPermission {
-    auth_group: AuthGroup
-    auth_permission: AuthPermission
     group_id: Integer!
     id: ID!
     permission_id: Integer!
+    auth_group: AuthGroup
+    auth_permission: AuthPermission
 }
 
 type AuthPermission {
     codename: String!
     content_type_id: Integer!
-    django_content_type: DjangoContentType
     id: ID!
     name: String!
+    django_content_type: DjangoContentType
     permission_auth_groups: [AuthGroupPermission]
     permission_auth_users: [AuthUserPermission]
 }
@@ -40,27 +40,27 @@ type AuthUser {
     last_login: datetime
     last_name: String!
     password: String!
+    username: String!
     user_auth_groups: [AuthUserGroup]
     user_auth_permissions: [AuthUserPermission]
     user_django_admin_logs: [DjangoAdminLog]
     user_tastypie_apikeys: [TastypieApikey]
-    username: String!
 }
 
 type AuthUserGroup {
-    auth_group: AuthGroup
-    auth_user: AuthUser
     group_id: Integer!
     id: ID!
     user_id: Integer!
+    auth_group: AuthGroup
+    auth_user: AuthUser
 }
 
 type AuthUserPermission {
-    auth_permission: AuthPermission
-    auth_user: AuthUser
     id: ID!
     permission_id: Integer!
     user_id: Integer!
+    auth_permission: AuthPermission
+    auth_user: AuthUser
 }
 
 type CorsheadersCorsmodel {
@@ -71,22 +71,22 @@ type CorsheadersCorsmodel {
 type DjangoAdminLog {
     action_flag: Integer!
     action_time: datetime!
-    auth_user: AuthUser
     change_message: String!
     content_type_id: Integer
-    django_content_type: DjangoContentType
     id: ID!
     object_id: String
     object_repr: String!
     user_id: Integer!
+    auth_user: AuthUser
+    django_content_type: DjangoContentType
 }
 
 type DjangoContentType {
     app_label: String!
-    content_type_auth_permissions: [AuthPermission]
-    content_type_django_admin_logs: [DjangoAdminLog]
     id: ID!
     model: String!
+    content_type_auth_permissions: [AuthPermission]
+    content_type_django_admin_logs: [DjangoAdminLog]
 }
 
 type DjangoMigration {
@@ -118,17 +118,17 @@ type HitsResourceview {
 type PokemonAbility {
     ability_id: Integer!
     id: ID!
+    pokemon_id: Integer!
     pokemon: Pokemon
     pokemon_ability: PokemonAbility
-    pokemon_id: Integer!
 }
 
 type PokemonDescription {
     description_id: Integer!
     id: ID!
+    pokemon_id: Integer!
     pokemon: Pokemon
     pokemon_description: PokemonDescription
-    pokemon_id: Integer!
 }
 
 type PokemonDescriptionGame {
@@ -141,10 +141,10 @@ type PokemonDescriptionGame {
 
 type PokemonEgggroup {
     created: datetime!
-    egggroup_pokemon_egg_groups: [PokemonEggGroup]
     id: ID!
     modified: datetime!
     name: String!
+    egggroup_pokemon_egg_groups: [PokemonEggGroup]
 }
 
 type PokemonEvolution {
@@ -155,19 +155,19 @@ type PokemonEvolution {
     level: Integer!
     method: String!
     modified: datetime!
+    to_id: Integer
     pokemon_frm: Pokemon
     pokemon_to: Pokemon
-    to_id: Integer
 }
 
 type PokemonGame {
     created: datetime!
-    game_pokemon_descriptions: [PokemonDescriptionGame]
     generation: Integer!
     id: ID!
     modified: datetime!
     name: String!
     release_year: Integer!
+    game_pokemon_descriptions: [PokemonDescriptionGame]
 }
 
 type PokemonMove {
@@ -177,19 +177,19 @@ type PokemonMove {
     description: String!
     id: ID!
     modified: datetime!
-    move_pokemon_etypes: [PokemonMoveEtype]
-    move_pokemon_movepokemons: [PokemonMovepokemon]
     name: String!
     power: Integer!
     pp: Integer!
+    move_pokemon_etypes: [PokemonMoveEtype]
+    move_pokemon_movepokemons: [PokemonMovepokemon]
 }
 
 type PokemonMoveEtype {
     id: ID!
     move_id: Integer!
+    type_id: Integer!
     pokemon_move: PokemonMove
     pokemon_type: PokemonType
-    type_id: Integer!
 }
 
 type PokemonMovepokemon {
@@ -199,8 +199,8 @@ type PokemonMovepokemon {
     level: Integer
     modified: datetime!
     move_id: Integer
-    pokemon: Pokemon
     pokemon_id: Integer
+    pokemon: Pokemon
     pokemon_move: PokemonMove
 }
 
@@ -218,6 +218,8 @@ type Pokemon {
     is_default: bool!
     name: String!
     order: Integer
+    pokemon_species_id: Integer
+    weight: Integer!
     pokemon_encounters: [Encounter]
     pokemon_pokemonabilities: [Pokemonability]
     pokemon_pokemonforms: [Pokemonform]
@@ -227,17 +229,15 @@ type Pokemon {
     pokemon_pokemonsprites: [Pokemonsprite]
     pokemon_pokemonstats: [Pokemonstat]
     pokemon_pokemontypes: [Pokemontype]
-    pokemon_species_id: Integer
     pokemonspecy_pokemon_specy: Pokemonspecy
-    weight: Integer!
 }
 
 type PokemonEggGroup {
     egggroup_id: Integer!
     id: ID!
+    pokemon_id: Integer!
     pokemon: Pokemon
     pokemon_egggroup: PokemonEgggroup
-    pokemon_id: Integer!
 }
 
 type PokemonSprite {
@@ -251,10 +251,10 @@ type PokemonSprite {
 
 type PokemonType {
     created: datetime!
-    frm_pokemon_typecharts: [PokemonTypechart]
     id: ID!
     modified: datetime!
     name: String!
+    frm_pokemon_typecharts: [PokemonTypechart]
     to_pokemon_typecharts: [PokemonTypechart]
     type_pokemon_move_etypes: [PokemonMoveEtype]
     type_pokemons: [PokemonType]
@@ -265,80 +265,77 @@ type PokemonTypechart {
     frm_id: Integer
     id: ID!
     modified: datetime!
-    pokemon_type_frm: PokemonType
-    pokemon_type_to: PokemonType
     to_id: Integer
     ttype: String
+    pokemon_type_frm: PokemonType
+    pokemon_type_to: PokemonType
 }
 
 type Ability {
+    generation_id: Integer
+    id: ID!
+    is_main_series: bool!
+    name: String!
     ability_abilitychanges: [Abilitychange]
     ability_abilityeffecttexts: [Abilityeffecttext]
     ability_abilityflavortexts: [Abilityflavortext]
     ability_abilitynames: [Abilityname]
     ability_pokemonabilities: [Pokemonability]
     generation: Generation
-    generation_id: Integer
-    id: ID!
-    is_main_series: bool!
-    name: String!
 }
 
 type Abilitychange {
-    ability: Ability
-    ability_change_abilitychangeeffecttexts: [Abilitychangeeffecttext]
     ability_id: Integer
     id: ID!
     version_group_id: Integer
+    ability: Ability
+    ability_change_abilitychangeeffecttexts: [Abilitychangeeffecttext]
     versiongroup_version_group: Versiongroup
 }
 
 type Abilitychangeeffecttext {
     ability_change_id: Integer
-    abilitychange_ability_change: Abilitychange
     effect: String!
     id: ID!
-    language: Language
     language_id: Integer
+    abilitychange_ability_change: Abilitychange
+    language: Language
 }
 
 type Abilityeffecttext {
-    ability: Ability
     ability_id: Integer
     effect: String!
     id: ID!
-    language: Language
     language_id: Integer
     short_effect: String!
+    ability: Ability
+    language: Language
 }
 
 type Abilityflavortext {
-    ability: Ability
     ability_id: Integer
     flavor_text: String!
     id: ID!
-    language: Language
     language_id: Integer
     version_group_id: Integer
+    ability: Ability
+    language: Language
     versiongroup_version_group: Versiongroup
 }
 
 type Abilityname {
-    ability: Ability
     ability_id: Integer
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
+    ability: Ability
+    language: Language
 }
 
 type Berry {
-    berry_berryflavormaps: [Berryflavormap]
     berry_firmness_id: Integer
-    berryfirmness_berry_firmness: Berryfirmnes
     growth_time: Integer!
     id: ID!
-    item: Item
     item_id: Integer
     max_harvest: Integer!
     name: String!
@@ -347,266 +344,272 @@ type Berry {
     size: Integer!
     smoothness: Integer!
     soil_dryness: Integer!
+    berry_berryflavormaps: [Berryflavormap]
+    berryfirmness_berry_firmness: Berryfirmnes
+    item: Item
     type_natural_gift: Type
 }
 
 type Berryfirmnes {
-    berry_firmness_berryfirmnessnames: [Berryfirmnessname]
-    berry_firmnesses: [Berry]
     id: ID!
     name: String!
+    berry_firmness_berryfirmnessnames: [Berryfirmnessname]
+    berry_firmnesses: [Berry]
 }
 
 type Berryfirmnessname {
     berry_firmness_id: Integer
-    berryfirmness_berry_firmness: Berryfirmnes
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
+    berryfirmness_berry_firmness: Berryfirmnes
+    language: Language
 }
 
 type Berryflavor {
+    contest_type_id: Integer
+    id: ID!
+    name: String!
     berry_flavor_berryflavormaps: [Berryflavormap]
     berry_flavor_berryflavornames: [Berryflavorname]
-    contest_type_id: Integer
     contesttype_contest_type: Contesttype
     hates_flavor_natures: [Nature]
-    id: ID!
     likes_flavor_natures: [Nature]
-    name: String!
 }
 
 type Berryflavormap {
-    berry: Berry
     berry_flavor_id: Integer
     berry_id: Integer
-    berryflavor_berry_flavor: Berryflavor
     id: ID!
     potency: Integer!
+    berry: Berry
+    berryflavor_berry_flavor: Berryflavor
 }
 
 type Berryflavorname {
     berry_flavor_id: Integer
-    berryflavor_berry_flavor: Berryflavor
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
+    berryflavor_berry_flavor: Berryflavor
+    language: Language
 }
 
 type Characteristic {
-    characteristic_characteristicdescriptions: [Characteristicdescription]
     gene_mod_5: Integer!
     id: ID!
-    stat: Stat
     stat_id: Integer
+    characteristic_characteristicdescriptions: [Characteristicdescription]
+    stat: Stat
 }
 
 type Characteristicdescription {
-    characteristic: Characteristic
     characteristic_id: Integer
     description: String!
     id: ID!
-    language: Language
     language_id: Integer
+    characteristic: Characteristic
+    language: Language
 }
 
 type Contestcombo {
     first_move_id: Integer
     id: ID!
+    second_move_id: Integer
     move_first: Move
     move_second: Move
-    second_move_id: Integer
 }
 
 type Contesteffect {
     appeal: Integer!
+    id: ID!
+    jam: Integer!
     contest_effect_contesteffecteffecttexts: [Contesteffecteffecttext]
     contest_effect_contesteffectflavortexts: [Contesteffectflavortext]
     contest_effect_moves: [Move]
-    id: ID!
-    jam: Integer!
 }
 
 type Contesteffecteffecttext {
     contest_effect_id: Integer
-    contesteffect_contest_effect: Contesteffect
     effect: String!
     id: ID!
-    language: Language
     language_id: Integer
+    contesteffect_contest_effect: Contesteffect
+    language: Language
 }
 
 type Contesteffectflavortext {
     contest_effect_id: Integer
-    contesteffect_contest_effect: Contesteffect
     flavor_text: String!
     id: ID!
-    language: Language
     language_id: Integer
+    contesteffect_contest_effect: Contesteffect
+    language: Language
 }
 
 type Contesttype {
+    id: ID!
+    name: String!
     contest_type_berryflavors: [Berryflavor]
     contest_type_contesttypenames: [Contesttypename]
     contest_type_moves: [Move]
-    id: ID!
-    name: String!
 }
 
 type Contesttypename {
     color: String!
     contest_type_id: Integer
-    contesttype_contest_type: Contesttype
     flavor: String!
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
+    contesttype_contest_type: Contesttype
+    language: Language
 }
 
 type Egggroup {
-    egg_group_egggroupnames: [Egggroupname]
-    egg_group_pokemonegggroups: [Pokemonegggroup]
     id: ID!
     name: String!
+    egg_group_egggroupnames: [Egggroupname]
+    egg_group_pokemonegggroups: [Pokemonegggroup]
 }
 
 type Egggroupname {
     egg_group_id: Integer
-    egggroup_egg_group: Egggroup
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
+    egggroup_egg_group: Egggroup
+    language: Language
 }
 
 type Encounter {
-    encounter_encounterconditionvaluemaps: [Encounterconditionvaluemap]
     encounter_slot_id: Integer
-    encounterslot_encounter_slot: Encounterslot
     id: ID!
     location_area_id: Integer
-    locationarea_location_area: Locationarea
     max_level: Integer!
     min_level: Integer!
-    pokemon: Pokemon
     pokemon_id: Integer
-    version: Version
     version_id: Integer
+    encounter_encounterconditionvaluemaps: [Encounterconditionvaluemap]
+    encounterslot_encounter_slot: Encounterslot
+    locationarea_location_area: Locationarea
+    pokemon: Pokemon
+    version: Version
 }
 
 type Encountercondition {
-    encounter_condition_encounterconditionnames: [Encounterconditionname]
-    encounter_condition_encounterconditionvalues: [Encounterconditionvalue]
     id: ID!
     name: String!
+    encounter_condition_encounterconditionnames: [Encounterconditionname]
+    encounter_condition_encounterconditionvalues: [Encounterconditionvalue]
 }
 
 type Encounterconditionname {
     encounter_condition_id: Integer
-    encountercondition_encounter_condition: Encountercondition
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
+    encountercondition_encounter_condition: Encountercondition
+    language: Language
 }
 
 type Encounterconditionvalue {
     encounter_condition_id: Integer
-    encounter_condition_value_encounterconditionvaluemaps: [Encounterconditionvaluemap]
-    encounter_condition_value_encounterconditionvaluenames: [Encounterconditionvaluename]
-    encountercondition_encounter_condition: Encountercondition
     id: ID!
     is_default: bool!
     name: String!
+    encounter_condition_value_encounterconditionvaluemaps: [Encounterconditionvaluemap]
+    encounter_condition_value_encounterconditionvaluenames: [Encounterconditionvaluename]
+    encountercondition_encounter_condition: Encountercondition
 }
 
 type Encounterconditionvaluemap {
-    encounter: Encounter
     encounter_condition_value_id: Integer
     encounter_id: Integer
-    encounterconditionvalue_encounter_condition_value: Encounterconditionvalue
     id: ID!
+    encounter: Encounter
+    encounterconditionvalue_encounter_condition_value: Encounterconditionvalue
 }
 
 type Encounterconditionvaluename {
     encounter_condition_value_id: Integer
-    encounterconditionvalue_encounter_condition_value: Encounterconditionvalue
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
+    encounterconditionvalue_encounter_condition_value: Encounterconditionvalue
+    language: Language
 }
 
 type Encountermethod {
-    encounter_method_encountermethodnames: [Encountermethodname]
-    encounter_method_encounterslots: [Encounterslot]
-    encounter_method_locationareaencounterrates: [Locationareaencounterrate]
     id: ID!
     name: String!
     order: Integer
+    encounter_method_encountermethodnames: [Encountermethodname]
+    encounter_method_encounterslots: [Encounterslot]
+    encounter_method_locationareaencounterrates: [Locationareaencounterrate]
 }
 
 type Encountermethodname {
     encounter_method_id: Integer
-    encountermethod_encounter_method: Encountermethod
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
+    encountermethod_encounter_method: Encountermethod
+    language: Language
 }
 
 type Encounterslot {
     encounter_method_id: Integer
-    encounter_slots: [Encounter]
-    encountermethod_encounter_method: Encountermethod
     id: ID!
     rarity: Integer!
     slot: Integer
     version_group_id: Integer
+    encounter_slots: [Encounter]
+    encountermethod_encounter_method: Encountermethod
     versiongroup_version_group: Versiongroup
 }
 
 type Evolutionchain {
     baby_trigger_item_id: Integer
-    evolution_chain_pokemonspecies: [Pokemonspecy]
     id: ID!
+    evolution_chain_pokemonspecies: [Pokemonspecy]
     item_baby_trigger: Item
 }
 
 type Evolutiontrigger {
-    evolution_trigger_evolutiontriggernames: [Evolutiontriggername]
-    evolution_trigger_pokemonevolutions: [Pokemonevolution]
     id: ID!
     name: String!
+    evolution_trigger_evolutiontriggernames: [Evolutiontriggername]
+    evolution_trigger_pokemonevolutions: [Pokemonevolution]
 }
 
 type Evolutiontriggername {
     evolution_trigger_id: Integer
-    evolutiontrigger_evolution_trigger: Evolutiontrigger
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
+    evolutiontrigger_evolution_trigger: Evolutiontrigger
+    language: Language
 }
 
 type Experience {
     experience: Integer!
     growth_rate_id: Integer
-    growthrate_growth_rate: Growthrate
     id: ID!
     level: Integer!
+    growthrate_growth_rate: Growthrate
 }
 
 type Gender {
-    gender_pokemonevolutions: [Pokemonevolution]
     id: ID!
     name: String!
+    gender_pokemonevolutions: [Pokemonevolution]
 }
 
 type Generation {
+    id: ID!
+    name: String!
+    region_id: Integer
     generation_abilities: [Ability]
     generation_generationnames: [Generationname]
     generation_itemgameindices: [Itemgameindex]
@@ -617,50 +620,48 @@ type Generation {
     generation_typegameindices: [Typegameindex]
     generation_types: [Type]
     generation_versiongroups: [Versiongroup]
-    id: ID!
-    name: String!
     region: Region
-    region_id: Integer
 }
 
 type Generationname {
-    generation: Generation
     generation_id: Integer
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
+    generation: Generation
+    language: Language
 }
 
 type Growthrate {
     formula: String!
+    id: ID!
+    name: String!
     growth_rate_experiences: [Experience]
     growth_rate_growthratedescriptions: [Growthratedescription]
     growth_rate_machines: [Machine]
     growth_rate_pokemonspecies: [Pokemonspecy]
-    id: ID!
-    name: String!
 }
 
 type Growthratedescription {
     description: String!
     growth_rate_id: Integer
-    growthrate_growth_rate: Growthrate
     id: ID!
-    language: Language
     language_id: Integer
+    growthrate_growth_rate: Growthrate
+    language: Language
 }
 
 type Item {
-    baby_trigger_item_evolutionchains: [Evolutionchain]
     cost: Integer
-    evolution_item_pokemonevolutions: [Pokemonevolution]
     fling_power: Integer
-    held_item_pokemonevolutions: [Pokemonevolution]
     id: ID!
-    item_berries: [Berry]
     item_category_id: Integer
     item_fling_effect_id: Integer
+    name: String!
+    baby_trigger_item_evolutionchains: [Evolutionchain]
+    evolution_item_pokemonevolutions: [Pokemonevolution]
+    held_item_pokemonevolutions: [Pokemonevolution]
+    item_berries: [Berry]
     item_itemattributemaps: [Itemattributemap]
     item_itemeffecttexts: [Itemeffecttext]
     item_itemflavortexts: [Itemflavortext]
@@ -671,143 +672,145 @@ type Item {
     item_pokemonitems: [Pokemonitem]
     itemcategory_item_category: Itemcategory
     itemflingeffect_item_fling_effect: Itemflingeffect
-    name: String!
 }
 
 type Itemattribute {
     id: ID!
+    name: String!
     item_attribute_itemattributedescriptions: [Itemattributedescription]
     item_attribute_itemattributemaps: [Itemattributemap]
     item_attribute_itemattributenames: [Itemattributename]
-    name: String!
 }
 
 type Itemattributedescription {
     description: String!
     id: ID!
     item_attribute_id: Integer
+    language_id: Integer
     itemattribute_item_attribute: Itemattribute
     language: Language
-    language_id: Integer
 }
 
 type Itemattributemap {
     id: ID!
-    item: Item
     item_attribute_id: Integer
     item_id: Integer
+    item: Item
     itemattribute_item_attribute: Itemattribute
 }
 
 type Itemattributename {
     id: ID!
     item_attribute_id: Integer
-    itemattribute_item_attribute: Itemattribute
-    language: Language
     language_id: Integer
     name: String!
+    itemattribute_item_attribute: Itemattribute
+    language: Language
 }
 
 type Itemcategory {
     id: ID!
+    item_pocket_id: Integer
+    name: String!
     item_categories: [Item]
     item_category_itemcategorynames: [Itemcategoryname]
-    item_pocket_id: Integer
     itempocket_item_pocket: Itempocket
-    name: String!
 }
 
 type Itemcategoryname {
     id: ID!
     item_category_id: Integer
-    itemcategory_item_category: Itemcategory
-    language: Language
     language_id: Integer
     name: String!
+    itemcategory_item_category: Itemcategory
+    language: Language
 }
 
 type Itemeffecttext {
     effect: String!
     id: ID!
-    item: Item
     item_id: Integer
-    language: Language
     language_id: Integer
     short_effect: String!
+    item: Item
+    language: Language
 }
 
 type Itemflavortext {
     flavor_text: String!
     id: ID!
-    item: Item
     item_id: Integer
-    language: Language
     language_id: Integer
     version_group_id: Integer
+    item: Item
+    language: Language
     versiongroup_version_group: Versiongroup
 }
 
 type Itemflingeffect {
     id: ID!
+    name: String!
     item_fling_effect_itemflingeffecteffecttexts: [Itemflingeffecteffecttext]
     item_fling_effects: [Item]
-    name: String!
 }
 
 type Itemflingeffecteffecttext {
     effect: String!
     id: ID!
     item_fling_effect_id: Integer
+    language_id: Integer
     itemflingeffect_item_fling_effect: Itemflingeffect
     language: Language
-    language_id: Integer
 }
 
 type Itemgameindex {
     game_index: Integer!
-    generation: Generation
     generation_id: Integer
     id: ID!
-    item: Item
     item_id: Integer
+    generation: Generation
+    item: Item
 }
 
 type Itemname {
     id: ID!
-    item: Item
     item_id: Integer
-    language: Language
     language_id: Integer
     name: String!
+    item: Item
+    language: Language
 }
 
 type Itempocket {
     id: ID!
+    name: String!
     item_pocket_itemcategories: [Itemcategory]
     item_pocket_itempocketnames: [Itempocketname]
-    name: String!
 }
 
 type Itempocketname {
     id: ID!
     item_pocket_id: Integer
-    itempocket_item_pocket: Itempocket
-    language: Language
     language_id: Integer
     name: String!
+    itempocket_item_pocket: Itempocket
+    language: Language
 }
 
 type Itemsprite {
     id: ID!
-    item: Item
     item_id: Integer
     sprites: String!
+    item: Item
 }
 
 type Language {
     id: ID!
     iso3166: String!
     iso639: String!
+    name: String!
+    official: bool!
+    order: Integer
     language_abilitychangeeffecttexts: [Abilitychangeeffecttext]
     language_abilityeffecttexts: [Abilityeffecttext]
     language_abilityflavortexts: [Abilityflavortext]
@@ -869,90 +872,87 @@ type Language {
     language_typenames: [Typename]
     language_versionnames: [Versionname]
     local_language_languagenames: [Languagename]
-    name: String!
-    official: bool!
-    order: Integer
 }
 
 type Languagename {
     id: ID!
-    language: Language
     language_id: Integer
-    language_local: Language
     local_language_id: Integer
     name: String!
+    language: Language
+    language_local: Language
 }
 
 type Location {
     id: ID!
+    name: String!
+    region_id: Integer
     location_locationareas: [Locationarea]
     location_locationgameindices: [Locationgameindex]
     location_locationnames: [Locationname]
     location_pokemonevolutions: [Pokemonevolution]
-    name: String!
     region: Region
-    region_id: Integer
 }
 
 type Locationarea {
     game_index: Integer!
     id: ID!
+    location_id: Integer
+    name: String!
     location: Location
     location_area_encounters: [Encounter]
     location_area_locationareaencounterrates: [Locationareaencounterrate]
     location_area_locationareanames: [Locationareaname]
-    location_id: Integer
-    name: String!
 }
 
 type Locationareaencounterrate {
     encounter_method_id: Integer
-    encountermethod_encounter_method: Encountermethod
     id: ID!
     location_area_id: Integer
-    locationarea_location_area: Locationarea
     rate: Integer!
-    version: Version
     version_id: Integer
+    encountermethod_encounter_method: Encountermethod
+    locationarea_location_area: Locationarea
+    version: Version
 }
 
 type Locationareaname {
     id: ID!
-    language: Language
     language_id: Integer
     location_area_id: Integer
-    locationarea_location_area: Locationarea
     name: String!
+    language: Language
+    locationarea_location_area: Locationarea
 }
 
 type Locationgameindex {
     game_index: Integer!
-    generation: Generation
     generation_id: Integer
     id: ID!
-    location: Location
     location_id: Integer
+    generation: Generation
+    location: Location
 }
 
 type Locationname {
     id: ID!
-    language: Language
     language_id: Integer
-    location: Location
     location_id: Integer
     name: String!
+    language: Language
+    location: Location
 }
 
 type Machine {
     growth_rate_id: Integer
-    growthrate_growth_rate: Growthrate
     id: ID!
-    item: Item
     item_id: Integer
     machine_number: Integer!
-    move: Move
     move_id: Integer
     version_group_id: Integer
+    growthrate_growth_rate: Growthrate
+    item: Item
+    move: Move
     versiongroup_version_group: Versiongroup
 }
 
@@ -960,17 +960,24 @@ type Move {
     accuracy: Integer
     contest_effect_id: Integer
     contest_type_id: Integer
+    generation_id: Integer
+    id: ID!
+    move_damage_class_id: Integer
+    move_effect_chance: Integer
+    move_effect_id: Integer
+    move_target_id: Integer
+    name: String!
+    power: Integer
+    pp: Integer
+    priority: Integer
+    super_contest_effect_id: Integer
+    type_id: Integer
     contesteffect_contest_effect: Contesteffect
     contesttype_contest_type: Contesttype
     first_move_contestcombos: [Contestcombo]
     first_move_supercontestcombos: [Supercontestcombo]
     generation: Generation
-    generation_id: Integer
-    id: ID!
     known_move_pokemonevolutions: [Pokemonevolution]
-    move_damage_class_id: Integer
-    move_effect_chance: Integer
-    move_effect_id: Integer
     move_machines: [Machine]
     move_moveattributemaps: [Moveattributemap]
     move_movechanges: [Movechange]
@@ -979,114 +986,107 @@ type Move {
     move_movemetastatchanges: [Movemetastatchange]
     move_movenames: [Movename]
     move_pokemonmoves: [Pokemonmove]
-    move_target_id: Integer
     movedamageclass_move_damage_class: Movedamageclas
     moveeffect_move_effect: Moveeffect
     movetarget_move_target: Movetarget
-    name: String!
-    power: Integer
-    pp: Integer
-    priority: Integer
     second_move_contestcombos: [Contestcombo]
     second_move_supercontestcombos: [Supercontestcombo]
-    super_contest_effect_id: Integer
     supercontesteffect_super_contest_effect: Supercontesteffect
     type: Type
-    type_id: Integer
 }
 
 type Moveattribute {
     id: ID!
+    name: String!
     move_attribute_moveattributedescriptions: [Moveattributedescription]
     move_attribute_moveattributemaps: [Moveattributemap]
     move_attribute_moveattributenames: [Moveattributename]
-    name: String!
 }
 
 type Moveattributedescription {
     description: String!
     id: ID!
-    language: Language
     language_id: Integer
     move_attribute_id: Integer
+    language: Language
     moveattribute_move_attribute: Moveattribute
 }
 
 type Moveattributemap {
     id: ID!
-    move: Move
     move_attribute_id: Integer
     move_id: Integer
+    move: Move
     moveattribute_move_attribute: Moveattribute
 }
 
 type Moveattributename {
     id: ID!
-    language: Language
     language_id: Integer
     move_attribute_id: Integer
-    moveattribute_move_attribute: Moveattribute
     name: String!
+    language: Language
+    moveattribute_move_attribute: Moveattribute
 }
 
 type Movebattlestyle {
     id: ID!
+    name: String!
     move_battle_style_movebattlestylenames: [Movebattlestylename]
     move_battle_style_naturebattlestylepreferences: [Naturebattlestylepreference]
-    name: String!
 }
 
 type Movebattlestylename {
     id: ID!
-    language: Language
     language_id: Integer
     move_battle_style_id: Integer
-    movebattlestyle_move_battle_style: Movebattlestyle
     name: String!
+    language: Language
+    movebattlestyle_move_battle_style: Movebattlestyle
 }
 
 type Movechange {
     accuracy: Integer
     id: ID!
-    move: Move
     move_effect_chance: Integer
     move_effect_id: Integer
     move_id: Integer
-    moveeffect_move_effect: Moveeffect
     power: Integer
     pp: Integer
-    type: Type
     type_id: Integer
     version_group_id: Integer
+    move: Move
+    moveeffect_move_effect: Moveeffect
+    type: Type
     versiongroup_version_group: Versiongroup
 }
 
 type Movedamageclas {
     id: ID!
+    name: String!
     move_damage_class_movedamageclassdescriptions: [Movedamageclassdescription]
     move_damage_class_movedamageclassnames: [Movedamageclassname]
     move_damage_class_stats: [Stat]
     move_damage_class_types: [Type]
     move_damage_classes: [Move]
-    name: String!
 }
 
 type Movedamageclassdescription {
     description: String!
     id: ID!
-    language: Language
     language_id: Integer
     move_damage_class_id: Integer
+    language: Language
     movedamageclass_move_damage_class: Movedamageclas
 }
 
 type Movedamageclassname {
     id: ID!
-    language: Language
     language_id: Integer
     move_damage_class_id: Integer
-    movedamageclass_move_damage_class: Movedamageclas
     name: String!
+    language: Language
+    movedamageclass_move_damage_class: Movedamageclas
 }
 
 type Moveeffect {
@@ -1099,68 +1099,68 @@ type Moveeffect {
 
 type Moveeffectchange {
     id: ID!
-    move_effect_change_moveeffectchangeeffecttexts: [Moveeffectchangeeffecttext]
     move_effect_id: Integer
-    moveeffect_move_effect: Moveeffect
     version_group_id: Integer
+    move_effect_change_moveeffectchangeeffecttexts: [Moveeffectchangeeffecttext]
+    moveeffect_move_effect: Moveeffect
     versiongroup_version_group: Versiongroup
 }
 
 type Moveeffectchangeeffecttext {
     effect: String!
     id: ID!
-    language: Language
     language_id: Integer
     move_effect_change_id: Integer
+    language: Language
     moveeffectchange_move_effect_change: Moveeffectchange
 }
 
 type Moveeffecteffecttext {
     effect: String!
     id: ID!
-    language: Language
     language_id: Integer
     move_effect_id: Integer
-    moveeffect_move_effect: Moveeffect
     short_effect: String!
+    language: Language
+    moveeffect_move_effect: Moveeffect
 }
 
 type Moveflavortext {
     flavor_text: String!
     id: ID!
-    language: Language
     language_id: Integer
-    move: Move
     move_id: Integer
     version_group_id: Integer
+    language: Language
+    move: Move
     versiongroup_version_group: Versiongroup
 }
 
 type Movelearnmethod {
     id: ID!
+    name: String!
     move_learn_method_movelearnmethoddescriptions: [Movelearnmethoddescription]
     move_learn_method_movelearnmethodnames: [Movelearnmethodname]
     move_learn_method_pokemonmoves: [Pokemonmove]
     move_learn_method_versiongroupmovelearnmethods: [Versiongroupmovelearnmethod]
-    name: String!
 }
 
 type Movelearnmethoddescription {
     description: String!
     id: ID!
-    language: Language
     language_id: Integer
     move_learn_method_id: Integer
+    language: Language
     movelearnmethod_move_learn_method: Movelearnmethod
 }
 
 type Movelearnmethodname {
     id: ID!
-    language: Language
     language_id: Integer
     move_learn_method_id: Integer
-    movelearnmethod_move_learn_method: Movelearnmethod
     name: String!
+    language: Language
+    movelearnmethod_move_learn_method: Movelearnmethod
 }
 
 type Movemetum {
@@ -1174,94 +1174,92 @@ type Movemetum {
     max_turns: Integer
     min_hits: Integer
     min_turns: Integer
-    move: Move
     move_id: Integer!
     move_meta_ailment_id: Integer
     move_meta_category_id: Integer
+    stat_chance: Integer
+    move: Move
     movemetaailment_move_meta_ailment: Movemetaailment
     movemetacategory_move_meta_category: Movemetacategory
-    stat_chance: Integer
 }
 
 type Movemetaailment {
     id: ID!
+    name: String!
     move_meta_ailment_movemeta: [Movemetum]
     move_meta_ailment_movemetaailmentnames: [Movemetaailmentname]
-    name: String!
 }
 
 type Movemetaailmentname {
     id: ID!
-    language: Language
     language_id: Integer
     move_meta_ailment_id: Integer
-    movemetaailment_move_meta_ailment: Movemetaailment
     name: String!
+    language: Language
+    movemetaailment_move_meta_ailment: Movemetaailment
 }
 
 type Movemetacategory {
     id: ID!
+    name: String!
     move_meta_category_movemeta: [Movemetum]
     move_meta_category_movemetacategorydescriptions: [Movemetacategorydescription]
-    name: String!
 }
 
 type Movemetacategorydescription {
     description: String!
     id: ID!
-    language: Language
     language_id: Integer
     move_meta_category_id: Integer
+    language: Language
     movemetacategory_move_meta_category: Movemetacategory
 }
 
 type Movemetastatchange {
     change: Integer!
     id: ID!
-    move: Move
     move_id: Integer
-    stat: Stat
     stat_id: Integer
+    move: Move
+    stat: Stat
 }
 
 type Movename {
     id: ID!
-    language: Language
     language_id: Integer
-    move: Move
     move_id: Integer
     name: String!
+    language: Language
+    move: Move
 }
 
 type Movetarget {
     id: ID!
+    name: String!
     move_target_movetargetdescriptions: [Movetargetdescription]
     move_target_movetargetnames: [Movetargetname]
     move_targets: [Move]
-    name: String!
 }
 
 type Movetargetdescription {
     description: String!
     id: ID!
-    language: Language
     language_id: Integer
     move_target_id: Integer
+    language: Language
     movetarget_move_target: Movetarget
 }
 
 type Movetargetname {
     id: ID!
-    language: Language
     language_id: Integer
     move_target_id: Integer
-    movetarget_move_target: Movetarget
     name: String!
+    language: Language
+    movetarget_move_target: Movetarget
 }
 
 type Nature {
-    berryflavor_hates_flavor: Berryflavor
-    berryflavor_likes_flavor: Berryflavor
     decreased_stat_id: Integer
     game_index: Integer!
     hates_flavor_id: Integer
@@ -1269,6 +1267,8 @@ type Nature {
     increased_stat_id: Integer
     likes_flavor_id: Integer
     name: String!
+    berryflavor_hates_flavor: Berryflavor
+    berryflavor_likes_flavor: Berryflavor
     nature_naturebattlestylepreferences: [Naturebattlestylepreference]
     nature_naturenames: [Naturename]
     nature_naturepokeathlonstats: [Naturepokeathlonstat]
@@ -1281,26 +1281,26 @@ type Naturebattlestylepreference {
     id: ID!
     low_hp_preference: Integer!
     move_battle_style_id: Integer
+    nature_id: Integer
     movebattlestyle_move_battle_style: Movebattlestyle
     nature: Nature
-    nature_id: Integer
 }
 
 type Naturename {
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
-    nature: Nature
     nature_id: Integer
+    language: Language
+    nature: Nature
 }
 
 type Naturepokeathlonstat {
     id: ID!
     max_change: Integer!
-    nature: Nature
     nature_id: Integer
     pokeathlon_stat_id: Integer
+    nature: Nature
     pokeathlonstat_pokeathlon_stat: Pokeathlonstat
 }
 
@@ -1308,10 +1308,10 @@ type Palpark {
     base_score: Integer
     id: ID!
     pal_park_area_id: Integer
-    palparkarea_pal_park_area: Palparkarea
     pokemon_species_id: Integer
-    pokemonspecy_pokemon_specy: Pokemonspecy
     rate: Integer!
+    palparkarea_pal_park_area: Palparkarea
+    pokemonspecy_pokemon_specy: Pokemonspecy
 }
 
 type Palparkarea {
@@ -1323,10 +1323,10 @@ type Palparkarea {
 
 type Palparkareaname {
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
     pal_park_area_id: Integer
+    language: Language
     palparkarea_pal_park_area: Palparkarea
 }
 
@@ -1339,10 +1339,10 @@ type Pokeathlonstat {
 
 type Pokeathlonstatname {
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
     pokeathlon_stat_id: Integer
+    language: Language
     pokeathlonstat_pokeathlon_stat: Pokeathlonstat
 }
 
@@ -1350,48 +1350,48 @@ type Pokedex {
     id: ID!
     is_main_series: bool!
     name: String!
+    region_id: Integer
     pokedex_pokedexdescriptions: [Pokedexdescription]
     pokedex_pokedexnames: [Pokedexname]
     pokedex_pokedexversiongroups: [Pokedexversiongroup]
     pokedex_pokemondexnumbers: [Pokemondexnumber]
     region: Region
-    region_id: Integer
 }
 
 type Pokedexdescription {
     description: String!
     id: ID!
-    language: Language
     language_id: Integer
-    pokedex: Pokedex
     pokedex_id: Integer
+    language: Language
+    pokedex: Pokedex
 }
 
 type Pokedexname {
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
-    pokedex: Pokedex
     pokedex_id: Integer
+    language: Language
+    pokedex: Pokedex
 }
 
 type Pokedexversiongroup {
     id: ID!
-    pokedex: Pokedex
     pokedex_id: Integer
     version_group_id: Integer
+    pokedex: Pokedex
     versiongroup_version_group: Versiongroup
 }
 
 type Pokemonability {
-    ability: Ability
     ability_id: Integer
     id: ID!
     is_hidden: bool!
-    pokemon: Pokemon
     pokemon_id: Integer
     slot: Integer!
+    ability: Ability
+    pokemon: Pokemon
 }
 
 type Pokemoncolor {
@@ -1403,60 +1403,60 @@ type Pokemoncolor {
 
 type Pokemoncolorname {
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
     pokemon_color_id: Integer
+    language: Language
     pokemoncolor_pokemon_color: Pokemoncolor
 }
 
 type Pokemondexnumber {
     id: ID!
-    pokedex: Pokedex
     pokedex_id: Integer
     pokedex_number: Integer!
     pokemon_species_id: Integer
+    pokedex: Pokedex
     pokemonspecy_pokemon_specy: Pokemonspecy
 }
 
 type Pokemonegggroup {
     egg_group_id: Integer
-    egggroup_egg_group: Egggroup
     id: ID!
     pokemon_species_id: Integer
+    egggroup_egg_group: Egggroup
     pokemonspecy_pokemon_specy: Pokemonspecy
 }
 
 type Pokemonevolution {
     evolution_item_id: Integer
     evolution_trigger_id: Integer
-    evolutiontrigger_evolution_trigger: Evolutiontrigger
     evolved_species_id: Integer
-    gender: Gender
     gender_id: Integer
     held_item_id: Integer
     id: ID!
-    item_evolution: Item
-    item_held: Item
     known_move_id: Integer
     known_move_type_id: Integer
-    location: Location
     location_id: Integer
     min_affection: Integer
     min_beauty: Integer
     min_happiness: Integer
     min_level: Integer
-    move_known: Move
     needs_overworld_rain: bool!
     party_species_id: Integer
     party_type_id: Integer
-    pokemonspecy_evolved_specy: Pokemonspecy
-    pokemonspecy_party_specy: Pokemonspecy
-    pokemonspecy_trade_specy: Pokemonspecy
     relative_physical_stats: Integer
     time_of_day: String
     trade_species_id: Integer
     turn_upside_down: bool!
+    evolutiontrigger_evolution_trigger: Evolutiontrigger
+    gender: Gender
+    item_evolution: Item
+    item_held: Item
+    location: Location
+    move_known: Move
+    pokemonspecy_evolved_specy: Pokemonspecy
+    pokemonspecy_party_specy: Pokemonspecy
+    pokemonspecy_trade_specy: Pokemonspecy
     type_known_move: Type
     type_party: Type
 }
@@ -1470,48 +1470,48 @@ type Pokemonform {
     is_mega: bool!
     name: String!
     order: Integer
+    pokemon_id: Integer
+    version_group_id: Integer
     pokemon: Pokemon
     pokemon_form_pokemonformgenerations: [Pokemonformgeneration]
     pokemon_form_pokemonformnames: [Pokemonformname]
     pokemon_form_pokemonformsprites: [Pokemonformsprite]
-    pokemon_id: Integer
-    version_group_id: Integer
     versiongroup_version_group: Versiongroup
 }
 
 type Pokemonformgeneration {
     game_index: Integer!
-    generation: Generation
     generation_id: Integer
     id: ID!
     pokemon_form_id: Integer
+    generation: Generation
     pokemonform_pokemon_form: Pokemonform
 }
 
 type Pokemonformname {
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
     pokemon_form_id: Integer
     pokemon_name: String!
+    language: Language
     pokemonform_pokemon_form: Pokemonform
 }
 
 type Pokemonformsprite {
     id: ID!
     pokemon_form_id: Integer
-    pokemonform_pokemon_form: Pokemonform
     sprites: String!
+    pokemonform_pokemon_form: Pokemonform
 }
 
 type Pokemongameindex {
     game_index: Integer!
     id: ID!
-    pokemon: Pokemon
     pokemon_id: Integer
-    version: Version
     version_id: Integer
+    pokemon: Pokemon
+    version: Version
 }
 
 type Pokemonhabitat {
@@ -1523,35 +1523,35 @@ type Pokemonhabitat {
 
 type Pokemonhabitatname {
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
     pokemon_habitat_id: Integer
+    language: Language
     pokemonhabitat_pokemon_habitat: Pokemonhabitat
 }
 
 type Pokemonitem {
     id: ID!
-    item: Item
     item_id: Integer
-    pokemon: Pokemon
     pokemon_id: Integer
     rarity: Integer!
-    version: Version
     version_id: Integer
+    item: Item
+    pokemon: Pokemon
+    version: Version
 }
 
 type Pokemonmove {
     id: ID!
     level: Integer!
-    move: Move
     move_id: Integer
     move_learn_method_id: Integer
-    movelearnmethod_move_learn_method: Movelearnmethod
     order: Integer
-    pokemon: Pokemon
     pokemon_id: Integer
     version_group_id: Integer
+    move: Move
+    movelearnmethod_move_learn_method: Movelearnmethod
+    pokemon: Pokemon
     versiongroup_version_group: Versiongroup
 }
 
@@ -1565,10 +1565,10 @@ type Pokemonshape {
 type Pokemonshapename {
     awesome_name: String!
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
     pokemon_shape_id: Integer
+    language: Language
     pokemonshape_pokemon_shape: Pokemonshape
 }
 
@@ -1576,26 +1576,26 @@ type Pokemonspecy {
     base_happiness: Integer!
     capture_rate: Integer!
     evolution_chain_id: Integer
-    evolutionchain_evolution_chain: Evolutionchain
-    evolved_specy_pokemonevolutions: [Pokemonevolution]
     evolves_from_species_id: Integer
-    evolves_from_specy_pokemonspecies: [Pokemonspecy]
     forms_switchable: bool!
     gender_rate: Integer!
-    generation: Generation
     generation_id: Integer
     growth_rate_id: Integer
-    growthrate_growth_rate: Growthrate
     has_gender_differences: bool!
     hatch_counter: Integer!
     id: ID!
     is_baby: bool!
     name: String!
     order: Integer
-    party_specy_pokemonevolutions: [Pokemonevolution]
     pokemon_color_id: Integer
     pokemon_habitat_id: Integer
     pokemon_shape_id: Integer
+    evolutionchain_evolution_chain: Evolutionchain
+    evolved_specy_pokemonevolutions: [Pokemonevolution]
+    evolves_from_specy_pokemonspecies: [Pokemonspecy]
+    generation: Generation
+    growthrate_growth_rate: Growthrate
+    party_specy_pokemonevolutions: [Pokemonevolution]
     pokemon_species: [Pokemon]
     pokemon_specy_palparks: [Palpark]
     pokemon_specy_pokemondexnumbers: [Pokemondexnumber]
@@ -1613,57 +1613,57 @@ type Pokemonspecy {
 type Pokemonspeciesdescription {
     description: String!
     id: ID!
-    language: Language
     language_id: Integer
     pokemon_species_id: Integer
+    language: Language
     pokemonspecy_pokemon_specy: Pokemonspecy
 }
 
 type Pokemonspeciesflavortext {
     flavor_text: String!
     id: ID!
-    language: Language
     language_id: Integer
     pokemon_species_id: Integer
+    version_id: Integer
+    language: Language
     pokemonspecy_pokemon_specy: Pokemonspecy
     version: Version
-    version_id: Integer
 }
 
 type Pokemonspeciesname {
     genus: String!
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
     pokemon_species_id: Integer
+    language: Language
     pokemonspecy_pokemon_specy: Pokemonspecy
 }
 
 type Pokemonsprite {
     id: ID!
-    pokemon: Pokemon
     pokemon_id: Integer
     sprites: String!
+    pokemon: Pokemon
 }
 
 type Pokemonstat {
     base_stat: Integer!
     effort: Integer!
     id: ID!
-    pokemon: Pokemon
     pokemon_id: Integer
-    stat: Stat
     stat_id: Integer
+    pokemon: Pokemon
+    stat: Stat
 }
 
 type Pokemontype {
     id: ID!
-    pokemon: Pokemon
     pokemon_id: Integer
     slot: Integer!
-    type: Type
     type_id: Integer
+    pokemon: Pokemon
+    type: Type
 }
 
 type Region {
@@ -1678,22 +1678,22 @@ type Region {
 
 type Regionname {
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
-    region: Region
     region_id: Integer
+    language: Language
+    region: Region
 }
 
 type Stat {
-    decreased_stat_natures: [Nature]
     game_index: Integer!
     id: ID!
-    increased_stat_natures: [Nature]
     is_battle_only: bool!
     move_damage_class_id: Integer
-    movedamageclass_move_damage_class: Movedamageclas
     name: String!
+    decreased_stat_natures: [Nature]
+    increased_stat_natures: [Nature]
+    movedamageclass_move_damage_class: Movedamageclas
     stat_characteristics: [Characteristic]
     stat_movemetastatchanges: [Movemetastatchange]
     stat_pokemonstats: [Pokemonstat]
@@ -1702,19 +1702,19 @@ type Stat {
 
 type Statname {
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
-    stat: Stat
     stat_id: Integer
+    language: Language
+    stat: Stat
 }
 
 type Supercontestcombo {
     first_move_id: Integer
     id: ID!
+    second_move_id: Integer
     move_first: Move
     move_second: Move
-    second_move_id: Integer
 }
 
 type Supercontesteffect {
@@ -1727,21 +1727,21 @@ type Supercontesteffect {
 type Supercontesteffectflavortext {
     flavor_text: String!
     id: ID!
-    language: Language
     language_id: Integer
     super_contest_effect_id: Integer
+    language: Language
     supercontesteffect_super_contest_effect: Supercontesteffect
 }
 
 type Type {
-    damage_type_typeefficacies: [Typeefficacy]
-    generation: Generation
     generation_id: Integer
     id: ID!
-    known_move_type_pokemonevolutions: [Pokemonevolution]
     move_damage_class_id: Integer
-    movedamageclass_move_damage_class: Movedamageclas
     name: String!
+    damage_type_typeefficacies: [Typeefficacy]
+    generation: Generation
+    known_move_type_pokemonevolutions: [Pokemonevolution]
+    movedamageclass_move_damage_class: Movedamageclas
     natural_gift_type_berries: [Berry]
     party_type_pokemonevolutions: [Pokemonevolution]
     target_type_typeefficacies: [Typeefficacy]
@@ -1763,27 +1763,27 @@ type Typeefficacy {
 
 type Typegameindex {
     game_index: Integer!
-    generation: Generation
     generation_id: Integer
     id: ID!
-    type: Type
     type_id: Integer
+    generation: Generation
+    type: Type
 }
 
 type Typename {
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
-    type: Type
     type_id: Integer
+    language: Language
+    type: Type
 }
 
 type Version {
     id: ID!
     name: String!
-    version_encounters: [Encounter]
     version_group_id: Integer
+    version_encounters: [Encounter]
     version_locationareaencounterrates: [Locationareaencounterrate]
     version_pokemongameindices: [Pokemongameindex]
     version_pokemonitems: [Pokemonitem]
@@ -1793,11 +1793,11 @@ type Version {
 }
 
 type Versiongroup {
-    generation: Generation
     generation_id: Integer
     id: ID!
     name: String!
     order: Integer
+    generation: Generation
     version_group_abilitychanges: [Abilitychange]
     version_group_abilityflavortexts: [Abilityflavortext]
     version_group_encounterslots: [Encounterslot]
@@ -1817,26 +1817,26 @@ type Versiongroup {
 type Versiongroupmovelearnmethod {
     id: ID!
     move_learn_method_id: Integer
-    movelearnmethod_move_learn_method: Movelearnmethod
     version_group_id: Integer
+    movelearnmethod_move_learn_method: Movelearnmethod
     versiongroup_version_group: Versiongroup
 }
 
 type Versiongroupregion {
     id: ID!
-    region: Region
     region_id: Integer
     version_group_id: Integer
+    region: Region
     versiongroup_version_group: Versiongroup
 }
 
 type Versionname {
     id: ID!
-    language: Language
     language_id: Integer
     name: String!
-    version: Version
     version_id: Integer
+    language: Language
+    version: Version
 }
 
 type TastypieApiacces {
@@ -1848,9 +1848,9 @@ type TastypieApiacces {
 }
 
 type TastypieApikey {
-    auth_user: AuthUser
     created: datetime!
     id: ID!
     key: String!
     user_id: Integer!
+    auth_user: AuthUser
 }
